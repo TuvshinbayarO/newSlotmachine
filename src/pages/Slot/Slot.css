@@ -1,0 +1,86 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.slot {
+  position: relative;
+  display: inline-block;
+  height: 100px;
+  width: 80px;
+}
+
+section {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+  font-family: sans-serif;
+  text-align: center;
+  font-size: 25px;
+  line-height: 60px;
+  cursor: default;
+}
+
+.container {
+  position: absolute;
+  top: 2px;
+  width: 100%;
+  transition: top ease-in-out 3s;
+  animation: top 0.9s linear infinite;
+  text-align: center;
+}
+
+.containerStop {
+  animation: none !important;
+}
+
+@keyframes top {
+
+  0% {transform:translateY(0);}
+  
+  100% {transform:translateY(-1000px);}
+  
+  }
+
+
+  /* animation: stop .5s ease-out forwards;
+  
+
+  @keyframes stop { 0% {transform:translateY(0)} 50% {transform:translateY(-90px)} 75% {transform:translateY(-80px)} 100% {transform:translateY(-85px)} } */
+  
+  
+
+.roll {
+  width: 143px;
+  cursor: pointer;
+  background-color: red;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 20px;
+  border: 2px solid black;
+  color: white;
+}
+
+.rolling {
+  /* animation: blinkingText 1s infinite; */
+}
+
+@keyframes blinkingText {
+  0% {
+    color: rgb(255, 255, 255)
+  }
+  49% {
+    color: rgb(255, 255, 255);
+  }
+  60% {
+    color: transparent;
+  }
+  99% {
+    color: transparent;
+  }
+  100% {
+    color: rgb(255, 0, 0);
+  }
+}
