@@ -5,7 +5,7 @@ import {FaCaretLeft} from 'react-icons/fa'
 
 function Rule() {
   return (
-    <div style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}} className='container mx-auto bg-mobi-pinl h-screen w-full overflow-x-hidden overflow-y-scroll'>
+    <div style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}} className='mx-auto bg-mobi-pinl h-screen w-full overflow-x-hidden overflow-y-scroll'>
         <div className='px-2'>
             <a href='/' className='text-white flex font-bold items-center'><FaCaretLeft /> Буцах</a>
         </div>
