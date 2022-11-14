@@ -53,7 +53,7 @@ const Slots = () => {
     } 
       setLoading(true);
       // HERE
-      let temp = [14,0,7];
+      let temp = [0,0,7];
       slotRef.forEach((slot, i) => {
         const selected = triggerSlotRotation(slot.current, temp, i);
         setValues({ [`dummy${i++}`]: selected });

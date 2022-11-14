@@ -41,5 +41,5 @@
   "devDependencies": {
     "tailwindcss": "^3.2.3"
   },
-  "proxy": "https://16.23.2.25:8081/api"
+  "proxy": "http://172.22.2.30:8080/family-slot-game/rest/"
 }
