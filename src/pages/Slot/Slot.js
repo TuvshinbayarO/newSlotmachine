@@ -20,16 +20,16 @@ const Slots = () => {
     Dummy: [Santa, elf, grinch, Snowman, Santa, elf, grinch, Snowman, Santa, elf, grinch, Snowman , Santa, elf, grinch, Snowman , Santa, elf, grinch, Snowman ,Santa, elf, grinch, Snowman ,Santa, elf, grinch, Snowman ,Santa, elf, grinch, Snowman ,Santa, elf, grinch, Snowman ,Santa, elf, grinch, Snowman],
   };
   const slotRef = [useRef(), useRef(), useRef()];
-  const [data, setData] = useState({});
+  // const [data, setData] = useState({});
   const [spins, setSpins] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // spin too avah requestee end
-    axios.post("/leaderboard", 
+    axios.post("leaderboard", 
         {}, 
         {headers: {
-          "Authorization" : "Bearer e4hdjsahYAS321hjkfdsa"
+          "token" : "61a78fa3180c3ee77c992c95d474351af121bc38"
         }})
       .then((res) => {
         setSpins(res.data)
@@ -53,7 +53,7 @@ const Slots = () => {
     // } 
       setLoading(true);
       // HERE
-      let temp = [0,0,7];
+      let temp = [9,0,7];
       slotRef.forEach((slot, i) => {
         const selected = triggerSlotRotation(slot.current, temp, i);
         setValues({ [`dummy${i++}`]: selected });
@@ -143,17 +143,17 @@ const Slots = () => {
   return (
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className="flex flex-col justify-center items-center relative h-screen">
       <div className='flex flex-col justify-center items-center absolute top-0'>
-        <img className='w-64' alt="gifts" src={gifts} />
+        <img className=' max-w-[160px]' alt="gifts" src={gifts} />
       </div>
-      <img alt="icons" className="absolute top-[110px] max-w-[350px] z-20" src={gift} />
-      <div className="absolute top-[306px]">
+      <img alt="icons" className="absolute top-[65px] max-w-[350px] z-20" src={gift} />
+      <div className="absolute top-[260px]">
         <div className="bg-white w-72 h-32">
       <div className="slot">
         <section>
           <div className={loading ? "container" : 'container containerStop'} ref={slotRef[0]}>
-            {defaultProps.Dummy.map((item, i) => (
+            {defaultProps.Dummy.map((item, idx) => (
               <div className="">
-                <div key={i}>
+                <div key={idx}>
                   <img alt="icons" src={item} width={67} />
                 </div>
               </div>
@@ -186,28 +186,36 @@ const Slots = () => {
       </div>
       </div>
       <div
-        className={`${!loading ? "roll rolling" : "roll"} absolute cursor-pointer text-white top-[411px] z-30 flex justify-center items-center text-center w-36 rounded-2xl bg-red-500 h-[57px]`}
+        className={`${!loading ? "roll rolling" : "roll"} absolute cursor-pointer text-white top-[366px] z-30 flex justify-center items-center text-center w-36 rounded-2xl bg-red-500 h-[57px]`}
         onClick={handleSubmit}
         disabled={spins > 0 && loading}
       >
-        {loading ? "Spining..." : "Spin"}
+        {loading ? "эргэж байна!" : "тоглох"}
       </div>
-          <div className='absolute top-[470px] bg-white w-[90%] mt-14 rounded-xl'>
-                <div className='flex justify-between'>
-                    <div className='flex space-x-2'>
-                        <img alt='icons' className='w-12 h-12 rounded-full' src={Santa} />
-                        <div className=''>
-                            <h1 className=' text-xs'>Багийн гишүүн-0</h1>
-                            <h1 className=' font-semibold'>Багийн нэр</h1>
+              <div className='absolute top-[475px] bg-red-500 w-[98%] rounded-md p-3'>
+                <div className='flex justify-between text-white'>
+                    <div className='flex flex-col justify-center items-center'>
+                        <h1 className='text-white text-xs'>Таны байр</h1>
+                        <p className='text-white text-xl'>000009</p>
+                    </div>
+                    <div className='flex'>
+                        <div className='flex text-xs'>
+                            <div className='flex'>
+                                <img alt='icons' className='w-8 h-8 rounded-full' src={Santa} />
+                                <div className='text-left'>
+                                <h1>Багийн гишүүн - 0</h1>
+                                <p>King</p>
+                                </div>
+                            </div>    
                         </div>
                     </div>
-                    <div className='bg-red-500 text-white w-[40%] text-center rounded-l-md rounded-tl'>
-                        <h1>Нийлбэр оноо</h1>
+                    <div className='text-left'>
+                        <h1 className='text-xs'>Нийлбэр оноо</h1>
                         <p>0’000</p>
                     </div>
                 </div>
             </div>
-            <div className='w-full h-[15%] px-5 overflow-y-scroll  absolute top-[580px]'>
+            <div className='w-full h-[15%] px-5 overflow-y-scroll  absolute top-[540px]'>
                 {
                     Data.map((item , key) => {
                         return(

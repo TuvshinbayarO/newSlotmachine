@@ -1,14 +1,11 @@
 import React from 'react'
 import bg from '../../Assets/Vector.png'
 import Santa from '../../Assets/santa-claus.png'
-import {FaCaretLeft} from 'react-icons/fa'
+import Footer from '../Slot/component/Footer'
 
 function Rule() {
   return (
     <div style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}} className='mx-auto bg-mobi-pinl h-screen w-full overflow-x-hidden overflow-y-scroll'>
-        <div className='px-2'>
-            <a href='/' className='text-white flex font-bold items-center'><FaCaretLeft /> Буцах</a>
-        </div>
         <div className='flex justify-center items-center'>
             <h1 className='w-[65%] text-center text-white text-xl'>ХАМГИЙН ГОЁ БЭЛЭГ УРАМШУУЛЛЫН ДҮРЭМ</h1>
         </div>
@@ -51,6 +48,7 @@ function Rule() {
             <h1 className='mt-5 text-left'>Жишээ нь: 4 гишүүнтэй гэр бүл Санта буух магадлал 34%Олаф буух магадлал 40% Гринч буух магадлал 26%</h1>
             
         </div>
+        <Footer />
     </div>
   )
 }

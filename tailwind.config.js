@@ -6,7 +6,8 @@ module.exports = {
       colors: {
         'graysss': '#F3F3F3',
         'water-blue': '#CCEFEE',
-        'mobi-pinl': '#FFBDBB'
+        'mobi-pinl': '#FFBDBB',
+        'mobi-red': '#ff3e5e'
       }
     },
   },
