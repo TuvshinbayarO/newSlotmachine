@@ -8,17 +8,16 @@ const LeaderBoard = () => {
   const [leaderBoard, setLeaderBoard] = useState('')
 
   useEffect(() => {
-    axios
-    .get('http://172.22.2.30:8080/family-slot-game/rest/game/leaderboard')
-    .then(res => {
-      console.log('res:',res)
-      setLeaderBoard(res.data)
-    })
-    .catch(err => {
-      console.log(err)
-    })
-
+    fetchData()
   }, [])
+
+  const fetchData = async () => {
+    const res = await axios({
+      method: 'get',
+      url: 'http://172.22.2.30:8080/family-slot-game/rest/game/leaderboard',
+      withCredentials: false
+    })
+  }
 
   const Datas = [
     {
