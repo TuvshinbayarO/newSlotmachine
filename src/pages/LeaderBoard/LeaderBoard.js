@@ -1,8 +1,24 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Santa from '../../Assets/santa-claus.png'
 import {FaGift} from 'react-icons/fa'
+import axios from 'axios'
 
 const LeaderBoard = () => {
+
+  const [leaderBoard, setLeaderBoard] = useState('')
+
+  useEffect(() => {
+    axios
+    .get('http://172.22.2.30:8080/family-slot-game/rest/game/leaderboard')
+    .then(res => {
+      console.log('res:',res)
+      setLeaderBoard(res.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+  }, [])
 
   const Datas = [
     {

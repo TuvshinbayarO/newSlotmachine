@@ -25,8 +25,8 @@ const Slots = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // spin too avah requestee end bich
-    axios.post("/api/check", 
+    // spin too avah requestee end
+    axios.post("/leaderboard", 
         {}, 
         {headers: {
           "Authorization" : "Bearer e4hdjsahYAS321hjkfdsa"
@@ -47,10 +47,10 @@ const Slots = () => {
   },[])
 
   const handleSubmit = (() => {
-    if(spins < 1) {
-      alert("No spin");
-      return 0;
-    } 
+    // if(spins < 1) {
+    //   alert("No spin");
+    //   return 0;
+    // } 
       setLoading(true);
       // HERE
       let temp = [0,0,7];
