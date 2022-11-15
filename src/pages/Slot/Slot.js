@@ -149,7 +149,7 @@ const Slots = () => {
         </div>
         <div className="relative">
           <div className="absolute  top-[93px] tablet:top-36 w-full flex justify-center items-center">
-            <div className="flex justify-center items-center w-[60%] tablet:w-[75%] bg-white h-32">
+            <div className="flex justify-center ml-4 tablet:ml-0 items-center w-[60%] tablet:w-[75%] bg-white h-32">
               <div className="slot">
                 <section>
                   <div className={loading ? "container" : 'container containerStop'} ref={slotRef[0]}>
@@ -192,7 +192,9 @@ const Slots = () => {
               onClick={handleSubmit}
               disabled={spins > 0 && loading}
             >
-              {loading ? "эргэж байна!" : "тоглох"}
+              <p className="text-xs tablet:text-sm">
+                {loading ? "эргэж байна!" : "тоглох"}
+              </p>
             </div>
           </div>
         </div>
@@ -221,7 +223,7 @@ const Slots = () => {
                 </div>
             </div>
         </div>
-        <div className='w-full h-[25%] tablet:h-[38%] px-5 overflow-y-scroll'>
+        <div className='w-full h-[13%] tablet:h-[38%] px-5 overflow-y-scroll'>
           {
             Data.map((item , key) => {
               return(

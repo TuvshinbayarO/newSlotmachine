@@ -9,7 +9,7 @@ function Rule() {
         <div className='flex justify-center items-center'>
             <h1 className='w-[65%] text-center text-white text-xl'>ХАМГИЙН ГОЁ БЭЛЭГ УРАМШУУЛЛЫН ДҮРЭМ</h1>
         </div>
-        <div className='text-white mt-4 px-8 w-full text-sm'>
+        <div className='text-white mt-4 px-8 w-full text-sm pb-3'>
             <ul className='w-full text-left'>
                 <li className='flex items-center justify-between'>
                     <h1 className='flex items-center justify-center'>1. Жаргалтай гэр бүлийн админ болоод гишүүд тоглох боломжтой</h1>
