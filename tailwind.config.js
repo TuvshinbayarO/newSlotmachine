@@ -8,6 +8,9 @@ module.exports = {
         'water-blue': '#CCEFEE',
         'mobi-pinl': '#FFBDBB',
         'mobi-red': '#ff3e5e'
+      },
+      screens : {
+        'tablet': '380px'
       }
     },
   },

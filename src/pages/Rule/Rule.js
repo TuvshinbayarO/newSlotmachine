@@ -5,7 +5,7 @@ import Footer from '../Slot/component/Footer'
 
 function Rule() {
   return (
-    <div style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}} className='mx-auto bg-mobi-pinl h-screen w-full overflow-x-hidden overflow-y-scroll'>
+    <div style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}} className='mx-auto bg-mobi-pinl h-screen flex flex-col justify-between w-full overflow-x-hidden overflow-y-scroll'>
         <div className='flex justify-center items-center'>
             <h1 className='w-[65%] text-center text-white text-xl'>ХАМГИЙН ГОЁ БЭЛЭГ УРАМШУУЛЛЫН ДҮРЭМ</h1>
         </div>

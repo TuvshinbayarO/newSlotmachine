@@ -25,11 +25,11 @@ const LeaderBoard = () => {
   }, [])
 
   return (
-    <div className='bg-mobi-pinl h-full'>
+    <div className='bg-mobi-pinl h-screen flex flex-col justify-between'>
         <div className='flex justify-center items-center'>
-          <h1 className='text-white text-xl pt-5'>• ШИЛДЭГ 50 БАГ •</h1>
+          <h1 className='text-white text-xl mt-2'>• ШИЛДЭГ 50 БАГ •</h1>
         </div>
-        <div className=' overflow-y-scroll h-[640px]'>
+        <div className=' overflow-y-scroll h-[640px] px-2'>
           {
             leaderBoard.map((items, idx) => {
               return(

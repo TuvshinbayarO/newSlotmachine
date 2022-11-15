@@ -141,95 +141,102 @@ const Slots = () => {
   ]
 
   return (
-    <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className="flex flex-col justify-center items-center relative h-screen">
-      <div className='flex flex-col justify-center items-center absolute top-0'>
-        <img className=' max-w-[160px]' alt="gifts" src={gifts} />
-      </div>
-      <img alt="icons" className="absolute top-[65px] max-w-[350px] z-20" src={gift} />
-      <div className="absolute top-[260px]">
-        <div className="bg-white w-72 h-32">
-      <div className="slot">
-        <section>
-          <div className={loading ? "container" : 'container containerStop'} ref={slotRef[0]}>
-            {defaultProps.Dummy.map((item, idx) => (
-              <div className="">
-                <div key={idx}>
-                  <img alt="icons" src={item} width={67} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-      <div className="slot">
-        <section>
-          <div className={loading ? "container" : 'container containerStop'} ref={slotRef[1]}>
-            {defaultProps.Dummy.map((item, key) => (
-              <div key={key}>
-                <img alt="icons" src={item} width={67} />
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-      <div className="slot">
-        <section>
-          <div className={loading ? "container" : 'container containerStop'} ref={slotRef[2]}>
-            {defaultProps.Dummy.map((item, key) => (
-              <div key={key}>
-                <img alt="icons" src={item} width={67} />
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-      </div>
-      </div>
-      <div
-        className={`${!loading ? "roll rolling" : "roll"} absolute cursor-pointer text-white top-[366px] z-30 flex justify-center items-center text-center w-36 rounded-2xl bg-red-500 h-[57px]`}
-        onClick={handleSubmit}
-        disabled={spins > 0 && loading}
-      >
-        {loading ? "эргэж байна!" : "тоглох"}
-      </div>
-              <div className='absolute top-[475px] bg-red-500 w-[98%] rounded-md p-3'>
-                <div className='flex justify-between text-white'>
-                    <div className='flex flex-col justify-center items-center'>
-                        <h1 className='text-white text-xs'>Таны байр</h1>
-                        <p className='text-white text-xl'>000009</p>
-                    </div>
-                    <div className='flex'>
-                        <div className='flex text-xs'>
-                            <div className='flex'>
-                                <img alt='icons' className='w-8 h-8 rounded-full' src={Santa} />
-                                <div className='text-left'>
-                                <h1>Багийн гишүүн - 0</h1>
-                                <p>King</p>
-                                </div>
-                            </div>    
+    <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className="w-full flex flex-col justify-between h-screen">
+      <div>
+        <div className='flex flex-col relative justify-center items-center'>
+          <img className=' max-w-[160px]' alt="gifts" src={gifts} />
+          <img alt="icons" className="max-w-[250px] tablet:max-w-[350px] absolute top-16 z-20" src={gift} />
+        </div>
+        <div className="relative">
+          <div className="absolute  top-[93px] tablet:top-36 w-full flex justify-center items-center">
+            <div className="flex justify-center items-center w-[60%] tablet:w-[75%] bg-white h-32">
+              <div className="slot">
+                <section>
+                  <div className={loading ? "container" : 'container containerStop'} ref={slotRef[0]}>
+                    {defaultProps.Dummy.map((item, idx) => (
+                      <div className="flex justify-center items-center">
+                        <div className="flex justify-center items-center" key={idx}>
+                          <img alt="icons" className="w-[45px] tablet:w-[67px]" src={item} />
                         </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+              <div className="slot">
+                <section>
+                  <div className={loading ? "container" : 'container containerStop'} ref={slotRef[1]}>
+                    {defaultProps.Dummy.map((item, key) => (
+                      <div key={key}>
+                        <img alt="icons" src={item} className="w-[45px] tablet:w-[67px]" />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+              <div className="slot">
+                <section>
+                  <div className={loading ? "container" : 'container containerStop'} ref={slotRef[2]}>
+                    {defaultProps.Dummy.map((item, key) => (
+                      <div key={key}>
+                        <img alt="icons" src={item} className="w-[45px] tablet:w-[67px]" />
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-center items-center">
+            <div className={`${!loading ? "roll rolling" : "roll"} absolute cursor-pointer text-white top-[175px] tablet:top-[265px] z-30 flex justify-center items-center text-center w-[104px] tablet:w-36 rounded-2xl bg-red-500 h-12 tablet:h-[57px]`}
+              onClick={handleSubmit}
+              disabled={spins > 0 && loading}
+            >
+              {loading ? "эргэж байна!" : "тоглох"}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col justify-end">
+        <div className=' bg-red-500 rounded-md p-3'>
+            <div className='flex justify-between text-white'>
+                <div className='flex flex-col justify-center items-center'>
+                    <h1 className='text-white text-xs'>Таны байр</h1>
+                    <p className='text-white text-xl'>000009</p>
+                </div>
+                <div className='flex'>
+                    <div className='flex text-xs'>
+                        <div className='flex'>
+                            <img alt='icons' className='w-8 h-8 rounded-full' src={Santa} />
+                            <div className='text-left'>
+                            <h1>Багийн гишүүн - 0</h1>
+                            <p>King</p>
+                            </div>
+                        </div>    
                     </div>
-                    <div className='text-left'>
-                        <h1 className='text-xs'>Нийлбэр оноо</h1>
-                        <p>0’000</p>
-                    </div>
+                </div>
+                <div className='text-left'>
+                    <h1 className='text-xs'>Нийлбэр оноо</h1>
+                    <p>0’000</p>
                 </div>
             </div>
-            <div className='w-full h-[15%] px-5 overflow-y-scroll  absolute top-[540px]'>
-                {
-                    Data.map((item , key) => {
-                        return(
-                            <div key={key} className='flex items-center justify-between border-b py-2'>
+        </div>
+        <div className='w-full h-[25%] tablet:h-[38%] px-5 overflow-y-scroll'>
+          {
+            Data.map((item , key) => {
+              return(
+                  <div key={key} className='flex items-center justify-between border-b py-2'>
                     <img className='w-12' alt='icons' src={item.img} />
                     <p>{item.Name}</p>
                     <p>{item.ticket}</p>
                     <p>{item.point}</p>
                 </div>
-                        )
-                    })
-                }
-            </div>  
-            <Footer />
+              )
+            })
+          }
+        </div>  
+        <Footer />
+      </div>
     </div>
   );
 };
