@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.04020a49.css",
+    "main.js": "/static/js/main.fbca20ae.js",
+    "static/js/787.325a6cf2.chunk.js": "/static/js/787.325a6cf2.chunk.js",
+    "static/media/back.jpg": "/static/media/back.b48a2e8920a33ce1a815.jpg",
+    "static/media/text.png": "/static/media/text.a39e603cde3e63f96114.png",
+    "static/media/gift.png": "/static/media/gift.92aa74617257565a1fe4.png",
+    "static/media/Vector.png": "/static/media/Vector.94d46f52a9eee110a1da.png",
+    "static/media/snowman.png": "/static/media/snowman.702646ea3853f1df207a.png",
+    "static/media/santa-claus.png": "/static/media/santa-claus.b84f23418fa3d00eae4b.png",
+    "static/media/grinch.png": "/static/media/grinch.4bad0fa25dcf6d8b1564.png",
+    "static/media/elf.png": "/static/media/elf.2c5730d22f6d4b88a27a.png",
+    "index.html": "/index.html",
+    "main.04020a49.css.map": "/static/css/main.04020a49.css.map",
+    "main.fbca20ae.js.map": "/static/js/main.fbca20ae.js.map",
+    "787.325a6cf2.chunk.js.map": "/static/js/787.325a6cf2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.04020a49.css",
+    "static/js/main.fbca20ae.js"
+  ]
+}
