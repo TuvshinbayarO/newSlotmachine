@@ -1,105 +1,110 @@
 import React, { useReducer, useRef, useState, useEffect } from "react";
 import "./Slot.css";
-import Santa from "../../Assets/santa-claus.png";
+import santa from "../../Assets/santa-claus.png";
 import elf from "../../Assets/elf.png";
 import grinch from "../../Assets/grinch.png";
-import Snowman from "../../Assets/snowman.png";
+import snowman from "../../Assets/snowman.png";
 import gift from "../../Assets/gift.png";
 import gifts from "../../Assets/text.png";
 import back from '../../Assets/back.jpg'
 import Footer from "./component/Footer";
 import axios from "axios";
+import swal from "sweetalert";
 
-const Slots = () => {
+const santaObj = {
+  name: 'SANTA',
+  image: santa
+}
+const elfObj = {
+  name: 'ELF',
+  image: elf
+}
+const grinchObj = {
+  name: 'GRINCH',
+  image: grinch
+}
+const snowmanObj = {
+  name: 'SNOWMAN',
+  image: snowman
+}
+
+const Slots = ({data}) => {
   const [values, setValues] = useReducer((state, newState) => ({...state, ...newState}), {
-    dummy1: Santa,
-    dummy2: grinch,
-    dummy3: Snowman
+    dummy1: santaObj.image,
+    dummy2: grinchObj.image,
+    dummy3: snowmanObj.image
   });
   const defaultProps = {
-    Dummy: [Santa, elf, grinch, Snowman, Santa, elf, grinch, Snowman, Santa, elf, grinch, Snowman , Santa, elf, grinch, Snowman , Santa, elf, grinch, Snowman ,Santa, elf, grinch, Snowman ,Santa, elf, grinch, Snowman ,Santa, elf, grinch, Snowman ,Santa, elf, grinch, Snowman ,Santa, elf, grinch, Snowman],
+    Dummy: [santaObj, elfObj, grinchObj, snowmanObj, santaObj, elfObj, grinchObj, snowmanObj, santaObj, elfObj, grinchObj, snowmanObj , santaObj, elfObj, grinchObj, snowmanObj , santaObj, elfObj, grinchObj, snowmanObj ,santaObj, elfObj, grinchObj, snowmanObj ,santaObj, elfObj, grinchObj, snowmanObj ,santaObj, elfObj, grinchObj, snowmanObj ,santaObj, elfObj, grinchObj, snowmanObj ,santaObj, elfObj, grinchObj, snowmanObj],
   };
   const slotRef = [useRef(), useRef(), useRef()];
-  // const [data, setData] = useState({});
-  const [spins, setSpins] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // spin too avah requestee end
-    axios.post("leaderboard", 
-        {}, 
-        {headers: {
-          "token" : "61a78fa3180c3ee77c992c95d474351af121bc38"
-        }})
-      .then((res) => {
-        setSpins(res.data)
-        // 200-300
-      })
-      .catch((err) => {
-        alert(err)
-
-        setLoading(false);
-        // 400<...
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  },[])
-
   const handleSubmit = (() => {
-    // if(spins < 1) {
-    //   alert("No spin");
-    //   return 0;
-    // } 
+    if(data.customer.ticketBalance < 1) {
+      swal("Эрх дууссан байна!", "", "error");
+      return 0;
+    } 
       setLoading(true);
-      // HERE
-      let temp = [9,0,7];
-      slotRef.forEach((slot, i) => {
-        const selected = triggerSlotRotation(slot.current, temp, i);
-        setValues({ [`dummy${i++}`]: selected });
-      });
-
-      setTimeout(() => {
+      axios.get(
+        "play",
+        {
+          params: {
+            isdn: "99111096",
+          },
+        },
+        {
+          headers: {
+            sessionId: "61a78fa3180c3ee77c992c95d474351af121bc38",
+          },
+        }
+      ).then((res) => {
+        setTimeout(() => {
+          slotRef.forEach((slot, i) => {
+            const selected = triggerSlotRotation(slot.current, res.data.items[i]);
+            setValues({ [`dummy${i++}`]: selected });
+          });
+          setLoading(false);
+          setTimeout(() => {
+            swal(`${res.data.point} оноо авлаа.`, "", "success");
+          }, 3000);
+        }, 500);
+      }).catch((err) => {
+        alert(err);
         setLoading(false);
-      }, 1000);
-      // HERE
-
-      // axios.post("/api/blabla", 
-      //     {lol: 55}, 
-      //     {headers: {
-      //       "Authorization" : "Bearer e4hdjsahYAS321hjkfdsa"
-      //     }})
-      //   .then((res) => {
-        // slotRef.forEach((slot, i) => {
-        //   const selected = triggerSlotRotation(slot.current, res.data, i);
-        //   setValues({ [`dummy${i++}`]: selected });
-        // });
-      //     // 200-300
-      //   })
-      //   .catch((err) => {
-      //     alert(err)
-
-      //     setLoading(false);
-      //     // 400<...
-      //   })
-      //   .finally(() => {
-      //     setLoading(false);
-      //   });
+      })
+    
   })
   
-  const triggerSlotRotation = (ref, data, idx) => {
+  const triggerSlotRotation = (ref, data) => {
+    console.log("data",data);
     function setTop(top) {
       ref.style.top = `${top}px`;
     }
+    let idx = 0;
+    let temp = parseInt(Math.random() * 10);
+    console.log("rand", temp);
+    switch(data.name) {
+      case "SANTA":
+        break;
+      case "ELF":
+        idx = 1;
+        break;
+      case "GRINCH":
+        idx = 2;
+        break;
+      case "SNOWMAN":
+        idx = 3;
+        break;
+    }
+    idx += temp * 4;
     
     let options = ref.children;
-    let randomOption = data[idx];
-    let choosenOption = options[data[idx]];
-
+    let randomOption = idx;
+    let choosenOption = options[idx];
   
     setTop(-choosenOption.offsetTop + 2);
-    return defaultProps.Dummy[randomOption];
-    
+    return defaultProps.Dummy[randomOption].image;
   };
 
   const Data = [
@@ -108,27 +113,27 @@ const Slots = () => {
         Name: "Aav",
         ticket: '5 эрх',
         point: '250 оноо',
-        img: Santa
+        img: santa
     },
     {
         id: 2,
         Name: "Aav",
         ticket: '5 эрх',
         point: '250 оноо',
-        img: Santa
+        img: santa
     },{
         id: 3,
         Name: "Aav",
         ticket: '5 эрх',
         point: '250 оноо',
-        img: Santa
+        img: santa
     },
     {
         id: 4,
         Name: "Aav",
         ticket: '5 эрх',
         point: '250 оноо',
-        img: Santa
+        img: santa
     }
     ,
     {
@@ -136,7 +141,7 @@ const Slots = () => {
         Name: "Aav",
         ticket: '5 эрх',
         point: '250 оноо',
-        img: Santa
+        img: santa
     }
   ]
 
@@ -156,7 +161,7 @@ const Slots = () => {
                     {defaultProps.Dummy.map((item, idx) => (
                       <div className="flex justify-center items-center">
                         <div className="flex justify-center items-center" key={idx}>
-                          <img alt="icons" className="w-[45px] tablet:w-[67px]" src={item} />
+                          <img alt="icons" className="w-[45px] tablet:w-[67px]" src={item.image} />
                         </div>
                       </div>
                     ))}
@@ -168,7 +173,7 @@ const Slots = () => {
                   <div className={loading ? "container" : 'container containerStop'} ref={slotRef[1]}>
                     {defaultProps.Dummy.map((item, key) => (
                       <div key={key}>
-                        <img alt="icons" src={item} className="w-[45px] tablet:w-[67px]" />
+                        <img alt="icons" src={item.image} className="w-[45px] tablet:w-[67px]" />
                       </div>
                     ))}
                   </div>
@@ -179,7 +184,7 @@ const Slots = () => {
                   <div className={loading ? "container" : 'container containerStop'} ref={slotRef[2]}>
                     {defaultProps.Dummy.map((item, key) => (
                       <div key={key}>
-                        <img alt="icons" src={item} className="w-[45px] tablet:w-[67px]" />
+                        <img alt="icons" src={item.image} className="w-[45px] tablet:w-[67px]" />
                       </div>
                     ))}
                   </div>
@@ -190,7 +195,6 @@ const Slots = () => {
           <div className="flex justify-center items-center">
             <div className={`${!loading ? "roll rolling" : "roll"} absolute cursor-pointer text-white top-[175px] tablet:top-[265px] z-30 flex justify-center items-center text-center w-[104px] tablet:w-36 rounded-2xl bg-red-500 h-12 tablet:h-[57px]`}
               onClick={handleSubmit}
-              disabled={spins > 0 && loading}
             >
               <p className="text-xs tablet:text-sm">
                 {loading ? "эргэж байна!" : "тоглох"}
@@ -209,7 +213,7 @@ const Slots = () => {
                 <div className='flex'>
                     <div className='flex text-xs'>
                         <div className='flex'>
-                            <img alt='icons' className='w-8 h-8 rounded-full' src={Santa} />
+                            <img alt='icons' className='w-8 h-8 rounded-full' src={santa} />
                             <div className='text-left'>
                             <h1>Багийн гишүүн - 0</h1>
                             <p>King</p>
@@ -223,7 +227,7 @@ const Slots = () => {
                 </div>
             </div>
         </div>
-        <div className='w-full h-[13%] tablet:h-[38%] px-5 overflow-y-scroll'>
+        <div className='w-full h-[13%] tablet:h-[22%] px-5 overflow-y-scroll'>
           {
             Data.map((item , key) => {
               return(

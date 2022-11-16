@@ -7,12 +7,15 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.1.3",
+    "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-bootstrap-sweetalert": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
+    "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
+    "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -42,5 +45,5 @@
   "devDependencies": {
     "tailwindcss": "^3.2.3"
   },
-  "proxy": "https://z-osa.mobicom.mn/func/family-slot/v1/game/"
+  "proxy": "http://10.64.10.242:8085/game/"
 }

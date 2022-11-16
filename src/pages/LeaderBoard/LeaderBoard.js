@@ -10,16 +10,21 @@ const LeaderBoard = () => {
 
   useEffect(() => {
     axios.get("leaderboard", 
-          {headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "token" : "61a78fa3180c3ee77c992c95d474351af121bc38"
-          }})
+          // {
+          //   params: {
+          //     isdn: '99111096'
+          //   }
+          // },
+          // {headers: {
+          //   "sessionId" : "61a78fa3180c3ee77c992c95d474351af121bc38"
+          // }}
+          )
           .then(res => {
-            console.log('res:',res)
-            setLeaderBoard(res.data.response)
+            // console.log('res:',res)
+            setLeaderBoard(res.data.rank)
           })
           .catch(err => {
+            console.log("DJASKLJDLKSAJLKD")
             console.log(err)
           })
   }, [])
@@ -48,7 +53,7 @@ const LeaderBoard = () => {
                         <div className='flex items-center'>
                           <img alt='icons' className='w-8 h-8 rounded-full' src={Santa} />
                           <div className=''>
-                            <p>{items.name}</p>
+                            <p>{items.familyName}</p>
                           </div>
                         </div>
                           <div className=''>

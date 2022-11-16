@@ -29,10 +29,12 @@ section {
   transition: top ease-in-out 3s;
   animation: top 0.9s linear infinite;
   text-align: center;
+  filter: blur(2px);
 }
 
 .containerStop {
   animation: none !important;
+  filter: blur(0px)
 }
 
 @keyframes top {
