@@ -7,10 +7,12 @@ import Footer from '../Slot/component/Footer'
 import { Link } from 'react-router-dom'
 import moment from 'moment/moment'
 import { ThreeDots } from 'react-loader-spinner'
+import { ProgressBar } from  'react-loader-spinner'
 
 const Detail = () => {
 
   const [log, setLog] = useState([])
+  const [firstLoading, setFirstLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const listInnerRef = useRef();
   var limit = 10;
@@ -27,7 +29,9 @@ const Detail = () => {
   };
 
   useEffect(() => {
+    setFirstLoading(true)
     fetchData();
+    setFirstLoading(false)
   }, [])
 
   const fetchData = () => {
@@ -48,7 +52,7 @@ const Detail = () => {
           
           )
           .then(res => {
-            setLog(res.data.result.record)
+            setLog(res.data.result)
           })
           .catch(err => {
             console.log(err)
@@ -58,6 +62,17 @@ const Detail = () => {
   }
 
   return (
+    firstLoading ? <>
+         <ProgressBar
+            height="80"
+            width="80"
+            ariaLabel="progress-bar-loading"
+            wrapperStyle={{}}
+            wrapperClass="progress-bar-wrapper"
+            borderColor = '#F4442E'
+            barColor = '#51E5FF'
+      />
+    </>:
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className=' h-screen flex flex-col justify-between'>
         <div className='flex justify-end px-2'>
             <Link to={"/edit"}><p className='text-white text-4xl mt-2'><FaEdit /></p></Link>

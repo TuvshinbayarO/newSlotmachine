@@ -10,15 +10,17 @@ import back from '../../Assets/back.jpg'
 import Footer from "./component/Footer";
 import axios from "axios";
 import swal from "sweetalert";
+import { ProgressBar } from  'react-loader-spinner'
+// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const santaObj = {
   name: 'SANTA',
   image: santa
 }
-const elfObj = {
-  name: 'ELF',
-  image: elf
-}
+// const elfObj = {
+//   name: 'ELF',
+//   image: elf
+// }
 const grinchObj = {
   name: 'GRINCH',
   image: grinch
@@ -39,7 +41,7 @@ const Slots = ({data, familyData, fetchFamily, fetchData}) => {
     dummy3: snowmanObj.image
   });
   const defaultProps = {
-    Dummy: [santaObj, elfObj, grinchObj, snowmanObj, santaObj, elfObj, grinchObj, snowmanObj, santaObj, elfObj, grinchObj, snowmanObj , santaObj, elfObj, grinchObj, snowmanObj , santaObj, elfObj, grinchObj, snowmanObj ,santaObj, elfObj, grinchObj, snowmanObj ,santaObj, elfObj, grinchObj, snowmanObj ,santaObj, elfObj, grinchObj, snowmanObj ,santaObj, elfObj, grinchObj, snowmanObj ,santaObj, elfObj, grinchObj, snowmanObj],
+    Dummy: [santaObj, grinchObj, snowmanObj, santaObj, grinchObj, snowmanObj, santaObj, grinchObj, snowmanObj, santaObj, grinchObj, snowmanObj, santaObj, grinchObj, snowmanObj, santaObj, grinchObj, snowmanObj, santaObj, grinchObj, snowmanObj, santaObj, grinchObj, snowmanObj , santaObj, grinchObj, snowmanObj , santaObj, grinchObj, snowmanObj ,santaObj, grinchObj, snowmanObj ,santaObj, grinchObj, snowmanObj ,santaObj, grinchObj, snowmanObj ,santaObj, grinchObj, snowmanObj ,santaObj, grinchObj, snowmanObj],
   };
   const slotRef = [useRef(), useRef(), useRef()];
   const [loading, setLoading] = useState(false);
@@ -60,6 +62,7 @@ const Slots = ({data, familyData, fetchFamily, fetchData}) => {
           },
         }
       ).then((res) => {
+        console.log('play:' ,res)
         console.log("res",res);
         if(res?.data?.customer?.ticketBalance < 1) {
           swal("Эрх дууссан байна!", "", "error");
@@ -92,21 +95,20 @@ const Slots = ({data, familyData, fetchFamily, fetchData}) => {
     }
     let idx = 0;
     let temp = parseInt(Math.random() * 10);
-    console.log("rand", temp);
     switch(data.name) {
       case "SANTA":
         break;
-      case "ELF":
+      // case "ELF":
+      //   idx = 1;
+      //   break;
+      case "GRINCH":
         idx = 1;
         break;
-      case "GRINCH":
+      case "SNOWMAN":
         idx = 2;
         break;
-      case "SNOWMAN":
-        idx = 3;
-        break;
     }
-    idx += temp * 4;
+    idx += temp * 3;
     
     let options = ref.children;
     let randomOption = idx;
@@ -116,45 +118,19 @@ const Slots = ({data, familyData, fetchFamily, fetchData}) => {
     return defaultProps.Dummy[randomOption].image;
   };
 
-  const Data = [
-    {
-        id: 1,
-        Name: "Aav",
-        ticket: '5 эрх',
-        point: '250 оноо',
-        img: santa
-    },
-    {
-        id: 2,
-        Name: "Aav",
-        ticket: '5 эрх',
-        point: '250 оноо',
-        img: santa
-    },{
-        id: 3,
-        Name: "Aav",
-        ticket: '5 эрх',
-        point: '250 оноо',
-        img: santa
-    },
-    {
-        id: 4,
-        Name: "Aav",
-        ticket: '5 эрх',
-        point: '250 оноо',
-        img: santa
-    }
-    ,
-    {
-        id: 5,
-        Name: "Aav",
-        ticket: '5 эрх',
-        point: '250 оноо',
-        img: santa
-    }
-  ]
-
   return (
+    // loading ? 
+    // <>
+    //   <ProgressBar
+    //     height="80"
+    //     width="80"
+    //     ariaLabel="progress-bar-loading"
+    //     wrapperStyle={{}}
+    //     wrapperClass="progress-bar-wrapper"
+    //     borderColor = '#F4442E'
+    //     barColor = '#51E5FF'
+    //   />
+    // </> :
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className="w-full flex flex-col justify-between h-screen">
       <div>
         <div className='flex flex-col relative justify-center items-center'>

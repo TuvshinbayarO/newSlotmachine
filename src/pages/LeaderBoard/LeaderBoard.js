@@ -4,12 +4,15 @@ import back from '../../Assets/back.jpg'
 import {FaGift} from 'react-icons/fa'
 import axios from 'axios'
 import Footer from '../Slot/component/Footer'
+import { ProgressBar } from  'react-loader-spinner'
 
 const LeaderBoard = () => {
 
   const [leaderBoard, setLeaderBoard] = useState([])
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     axios.get("leaderboard", 
           // {
           //   params: {
@@ -29,9 +32,22 @@ const LeaderBoard = () => {
             console.log("DJASKLJDLKSAJLKD")
             console.log(err)
           })
-  }, [])
+          setLoading(false);
+        }, [])
 
   return (
+    loading ? 
+    <>
+      <ProgressBar
+        height="80"
+        width="80"
+        ariaLabel="progress-bar-loading"
+        wrapperStyle={{}}
+        wrapperClass="progress-bar-wrapper"
+        borderColor = '#F4442E'
+        barColor = '#51E5FF'
+      />
+    </> :
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className=' h-screen flex flex-col justify-between'>
         <div className='flex justify-center items-center'>
           <h1 className='text-white text-xl mt-2'>• ШИЛДЭГ 50 БАГ •</h1>
