@@ -8,9 +8,11 @@ import { useEffect, useState } from 'react';
 import Detail from './pages/Detail/Details';
 import Edit from './pages/Detail/Component/Edit';
 import axios from 'axios';
+import history from './history'
 
 function App() {
   const [data, setData] = useState({})
+  const [familyData, setFamilyData] = useState({})
   // const [token, setToken] = useState('')
 
   // setToken={setToken}
@@ -21,17 +23,19 @@ function App() {
   }, [])
 
   const fetchData = () => {
-    axios.get("customer", 
-      {params: {
-        isdn: '99111096'
-      }},      
+    axios.get("customer/info", 
+      // {params: {
+      //   isdn: '99111096'
+      // }},      
       {headers: {
-        "sessionId" : "61a78fa3180c3ee77c992c95d474351af121bc38"
+        token : '61a78fa3180c3ee77c992c95d474351af121bc38',
+        sessionId : "SID_5E850B8_18484BD0C9077"
       }}
       ,)
       .then(res => {
         setData(res.data.result)
-        fetchFamily(res.data.result.family.members);
+        // console.log('first', res.data.result)
+        fetchFamily(res.data.result);
       })
       .catch(err => {
         console.log("DJASKLJDLKSAJLKD")
@@ -40,21 +44,24 @@ function App() {
     )
   }
 
-  const fetchFamily = (members) => {
-    axios.get("customer", 
+  const fetchFamily = () => {
+    axios.get("family", 
+    // {
+    //   params: {
+    //     isdn: '99111096',
+    //     fnfId: 3,
+    //     members: members.join(','),
+    //   }
+    // },      
     {
-      params: {
-        isdn: '99111096',
-        members: members.join(','),
-        fnfId: 3
-      }
-    },      
-    {
-      headers: {
-      "sessionId" : "61a78fa3180c3ee77c992c95d474351af121bc38"
+      headers: {        
+        token : '61a78fa3180c3ee77c992c95d474351af121bc38',
+        sessionId : "SID_5E850B8_18484BD0C9077",
+        // members: members.join(','),
       }
     }).then(res => {
-      console.log('family result:', res.data.result)
+      setFamilyData(res.data.result)
+      // console.log('family result:', res.data.family)
     }).catch(err => {
       console.log(err)
     }
@@ -63,9 +70,9 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
+      <Router history={history}>
           <Routes>
-              <Route path='/' element={<Slot data={data}/>} />
+              <Route path='/' element={<Slot data={data} familyData={familyData} fetchFamily={fetchFamily} fetchData={fetchData}/>} />
               <Route path='/rule' element={<Rule />} />
               <Route path='/prize' element={<Prize />} />
               <Route path='/leaderboards' element={<LeaderBoard />} />

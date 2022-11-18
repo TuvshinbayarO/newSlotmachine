@@ -28,7 +28,11 @@ const snowmanObj = {
   image: snowman
 }
 
-const Slots = ({data}) => {
+const Slots = ({data, familyData, fetchFamily, fetchData}) => {
+
+  console.log('data: ', data)
+  console.log('familyData: ' ,familyData)
+
   const [values, setValues] = useReducer((state, newState) => ({...state, ...newState}), {
     dummy1: santaObj.image,
     dummy2: grinchObj.image,
@@ -40,33 +44,38 @@ const Slots = ({data}) => {
   const slotRef = [useRef(), useRef(), useRef()];
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (() => {
-    if(data.customer.ticketBalance < 1) {
-      swal("Эрх дууссан байна!", "", "error");
-      return 0;
-    } 
+  const handleSubmit = (() => { 
       setLoading(true);
       axios.get(
         "play",
-        {
-          params: {
-            isdn: "99111096",
-          },
-        },
+        // {
+        //   params: {
+        //     isdn: "99111096",
+        //     fnfId: 3
+        //   },
+        // },
         {
           headers: {
-            sessionId: "61a78fa3180c3ee77c992c95d474351af121bc38",
+            sessionId: "SID_5E850B8_18484BD0C9077",
           },
         }
       ).then((res) => {
+        console.log("res",res);
+        if(res?.data?.customer?.ticketBalance < 1) {
+          swal("Эрх дууссан байна!", "", "error");
+          return 0;
+        }
+
         setTimeout(() => {
           slotRef.forEach((slot, i) => {
-            const selected = triggerSlotRotation(slot.current, res.data.items[i]);
+            const selected = triggerSlotRotation(slot.current, res?.data?.result?.items[i]);
             setValues({ [`dummy${i++}`]: selected });
           });
           setLoading(false);
           setTimeout(() => {
-            swal(`${res.data.point} оноо авлаа.`, "", "success");
+            swal(`${res?.data?.result?.point} оноо авлаа.`, "", "success");
+            fetchFamily();
+            fetchData();
           }, 3000);
         }, 500);
       }).catch((err) => {
@@ -150,17 +159,17 @@ const Slots = ({data}) => {
       <div>
         <div className='flex flex-col relative justify-center items-center'>
           <img className=' max-w-[160px]' alt="gifts" src={gifts} />
-          <img alt="icons" className="max-w-[250px] tablet:max-w-[350px] absolute top-16 z-20" src={gift} />
+          <img alt="icons" className="max-w-[250px] tablet:max-w-[300px] iPhone-12:max-w-[290px] absolute top-16 z-20" src={gift} />
         </div>
         <div className="relative">
-          <div className="absolute  top-[93px] tablet:top-36 w-full flex justify-center items-center">
-            <div className="flex justify-center ml-4 tablet:ml-0 items-center w-[60%] tablet:w-[75%] bg-white h-32">
+          <div className="absolute  top-[93px] tablet:top-28 w-full flex justify-center items-center">
+            <div className="flex justify-center ml-4 tablet:ml-0 items-center w-[60%] tablet:w-[73%] bg-white h-32">
               <div className="slot">
                 <section>
                   <div className={loading ? "container" : 'container containerStop'} ref={slotRef[0]}>
                     {defaultProps.Dummy.map((item, idx) => (
-                      <div className="flex justify-center items-center">
-                        <div className="flex justify-center items-center" key={idx}>
+                      <div className="flex justify-center items-center" key={idx}>
+                        <div className="flex justify-center items-center">
                           <img alt="icons" className="w-[45px] tablet:w-[67px]" src={item.image} />
                         </div>
                       </div>
@@ -193,56 +202,61 @@ const Slots = ({data}) => {
             </div>
           </div>
           <div className="flex justify-center items-center">
-            <div className={`${!loading ? "roll rolling" : "roll"} absolute cursor-pointer text-white top-[175px] tablet:top-[265px] z-30 flex justify-center items-center text-center w-[104px] tablet:w-36 rounded-2xl bg-red-500 h-12 tablet:h-[57px]`}
+            
+            <div className={`${!loading ? "roll rolling" : "roll"} absolute cursor-pointer text-white top-[175px] tablet:top-[223px] z-30 flex justify-center items-center text-center w-[104px] tablet:w-[119px] rounded-2xl bg-red-500 h-12 tablet:h-[50px]`}
               onClick={handleSubmit}
             >
-              <p className="text-xs tablet:text-sm">
+              <p className="">
                 {loading ? "эргэж байна!" : "тоглох"}
               </p>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-end">
-        <div className=' bg-red-500 rounded-md p-3'>
-            <div className='flex justify-between text-white'>
-                <div className='flex flex-col justify-center items-center'>
-                    <h1 className='text-white text-xs'>Таны байр</h1>
-                    <p className='text-white text-xl'>000009</p>
-                </div>
-                <div className='flex'>
-                    <div className='flex text-xs'>
-                        <div className='flex'>
-                            <img alt='icons' className='w-8 h-8 rounded-full' src={santa} />
-                            <div className='text-left'>
-                            <h1>Багийн гишүүн - 0</h1>
-                            <p>King</p>
-                            </div>
-                        </div>    
-                    </div>
-                </div>
-                <div className='text-left'>
-                    <h1 className='text-xs'>Нийлбэр оноо</h1>
-                    <p>0’000</p>
-                </div>
-            </div>
+      <div className="flex flex-col justify-end mx-4 mt-40">
+        <div className="flex justify-between items-center w-full">
+          <div className=' bg-white rounded-tl-md rounded-bl-md w-[70%] p-4'>
+              <div className='flex justify-between text-black'>
+                  <div className='w-full'>
+                      <div className='flex justify-between w-full text-xs'>
+                          <div className='flex justify-between space-x-3'>
+                              {/* <img alt='icons' className='w-8 h-8 rounded-full' src={santa} /> */}
+                              <p className='w-16 h-8 rounded-md text-white text-base bg-red-500 justify-center flex items-center' >#{familyData?.family?.rank}</p>
+                              <div className='text-left'>
+                                <h1>Гишүүд - {data?.family?.memberCount}</h1>
+                                <p>{data?.family?.nameCode}</p>
+                              </div>
+                          </div>    
+                          <div className="flex flex-col">
+                            <h1>Таны эрх</h1>
+                            <h1>{data?.customer?.ticketBalance}</h1>
+                          </div>
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+          <div className='flex flex-col p-3 rounded-tr-md rounded-br-md w-[30%] bg-mobi-red text-white'>
+              <h1 className='text-base'>Нийт оноо</h1>
+              <p className="text-right font-semibold text-base">{familyData?.family?.total}</p>
+          </div>
         </div>
-        <div className='w-full h-[13%] tablet:h-[22%] px-5 overflow-y-scroll'>
+        <div className='w-full h-[13%] tablet:h-[34%]  overflow-y-scroll'>
           {
-            Data.map((item , key) => {
+            familyData.detail?.map((item , key) => {
               return(
                   <div key={key} className='flex items-center justify-between border-b py-2'>
-                    <img className='w-12' alt='icons' src={item.img} />
-                    <p>{item.Name}</p>
-                    <p>{item.ticket}</p>
-                    <p>{item.point}</p>
+                    <img className='w-12' alt='icons' src={require(`../../Assets/Icons/${familyData.family.iconCode}.png`)} />
+                    <p>{item.customerInfo.isdn}</p>
+                    <p>{item.customerInfo.ticketBalance}</p>
+                    <p>{item.familyInfo.pointTotal}</p>
                 </div>
               )
             })
           }
         </div>  
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 };

@@ -1,9 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import Santa from '../../../Assets/santa-claus.png'
-import Elf from '../../../Assets/elf.png'
-import Grinch from '../../../Assets/grinch.png'
-import Snowman from '../../../Assets/snowman.png'
-import {FaGift} from 'react-icons/fa'
 import axios from 'axios'
 import Footer from '../../Slot/component/Footer'
 import swal from 'sweetalert';
@@ -19,9 +14,10 @@ const Edit = ({data, fetchData}) => {
           //     isdn: '99111096'
           //   }
           // },
-          // {headers: {
-          //   "sessionId" : "61a78fa3180c3ee77c992c95d474351af121bc38"
-          // }}
+          {headers: {
+            token : '61a78fa3180c3ee77c992c95d474351af121bc38',
+            sessionId : "SID_5E850B8_18484BD0C9077",
+          }}
           ).then(res => {
             setNames(res.data.result)
           }).catch(err => {
@@ -38,6 +34,10 @@ const Edit = ({data, fetchData}) => {
             "nameCode": name,
             "iconCode": data.family.iconCode
         },
+        {headers: {
+          token : '61a78fa3180c3ee77c992c95d474351af121bc38',
+          sessionId : "SID_5E850B8_18484BD0C9077",
+        }}
         ).then(res => {
             showAlert(res.data.code)
         }).catch(err => {
@@ -54,11 +54,17 @@ const Edit = ({data, fetchData}) => {
             "nameCode": data.family.nameCode,
             "iconCode": imageName
         },
+        {headers: {
+          token : '61a78fa3180c3ee77c992c95d474351af121bc38',
+          sessionId : "SID_5E850B8_18484BD0C9077",
+        }}
         ).then(res => {
             showAlert(res.data.code)
         }).catch(err => {
             console.log(err)
-        })
+        }).finally(() => {
+            fetchData();
+          })
   }
   const showAlert = (code) => {
     if(code !== 'SUCCESS') {
@@ -70,11 +76,27 @@ const Edit = ({data, fetchData}) => {
 
     const imgData = [
         {
-            img: "elf.png"
+            img: "BUNNY.png"
         },
         {
-            img: "grinch.png"
-        }
+            img: "FAMILY.png"
+        },
+        {
+            img: "FRIENDS.png"
+        },
+        {
+            img: "GIRLS.png"
+        },
+        {
+            img: "BOYS.png"
+        },
+        {
+            img: "MobiTest.png"
+        },
+        {
+            img: "DEFAULT_ICON.png"
+        },
+
     ]
 
   return (
@@ -83,7 +105,7 @@ const Edit = ({data, fetchData}) => {
           <h1 className='text-white text-xl mt-2'>• Edit Profile •</h1>
         </div>
         <div className='px-2 w-full flex-col justify-center items-center'>
-            <div className='flex justify-around items-center w-full'>
+            <div className='flex flex-col justify-around items-center w-full'>
                 {
                     names?.map((item, idx) => {
                         return(
@@ -99,7 +121,7 @@ const Edit = ({data, fetchData}) => {
                     imgData.map((item, idx) => {
                         return(
                             <div key={idx} className='bg-red-500 ml-7 mt-2 p-5 rounded-lg'>
-                                <img width={50}  src={require("../../../Assets/" + item.img)} onClick={() => handleImageClick(item.img)}/>
+                                <img width={50}  src={require("../../../Assets/Icons/" + item.img)} onClick={() => handleImageClick(item.img.split('.')[0])}/>
                             </div>
                         )
                     })

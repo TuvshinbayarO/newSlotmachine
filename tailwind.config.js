@@ -10,7 +10,8 @@ module.exports = {
         'mobi-red': '#ff3e5e'
       },
       screens : {
-        'tablet': '380px'
+        'tablet': '380px',
+        'iPhone-12' : '400px'
       }
     },
   },

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Santa from '../../Assets/santa-claus.png'
+import back from '../../Assets/back.jpg'
 import {FaGift} from 'react-icons/fa'
 import axios from 'axios'
 import Footer from '../Slot/component/Footer'
@@ -15,13 +16,14 @@ const LeaderBoard = () => {
           //     isdn: '99111096'
           //   }
           // },
-          // {headers: {
-          //   "sessionId" : "61a78fa3180c3ee77c992c95d474351af121bc38"
-          // }}
+          {headers: {
+            // token : '61a78fa3180c3ee77c992c95d474351af121bc38',
+            sessionId : "SID_5E850B8_18484BD0C9077",
+          }}
           )
           .then(res => {
-            // console.log('res:',res)
-            setLeaderBoard(res.data.rank)
+            console.log('res: ', res)
+            setLeaderBoard(res.data.result.rank)
           })
           .catch(err => {
             console.log("DJASKLJDLKSAJLKD")
@@ -30,7 +32,7 @@ const LeaderBoard = () => {
   }, [])
 
   return (
-    <div className='bg-mobi-pinl h-screen flex flex-col justify-between'>
+    <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className=' h-screen flex flex-col justify-between'>
         <div className='flex justify-center items-center'>
           <h1 className='text-white text-xl mt-2'>• ШИЛДЭГ 50 БАГ •</h1>
         </div>
@@ -46,19 +48,24 @@ const LeaderBoard = () => {
                     </div>
                     <div className='flex flex-col justify-center w-full'>
                       <div className='flex ml-2'>
-                        <FaGift />
-                        <h1 className='text-xs ml-2'>{items.bonus}</h1>
+                        {
+                          idx < 10 &&
+                          <FaGift className='text-mobi-red' />
+                        }
+                        <h1 className='text-xs ml-2'>{items.gift}</h1>
                       </div>
                       <div className='flex justify-between items-center text-xs mt-2'>
                         <div className='flex items-center'>
                           <img alt='icons' className='w-8 h-8 rounded-full' src={Santa} />
                           <div className=''>
-                            <p>{items.familyName}</p>
+                            <p className=''>{items.familyName}</p>
+                            <div className='h-4 bg-white'>
+                            </div>
                           </div>
                         </div>
                           <div className=''>
-                            <h1>Нийлбэр оноо</h1>
-                            <p>{items.point}</p>
+                            <h1>Нийт оноо</h1>
+                            <p className='text-base font-semibold'>{items.point}</p>
                           </div>
                       </div>
                     </div>

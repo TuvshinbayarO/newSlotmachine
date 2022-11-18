@@ -47,14 +47,14 @@ section {
   
 
 .roll {
-  width: 143px;
+  /* width: 143px; */
   cursor: pointer;
   background-color: red;
   padding: 10px;
   text-align: center;
   font-size: 20px;
   border-radius: 20px;
-  border: 2px solid black;
+  border: 1px solid white;
   color: white;
 }
 

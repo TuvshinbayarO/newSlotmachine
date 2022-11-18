@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react'
 import Santa from '../../Assets/santa-claus.png'
-import {FaCalendarAlt, FaPhoneAlt} from 'react-icons/fa'
+import back from '../../Assets/back.jpg'
+import {FaCalendarAlt, FaPhoneAlt, FaEdit} from 'react-icons/fa'
 import axios from 'axios'
 import Footer from '../Slot/component/Footer'
 import { Link } from 'react-router-dom'
@@ -31,6 +32,10 @@ const Detail = () => {
 
   const fetchData = () => {
     axios.get("log", 
+    {headers: {
+            token : '61a78fa3180c3ee77c992c95d474351af121bc38',
+            sessionId : "SID_5E850B8_18484BD0C9077",
+          }},
           {
             params: {
               isdn: '99111096',
@@ -40,12 +45,10 @@ const Detail = () => {
               isAsc: false
             }
           },
-          {headers: {
-            "sessionId" : "61a78fa3180c3ee77c992c95d474351af121bc38"
-          }}
+          
           )
           .then(res => {
-            setLog(res.data.record)
+            setLog(res.data.result.record)
           })
           .catch(err => {
             console.log(err)
@@ -55,9 +58,9 @@ const Detail = () => {
   }
 
   return (
-    <div className='bg-mobi-pinl h-screen flex flex-col justify-between'>
+    <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className=' h-screen flex flex-col justify-between'>
         <div className='flex justify-end px-2'>
-            <Link to={"/edit"}><p className='text-white text-xl mt-2'>Edit</p></Link>
+            <Link to={"/edit"}><p className='text-white text-4xl mt-2'><FaEdit /></p></Link>
         </div>
         <div className='flex justify-center items-center'>
           <h1 className='text-white text-xl mt-2'>• Дэлгэрэнгүй •</h1>

@@ -1,12 +1,12 @@
 import React from 'react'
-import bg from '../../Assets/Vector.png'
+import back from '../../Assets/back.jpg'
 import Santa from '../../Assets/santa-claus.png'
 import Footer from '../Slot/component/Footer'
 
 function Rule() {
   return (
-    <div style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}} className='mx-auto bg-mobi-pinl h-screen flex flex-col justify-between w-full overflow-x-hidden overflow-y-scroll'>
-        <div className='flex justify-center items-center'>
+    <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='mx-auto h-screen flex flex-col justify-between w-full overflow-x-hidden overflow-y-scroll'>
+        <div className='flex justify-center items-center pt-3'>
             <h1 className='w-[65%] text-center text-white text-xl'>ХАМГИЙН ГОЁ БЭЛЭГ УРАМШУУЛЛЫН ДҮРЭМ</h1>
         </div>
         <div className='text-white mt-4 px-8 w-full text-sm pb-3'>
