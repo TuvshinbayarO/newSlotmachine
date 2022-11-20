@@ -11,6 +11,7 @@ const Edit = ({data, fetchData, sessionId}) => {
   const [names, setNames] = useState([])
   const [selectedName, setSelectedName] = useState(data?.family?.nameCodeiconCode || '');
   const [selectedImage, setSelectedImage] = useState(data?.family?.iconCode || '');
+  const [active, setActive] = useState(false)
 
   useEffect(() => {
     axios.get("api/suggest/names",
@@ -27,7 +28,7 @@ const Edit = ({data, fetchData, sessionId}) => {
   }, [sessionId])
 
   const handleChange = () => { 
-    console.log('The checkbox was toggled');
+    setActive(!active)
   }; 
 
   const handleSubmit = () => {
@@ -128,7 +129,7 @@ const Edit = ({data, fetchData, sessionId}) => {
                 {
                     names?.map((item, idx) => {
                         return(
-                            <div key={idx} className={`active:bg-red-500 transition-all duration-200 active:text-white focus:outline-none focus:ring focus:ring-violet-300 mt-3 p-3 rounded-lg bg-white`}>
+                            <div key={idx} className={` active:bg-red-500 transition-all duration-200 active:text-white focus:outline-none focus:ring focus:ring-violet-300 mt-3 p-3 rounded-lg bg-white`}>
                                 <p className={''} onChange={handleChange} onClick={() => setSelectedName(item)}>{item}</p>
                             </div>
                         )
