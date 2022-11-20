@@ -9,7 +9,7 @@ import moment from 'moment/moment'
 import { ThreeDots } from 'react-loader-spinner'
 import { ProgressBar } from  'react-loader-spinner'
 
-const Detail = () => {
+const Detail = ({params}) => {
 
   const [log, setLog] = useState([])
   const [firstLoading, setFirstLoading] = useState(false);
@@ -37,8 +37,7 @@ const Detail = () => {
   const fetchData = () => {
     axios.get("api/log", 
     {headers: {
-            token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-            sessionId : "SID_99111096_18493513CF441",
+            sessionId : params.s,
           }},
           {
             params: {

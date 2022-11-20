@@ -5,25 +5,16 @@ import axios from 'axios'
 import Footer from '../Slot/component/Footer'
 import { ProgressBar } from  'react-loader-spinner'
 
-const LeaderBoard = () => {
+const LeaderBoard = ({params}) => {
 
   const [leaderBoard, setLeaderBoard] = useState([])
   const [loading, setLoading] = useState(false);
-  const [sessionId, setSessionId] = useState(localStorage.getItem('sessionId'));
-  console.log("ghahahahah ", sessionId)
 
   useEffect(() => {
     setLoading(true);
     axios.get("api/leaderboard", 
-          // {
-          //   params: {
-          //     isdn: '99111096'
-          //   }
-          // },
           {headers: {
-            // token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-            sessionId : 'sessionId',
-            
+            sessionId : params.s,
           }}
           )
           .then(res => {
@@ -31,7 +22,6 @@ const LeaderBoard = () => {
             setLeaderBoard(res.data.result.rank)
           })
           .catch(err => {
-            console.log("DJASKLJDLKSAJLKD")
             console.log(err)
           })
           setLoading(false);
@@ -92,29 +82,6 @@ const LeaderBoard = () => {
             })
           }
         </div>
-        {/* <div className='bg-red-500 w-full rounded-t-md p-5'>
-            <div className='flex justify-between text-white'>
-                <div className='flex flex-col justify-center items-center'>
-                    <h1 className='text-white text-xs'>Таны байр</h1>
-                    <p className='text-white text-xl'>000009</p>
-                </div>
-                <div className='flex'>
-                    <div className='flex text-xs'>
-                        <div className='flex'>
-                            <img alt='icons' className='w-8 h-8 rounded-full' src={Santa} />
-                            <div className='text-left'>
-                            <h1>Багийн гишүүн - 0</h1>
-                            <p>King</p>
-                            </div>
-                        </div>    
-                    </div>
-                </div>
-                <div className='text-left'>
-                    <h1 className='text-xs'>Нийлбэр оноо</h1>
-                    <p>0’000</p>
-                </div>
-            </div>
-        </div> */}
         <Footer />
     </div>
   )

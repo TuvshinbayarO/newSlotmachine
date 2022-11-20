@@ -5,15 +5,14 @@ import Swal from 'sweetalert2'
 import gifts from "../../../Assets/text.png";
 import back from '../../../Assets/back.jpg'
 
-const Edit = ({data, fetchData}) => {
+const Edit = ({data, fetchData, params}) => {
 
   const [names, setNames] = useState([])
 
   useEffect(() => {
     axios.get("api/suggest/names",
           {headers: {
-            token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-            sessionId : "SID_99111096_18493513CF441",
+            sessionId : params.s,
           }}
           ).then(res => {
             setNames(res.data.result)
@@ -32,8 +31,7 @@ const Edit = ({data, fetchData}) => {
             "iconCode": data.family.iconCode
         },
         {headers: {
-          token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-          sessionId : "SID_99111096_18493513CF441",
+          sessionId : params.s,
         }}
         ).then(res => {
             showAlert(res.data.code)
@@ -52,8 +50,7 @@ const Edit = ({data, fetchData}) => {
             "iconCode": imageName
         },
         {headers: {
-          token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-          sessionId : "SID_99111096_18493513CF441",
+          sessionId : params.s,
         }}
         ).then(res => {
             console.log('first', res)
@@ -112,36 +109,63 @@ const Edit = ({data, fetchData}) => {
         {
             img: "DEFAULT_ICON.png"
         },
-
+        {
+            img: "DEFAULT_ICON.png"
+        },
+        {
+            img: "DEFAULT_ICON.png"
+        },
+        {
+            img: "DEFAULT_ICON.png"
+        },
+        {
+            img: "DEFAULT_ICON.png"
+        },
+        {
+            img: "DEFAULT_ICON.png"
+        },
     ]
 
   return (
-    <div className='bg-mobi-pinl h-screen flex flex-col justify-between'>
+    <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='h-screen flex flex-col justify-between'>
         <div className='flex justify-center items-center'>
           <h1 className='text-white text-xl mt-2'>• Edit Profile •</h1>
         </div>
-        <div className='px-2 w-full flex-col justify-center items-center'>
-            <div className='flex flex-col justify-around items-center w-full'>
+        <div className='px-2 w-full flex-col justify-around items-center'>
+            <div className='flex flex-col px-2 justify-start'>
+                <p className='text-left text-white'>Нэр сонгох</p>
+                <div className='border-b border-white pb-3 w-[90%]' />
+            </div>
+            <div className='flex flex-wrap justify-around items-center w-full'>
                 {
                     names?.map((item, idx) => {
                         return(
-                            <div key={idx} className='bg-red-500 p-5 rounded-lg'>
+                            <div key={idx} className='bg-white mt-3 p-3 rounded-lg'>
                                 <p onClick={() => handleNameClick(item)}>{item}</p>
                             </div>
                         )
                     })
                 }
             </div>
-            <div className='flex flex-wrap flex-row justify-center mt-5 items-center px-2'>
+        <div className='flex flex-col px-2 mt-5 justify-start'>
+            <p className='text-left text-white'>Зураг сонгох</p>
+            <div className='border-b border-white pb-3 w-[90%]' />
+        </div>
+            <div className='flex flex-wrap flex-row justify-center mt-5 items-center px-2 w-full'>
                 {
                     imgData.map((item, idx) => {
                         return(
-                            <div key={idx} className='bg-red-500 ml-7 mt-2 p-5 rounded-lg'>
+                            <div key={idx} className='bg-white mt-2 ml-2 p-3 rounded-lg'>
                                 <img width={50}  src={require("../../../Assets/Icons/" + item.img)} onClick={() => handleImageClick(item.img.split('.')[0])}/>
                             </div>
                         )
                     })
                 }
+            </div>
+        </div>
+        <div className='flex justify-center items-center'>
+            <div className='bg-red-500 text-white w-[60%] p-3 rounded-md flex justify-center items-center'>
+                Хадгалах
             </div>
         </div>
         <Footer />

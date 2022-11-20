@@ -1,7 +1,6 @@
 import React, { useReducer, useRef, useState, useEffect} from "react";
 import "./Slot.css";
 import santa from "../../Assets/santa-claus.png";
-import elf from "../../Assets/elf.png";
 import grinch from "../../Assets/grinch.png";
 import snowman from "../../Assets/snowman.png";
 import gift from "../../Assets/gift.png";
@@ -9,20 +8,13 @@ import gifts from "../../Assets/text.png";
 import back from '../../Assets/back.jpg'
 import Footer from "./component/Footer";
 import axios from "axios";
-import swal from "sweetalert";
 import Swal from 'sweetalert2'
-import { ProgressBar } from  'react-loader-spinner'
 import { useSearchParams } from "react-router-dom";
-// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const santaObj = {
   name: 'SANTA',
   image: santa
 }
-// const elfObj = {
-//   name: 'ELF',
-//   image: elf
-// }
 const grinchObj = {
   name: 'GRINCH',
   image: grinch
@@ -32,46 +24,22 @@ const snowmanObj = {
   image: snowman
 }
 
-const Slots = ({data, familyData, fetchFamily, fetchData, setParams, params}) => {
-
+const Slots = ({data, familyData, fetchFamily, fetchData, params}) => {
 const [searchParams, setSearchParams] = useSearchParams();
-const [sessionId, setSessionId] = useState(localStorage.getItem("sessionId"))
 
-// console.log('first', sessionId)
 
 useEffect(() => {
-  // let params = [];
-  // for(let entry of searchParams.entries()) {
-  //   params.push(entry);
-  // }
-  // setSessionId(searchParams.get("s"))
+  let params = [];
+  for(let entry of searchParams.entries()) {
+    params.push(entry);
+  }
   
-  // console.log("params",sessionId);
-}, [])
+}, [params])
 
 useEffect(() => {
-  console.count("what");
   fetchData();
+  fetchFamily();
 }, [])
-
-  // console.log('data: ', data)
-  // console.log('familyData: ' ,familyData)
-
-  // Swal.fire({
-  //   title: 'Custom width, padding, color, background.',
-  //   width: 600,
-  //   padding: '3em',
-  //   color: '#716add',
-  //   background: '#fff url(/images/trees.png)',
-  //   backdrop: `
-  //     rgba(0,0,123,0.4)
-  //     url("/images/nyan-cat.gif")
-  //     left top
-  //     no-repeat
-  //   `
-  // })
-
-  // SID_99111096_18493513CF441
 
   const [values, setValues] = useReducer((state, newState) => ({...state, ...newState}), {
     dummy1: santaObj.image,
@@ -90,11 +58,10 @@ useEffect(() => {
         "api/play",
         {
           headers: {
-            sessionId: sessionId,
+            sessionId: params.s,
           },
         }
       ).then((res) => {
-
         if(res?.data?.result?.customer?.ticketBalance < 0) {
           Swal.fire({
             imageUrl: `${gifts}`,
@@ -139,7 +106,6 @@ useEffect(() => {
   })
   
   const triggerSlotRotation = (ref, data) => {
-    console.log("data",data);
     function setTop(top) {
       ref.style.top = `${top}px`;
     }
@@ -148,9 +114,6 @@ useEffect(() => {
     switch(data.name) {
       case "SANTA":
         break;
-      // case "ELF":
-      //   idx = 1;
-      //   break;
       case "GRINCH":
         idx = 1;
         break;
@@ -255,12 +218,11 @@ useEffect(() => {
       </div>
       <div className="flex flex-col justify-end mx-4 mt-64">
         <div className="flex justify-between items-center w-full bg-white rounded-md">
-          <div className=' bg-white rounded-tl-md flex flex-col justify-center items-center rounded-bl-md w-[70%] p-2'>
-              <div className='flex justify-between text-black'>
+          <div className=' bg-white rounded-tl-md flex flex-col justify-between items-center rounded-bl-md w-[70%] p-2'>
+              <div className='flex justify-between text-black w-full'>
                   <div className='w-full'>
                       <div className='flex justify-between w-full text-xs'>
                           <div className='flex justify-between space-x-4'>
-                              {/* <img alt='icons' className='w-8 h-8 rounded-full' src={santa} /> */}
                               <p className='w-16 h-8 rounded-md text-white text-xs bg-red-500 flex justify-start pl-1 items-center' >#{familyData?.family?.rank}</p>
                               <div className='text-left '>
                                 <h1>Гишүүд - {data?.family?.memberCount}</h1>
@@ -270,7 +232,6 @@ useEffect(() => {
                           <div className="flex flex-col">
                             <h1>Таны эрх</h1>
                             <h1>{data?.family?.availableTicket}</h1>
-                            {/* {console.log('first', data?.detail?.customerInfo?.ticketBalance)} */}
                           </div>
                       </div>
                   </div>

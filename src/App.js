@@ -13,19 +13,17 @@ import history from './history'
 function App() {
   const [data, setData] = useState({})
   const [familyData, setFamilyData] = useState({})
-  const [params, setParams] = useState({s: 'SID_99111096_1849396943489'})
+  const [params, setParams] = useState({s: 'SID_99111096_18493C48B6034'})
   
   const fetchData = () => {
     console.log("updated data", params);
     axios.get("api/family", 
       {
           params: {
-          // isdn: params.isdn ? params.isdn : '99111096',
           sessionId : params.s 
 
         },
           headers: {
-          // token : params.t ? params.t : '61a78fa3180c3ee77c992c95d474351af121bc38',
           sessionId : params.s 
         }
       }).then(res => {
@@ -37,13 +35,11 @@ function App() {
     )
   }
 
-  const fetchFamily = (data) => {
+  const fetchFamily = () => {
     axios.get("api/family",     
     {
       headers: {        
-        // token : params.t ? params.t : '61a78fa3180c3ee77c992c95d474351af121bc38',
-        sessionId : params.s ? params.s : "SID_99111096_18493513CF441"
-        // members: members.join(','),
+        sessionId : params.s
       }
     }).then(res => {
       setFamilyData(res.data.result)
@@ -61,9 +57,9 @@ function App() {
               <Route path='/' element={<Slot data={data} familyData={familyData} fetchFamily={fetchFamily} fetchData={fetchData} setParams={setParams} params={params}/>} />
               <Route path='/rule' element={<Rule />} />
               <Route path='/prize' element={<Prize />} />
-              <Route path='/leaderboards' element={<LeaderBoard />} />
-              <Route path='/detail' element={<Detail />} /> 
-              <Route path='/edit' element={<Edit data={data} fetchData={fetchData}/>} /> 
+              <Route path='/leaderboards' element={<LeaderBoard params={params} />} />
+              <Route path='/detail' element={<Detail params={params} />} /> 
+              <Route path='/edit' element={<Edit params={params} data={data} fetchData={fetchData}/>} /> 
           </Routes>            
       </Router>
     </div>
