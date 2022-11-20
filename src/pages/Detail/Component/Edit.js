@@ -53,7 +53,6 @@ const Edit = ({data, fetchData, params}) => {
           sessionId : params.s,
         }}
         ).then(res => {
-            console.log('first', res)
             showAlert(res.data.code)
         }).catch(err => {
             console.log(err)

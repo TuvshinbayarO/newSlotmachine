@@ -65,7 +65,7 @@ const LeaderBoard = ({params}) => {
                       <div className='flex justify-between items-center text-xs mt-2'>
                         <div className='flex items-center'>
                         <img className='w-8 h-8 rounded-full' alt='icons' src={require(`../../Assets/Icons/${items.iconCode}.png`)} />
-                          <div className=''>
+                          <div className='flex justify-center items-center ml-2'>
                             <p className=''>{items.nameCode}</p>
                             <div className='h-4 bg-white'>
                             </div>

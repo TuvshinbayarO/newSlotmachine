@@ -17,6 +17,8 @@ const Detail = ({params}) => {
   const listInnerRef = useRef();
   var limit = 5;
 
+  console.log('first', params)
+
   const onScroll = () => {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;

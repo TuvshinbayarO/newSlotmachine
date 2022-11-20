@@ -24,17 +24,19 @@ const snowmanObj = {
   image: snowman
 }
 
-const Slots = ({data, familyData, fetchFamily, fetchData, params}) => {
+const Slots = ({data, familyData, fetchFamily, fetchData, sessionId}) => {
 const [searchParams, setSearchParams] = useSearchParams();
-
-
-useEffect(() => {
-  let params = [];
-  for(let entry of searchParams.entries()) {
-    params.push(entry);
-  }
+localStorage.setItem("sessionId", searchParams.get('s'))
+// useEffect(() => {
+//   let params = [];
+//   for(let entry of searchParams.entries()) {
+//     params.push(entry);
+//   }
   
-}, [params])
+// }, [params])
+
+
+// console.log('setSearchParams', params)
 
 useEffect(() => {
   fetchData();
@@ -58,7 +60,7 @@ useEffect(() => {
         "api/play",
         {
           headers: {
-            sessionId: params.s,
+            sessionId: sessionId.s,
           },
         }
       ).then((res) => {
@@ -226,7 +228,7 @@ useEffect(() => {
                               <p className='w-16 h-8 rounded-md text-white text-xs bg-red-500 flex justify-start pl-1 items-center' >#{familyData?.family?.rank}</p>
                               <div className='text-left '>
                                 <h1>Гишүүд - {data?.family?.memberCount}</h1>
-                                <p>{data?.family?.nameCode}</p>
+                                <p className='text-[10px]'>{data?.family?.nameCode}</p>
                               </div>
                           </div>    
                           <div className="flex flex-col">
