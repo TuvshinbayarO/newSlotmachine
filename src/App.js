@@ -13,14 +13,17 @@ import history from './history'
 function App() {
   const [data, setData] = useState({})
   const [familyData, setFamilyData] = useState({})
-  const [params, setParams] = useState({s: `${params}`})
+  const [params, setParams] = useState({s: 'SID_99111096_1849396943489'})
+  
   const fetchData = () => {
-    console.log("updated data: ", params);
+    console.log("updated data", params);
     axios.get("api/family", 
       {
-        //   params: {
-        //   isdn: params.isdn ? params.isdn : '99111096'
-        // },
+          params: {
+          // isdn: params.isdn ? params.isdn : '99111096',
+          sessionId : params.s 
+
+        },
           headers: {
           // token : params.t ? params.t : '61a78fa3180c3ee77c992c95d474351af121bc38',
           sessionId : params.s 

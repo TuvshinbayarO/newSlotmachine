@@ -9,8 +9,8 @@ const LeaderBoard = () => {
 
   const [leaderBoard, setLeaderBoard] = useState([])
   const [loading, setLoading] = useState(false);
-  // const [sessionId, setSessionId] = useState(localStorage.getItem('sessionId'));
-  // console.log("ghahahahah ", sessionId)
+  const [sessionId, setSessionId] = useState(localStorage.getItem('sessionId'));
+  console.log("ghahahahah ", sessionId)
 
   useEffect(() => {
     setLoading(true);
