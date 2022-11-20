@@ -2,7 +2,8 @@ import * as React from "react";
 import Slot from './pages/Slot/Slot';
 import Rule from './pages/Rule/Rule';
 import LeaderBoard from './pages/LeaderBoard/LeaderBoard';
-import { BrowserRouter as Router, Route, Routes, useSearchParams, useLocation} from 'react-router-dom';
+import { BrowserRouter as Router, redirect, Route, Routes, useLocation} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Prize from './pages/Prize/Prize';
 import { useEffect, useState } from 'react';
 import Detail from './pages/Detail/Details';
@@ -13,60 +14,56 @@ import history from './history'
 function App() {
   const [data, setData] = useState({})
   const [familyData, setFamilyData] = useState({})
-  const [params, setParams] = useState({s: ""})
-  const [sessionId, setSessionId] = useState({s:localStorage.getItem('sessionId')})
-  useEffect(() => {
-    setSessionId({s:localStorage.getItem('sessionId')})
+  const [sessionId, setSessionId] = useState('')
   
-  }, [localStorage.getItem('sessionId')])
-  
+
   const fetchData = () => {
-    
-    axios.get("api/family", 
-      {
+    if(sessionId) { 
+      axios.get("api/family", 
+        {
           params: {
-          sessionId : sessionId.s 
+          sessionId : sessionId
 
         },
           headers: {
-          sessionId : sessionId.s 
+          sessionId : sessionId
         }
       }).then(res => {
-        
         setData(res.data.result)
         fetchFamily(res.data.result);
       }).catch(err => {
         console.log(err)
-      }
-    )
+      })
+    }
   }
 
   const fetchFamily = () => {
-    axios.get("api/family",     
-    {
-      headers: {        
-        sessionId : sessionId.s
-      }
-    }).then(res => {
-      console.log('first', res)
-      setFamilyData(res.data.result)
-      
-    }).catch(err => {
-      console.log(err)
+    if(sessionId) { 
+      axios.get("api/family",     
+      {
+        headers: {        
+          sessionId : sessionId
+        }
+      }).then(res => {
+        // console.log('first', res)
+        setFamilyData(res.data.result)
+        
+      }).catch(err => {
+        console.log(err)
+      })
     }
-  )
   }
 
   return (
     <div className="App">
       <Router history={history}>
           <Routes>
-              <Route path='/' element={<Slot data={data} familyData={familyData} fetchFamily={fetchFamily} fetchData={fetchData} setParams={setParams} params={sessionId}/>} />
+              <Route path='/' element={<Slot data={data} familyData={familyData} fetchFamily={fetchFamily} fetchData={fetchData} sessionId={sessionId} setSessionId={setSessionId}/>} />
               <Route path='/rule' element={<Rule />} />
               <Route path='/prize' element={<Prize />} />
-              <Route path='/leaderboards' element={<LeaderBoard params={sessionId} />} />
-              <Route path='/detail' element={<Detail params={sessionId} />} /> 
-              <Route path='/edit' element={<Edit params={sessionId} data={data} fetchData={fetchData}/>} /> 
+              <Route path='/leaderboards' element={<LeaderBoard sessionId={sessionId} />} />
+              <Route path='/detail' element={<Detail sessionId={sessionId} />} /> 
+              <Route path='/edit' element={<Edit sessionId={sessionId} data={data} fetchData={fetchData}/>} /> 
           </Routes>            
       </Router>
     </div>

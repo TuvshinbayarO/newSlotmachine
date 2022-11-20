@@ -9,15 +9,13 @@ import moment from 'moment/moment'
 import { ThreeDots } from 'react-loader-spinner'
 import { ProgressBar } from  'react-loader-spinner'
 
-const Detail = ({params}) => {
+const Detail = ({sessionId}) => {
 
   const [log, setLog] = useState([])
   const [firstLoading, setFirstLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const listInnerRef = useRef();
   var limit = 5;
-
-  console.log('first', params)
 
   const onScroll = () => {
     if (listInnerRef.current) {
@@ -34,12 +32,12 @@ const Detail = ({params}) => {
     setFirstLoading(true)
     fetchData();
     setFirstLoading(false)
-  }, [])
+  }, [sessionId])
   
   const fetchData = () => {
     axios.get("api/log", 
     {headers: {
-            sessionId : params.s,
+            sessionId : sessionId
           }},
           {
             params: {

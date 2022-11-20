@@ -5,7 +5,7 @@ import axios from 'axios'
 import Footer from '../Slot/component/Footer'
 import { ProgressBar } from  'react-loader-spinner'
 
-const LeaderBoard = ({params}) => {
+const LeaderBoard = ({sessionId}) => {
 
   const [leaderBoard, setLeaderBoard] = useState([])
   const [loading, setLoading] = useState(false);
@@ -13,19 +13,21 @@ const LeaderBoard = ({params}) => {
   useEffect(() => {
     setLoading(true);
     axios.get("api/leaderboard", 
-          {headers: {
-            sessionId : params.s,
-          }}
-          )
-          .then(res => {
-            console.log('res: ', res)
-            setLeaderBoard(res.data.result.rank)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-          setLoading(false);
-        }, [])
+      {headers: {
+        sessionId : sessionId,
+      }}
+      )
+      .then(res => {
+        console.log('res: ', res)
+        setLeaderBoard(res.data.result.rank)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+    }, [sessionId])
 
   return (
     loading ? 

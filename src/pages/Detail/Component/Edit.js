@@ -4,15 +4,18 @@ import Footer from '../../Slot/component/Footer'
 import Swal from 'sweetalert2'
 import gifts from "../../../Assets/text.png";
 import back from '../../../Assets/back.jpg'
+import {FaCheckCircle} from 'react-icons/fa'
 
-const Edit = ({data, fetchData, params}) => {
+const Edit = ({data, fetchData, sessionId}) => {
 
   const [names, setNames] = useState([])
+  const [selectedName, setSelectedName] = useState(data?.family?.nameCodeiconCode || '');
+  const [selectedImage, setSelectedImage] = useState(data?.family?.iconCode || '');
 
   useEffect(() => {
     axios.get("api/suggest/names",
           {headers: {
-            sessionId : params.s,
+            sessionId : sessionId
           }}
           ).then(res => {
             setNames(res.data.result)
@@ -21,17 +24,21 @@ const Edit = ({data, fetchData, params}) => {
           }).finally(() => {
             fetchData();
           })
-  }, [])
+  }, [sessionId])
 
-  const handleNameClick = (name) => {
+  const handleChange = () => { 
+    console.log('The checkbox was toggled');
+  }; 
+
+  const handleSubmit = () => {
     axios.post("api/family/profile", 
         {
             "fnfId": 3,
-            "nameCode": name,
-            "iconCode": data.family.iconCode
+            "nameCode": selectedName,
+            "iconCode": selectedImage
         },
         {headers: {
-          sessionId : params.s,
+          sessionId : sessionId
         }}
         ).then(res => {
             showAlert(res.data.code)
@@ -42,24 +49,6 @@ const Edit = ({data, fetchData, params}) => {
           })
   }
 
-  const handleImageClick = (imageName) => {
-    axios.post("api/family/profile", 
-        {
-            "fnfId": 3,
-            "nameCode": data.family.nameCode,
-            "iconCode": imageName
-        },
-        {headers: {
-          sessionId : params.s,
-        }}
-        ).then(res => {
-            showAlert(res.data.code)
-        }).catch(err => {
-            console.log(err)
-        }).finally(() => {
-            fetchData();
-          })
-  }
   const showAlert = (code) => {
     if(code !== 'SUCCESS') {
         Swal.fire({
@@ -139,8 +128,8 @@ const Edit = ({data, fetchData, params}) => {
                 {
                     names?.map((item, idx) => {
                         return(
-                            <div key={idx} className='bg-white mt-3 p-3 rounded-lg'>
-                                <p onClick={() => handleNameClick(item)}>{item}</p>
+                            <div key={idx} className={`active:bg-red-500 transition-all duration-200 active:text-white focus:outline-none focus:ring focus:ring-violet-300 mt-3 p-3 rounded-lg bg-white`}>
+                                <p className={''} onChange={handleChange} onClick={() => setSelectedName(item)}>{item}</p>
                             </div>
                         )
                     })
@@ -154,8 +143,8 @@ const Edit = ({data, fetchData, params}) => {
                 {
                     imgData.map((item, idx) => {
                         return(
-                            <div key={idx} className='bg-white mt-2 ml-2 p-3 rounded-lg'>
-                                <img width={50}  src={require("../../../Assets/Icons/" + item.img)} onClick={() => handleImageClick(item.img.split('.')[0])}/>
+                            <div key={idx} className='active:bg-red-500 transition-all duration-200 focus:outline-none focus:ring focus:ring-violet-200  bg-white mt-2 ml-2 p-3 rounded-lg'>
+                                <img width={50}  src={require("../../../Assets/Icons/" + item.img)}  onClick={() => setSelectedImage(item.img.split('.')[0])}/>
                             </div>
                         )
                     })
@@ -163,7 +152,7 @@ const Edit = ({data, fetchData, params}) => {
             </div>
         </div>
         <div className='flex justify-center items-center'>
-            <div className='bg-red-500 text-white w-[60%] p-3 rounded-md flex justify-center items-center'>
+            <div className='bg-red-500 text-white w-[60%] p-3 rounded-md flex justify-center items-center' onClick={() => handleSubmit()}>
                 Хадгалах
             </div>
         </div>

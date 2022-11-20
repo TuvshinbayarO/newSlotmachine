@@ -24,24 +24,18 @@ const snowmanObj = {
   image: snowman
 }
 
-const Slots = ({data, familyData, fetchFamily, fetchData, sessionId}) => {
+const Slots = ({data, familyData, fetchFamily, fetchData, sessionId, setSessionId}) => {
 const [searchParams, setSearchParams] = useSearchParams();
-localStorage.setItem("sessionId", searchParams.get('s'))
-// useEffect(() => {
-//   let params = [];
-//   for(let entry of searchParams.entries()) {
-//     params.push(entry);
-//   }
-  
-// }, [params])
 
-
-// console.log('setSearchParams', params)
+useEffect(() => {
+  setSessionId(searchParams.get('s'))
+  localStorage.setItem("sessionId", searchParams.get('s'))
+}, [])
 
 useEffect(() => {
   fetchData();
   fetchFamily();
-}, [])
+},[sessionId])
 
   const [values, setValues] = useReducer((state, newState) => ({...state, ...newState}), {
     dummy1: santaObj.image,
@@ -60,7 +54,7 @@ useEffect(() => {
         "api/play",
         {
           headers: {
-            sessionId: sessionId.s,
+            sessionId: sessionId,
           },
         }
       ).then((res) => {
@@ -227,7 +221,7 @@ useEffect(() => {
                           <div className='flex justify-between space-x-4'>
                               <p className='w-16 h-8 rounded-md text-white text-xs bg-red-500 flex justify-start pl-1 items-center' >#{familyData?.family?.rank}</p>
                               <div className='text-left '>
-                                <h1>Гишүүд - {data?.family?.memberCount}</h1>
+                                <h1>Гишүүд - {data?.famly?.memberCount}</h1>
                                 <p className='text-[10px]'>{data?.family?.nameCode}</p>
                               </div>
                           </div>    
