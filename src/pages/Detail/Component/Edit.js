@@ -1,22 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import Footer from '../../Slot/component/Footer'
-import swal from 'sweetalert';
+import Swal from 'sweetalert2'
+import gifts from "../../../Assets/text.png";
+import back from '../../../Assets/back.jpg'
 
 const Edit = ({data, fetchData}) => {
 
   const [names, setNames] = useState([])
 
   useEffect(() => {
-    axios.get("suggest/names", 
-          // {
-          //   params: {
-          //     isdn: '99111096'
-          //   }
-          // },
+    axios.get("api/suggest/names",
           {headers: {
             token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-            sessionId : "SID_5E850B8_18484BD0C9077",
+            sessionId : "SID_99111096_18493513CF441",
           }}
           ).then(res => {
             setNames(res.data.result)
@@ -28,7 +25,7 @@ const Edit = ({data, fetchData}) => {
   }, [])
 
   const handleNameClick = (name) => {
-    axios.post("family/profile", 
+    axios.post("api/family/profile", 
         {
             "fnfId": 3,
             "nameCode": name,
@@ -36,7 +33,7 @@ const Edit = ({data, fetchData}) => {
         },
         {headers: {
           token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-          sessionId : "SID_5E850B8_18484BD0C9077",
+          sessionId : "SID_99111096_18493513CF441",
         }}
         ).then(res => {
             showAlert(res.data.code)
@@ -48,7 +45,7 @@ const Edit = ({data, fetchData}) => {
   }
 
   const handleImageClick = (imageName) => {
-    axios.post("family/profile", 
+    axios.post("api/family/profile", 
         {
             "fnfId": 3,
             "nameCode": data.family.nameCode,
@@ -56,9 +53,10 @@ const Edit = ({data, fetchData}) => {
         },
         {headers: {
           token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-          sessionId : "SID_5E850B8_18484BD0C9077",
+          sessionId : "SID_99111096_18493513CF441",
         }}
         ).then(res => {
+            console.log('first', res)
             showAlert(res.data.code)
         }).catch(err => {
             console.log(err)
@@ -68,9 +66,27 @@ const Edit = ({data, fetchData}) => {
   }
   const showAlert = (code) => {
     if(code !== 'SUCCESS') {
-        swal("Алдаа", "", "error");
+        Swal.fire({
+            imageUrl: `${gifts}`,
+            imageHeight: 100,
+            title: (`Алдаа гарлаа`),
+            width: 600,
+            color: '#FFFFFF',
+            showConfirmButton: true,
+            confirmButtonColor: '#ef4444',
+            background: `url(${back})`,
+          })
     } else {
-        swal("Хадгалагдлаа", "", "success");
+        Swal.fire({
+            imageUrl: `${gifts}`,
+            imageHeight: 100,
+            title: (`Хадгалагдлаа`),
+            width: 600,
+            color: '#FFFFFF',
+            showConfirmButton: true,
+            confirmButtonColor: '#ef4444',
+            background: `url(${back})`,
+          })
     }
   }
 

@@ -2,7 +2,7 @@
 import Slot from './pages/Slot/Slot';
 import Rule from './pages/Rule/Rule';
 import LeaderBoard from './pages/LeaderBoard/LeaderBoard';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Prize from './pages/Prize/Prize';
 import { useEffect, useState } from 'react';
 import Detail from './pages/Detail/Details';
@@ -13,50 +13,33 @@ import history from './history'
 function App() {
   const [data, setData] = useState({})
   const [familyData, setFamilyData] = useState({})
-  // const [token, setToken] = useState('')
-
-  // setToken={setToken}
-  // token={token}
-
-  useEffect(() => {
-    fetchData();
-  }, [])
-
+  const [params, setParams] = useState({s: `${params}`})
   const fetchData = () => {
-    axios.get("customer/info", 
-      // {params: {
-      //   isdn: '99111096'
-      // }},      
-      {headers: {
-        token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-        sessionId : "SID_5E850B8_18484BD0C9077"
-      }}
-      ,)
-      .then(res => {
+    console.log("updated data: ", params);
+    axios.get("api/family", 
+      {
+        //   params: {
+        //   isdn: params.isdn ? params.isdn : '99111096'
+        // },
+          headers: {
+          // token : params.t ? params.t : '61a78fa3180c3ee77c992c95d474351af121bc38',
+          sessionId : params.s 
+        }
+      }).then(res => {
         setData(res.data.result)
-        // console.log('first', res.data.result)
         fetchFamily(res.data.result);
-      })
-      .catch(err => {
-        console.log("DJASKLJDLKSAJLKD")
+      }).catch(err => {
         console.log(err)
       }
     )
   }
 
-  const fetchFamily = () => {
-    axios.get("family", 
-    // {
-    //   params: {
-    //     isdn: '99111096',
-    //     fnfId: 3,
-    //     members: members.join(','),
-    //   }
-    // },      
+  const fetchFamily = (data) => {
+    axios.get("api/family",     
     {
       headers: {        
-        token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-        sessionId : "SID_5E850B8_18484BD0C9077",
+        // token : params.t ? params.t : '61a78fa3180c3ee77c992c95d474351af121bc38',
+        sessionId : params.s ? params.s : "SID_99111096_18493513CF441"
         // members: members.join(','),
       }
     }).then(res => {
@@ -72,7 +55,7 @@ function App() {
     <div className="App">
       <Router history={history}>
           <Routes>
-              <Route path='/' element={<Slot data={data} familyData={familyData} fetchFamily={fetchFamily} fetchData={fetchData}/>} />
+              <Route path='/' element={<Slot data={data} familyData={familyData} fetchFamily={fetchFamily} fetchData={fetchData} setParams={setParams} params={params}/>} />
               <Route path='/rule' element={<Rule />} />
               <Route path='/prize' element={<Prize />} />
               <Route path='/leaderboards' element={<LeaderBoard />} />

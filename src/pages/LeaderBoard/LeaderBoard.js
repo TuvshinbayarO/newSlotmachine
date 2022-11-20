@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import Santa from '../../Assets/santa-claus.png'
 import back from '../../Assets/back.jpg'
 import {FaGift} from 'react-icons/fa'
 import axios from 'axios'
@@ -10,10 +9,12 @@ const LeaderBoard = () => {
 
   const [leaderBoard, setLeaderBoard] = useState([])
   const [loading, setLoading] = useState(false);
+  // const [sessionId, setSessionId] = useState(localStorage.getItem('sessionId'));
+  // console.log("ghahahahah ", sessionId)
 
   useEffect(() => {
     setLoading(true);
-    axios.get("leaderboard", 
+    axios.get("api/leaderboard", 
           // {
           //   params: {
           //     isdn: '99111096'
@@ -21,7 +22,8 @@ const LeaderBoard = () => {
           // },
           {headers: {
             // token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-            sessionId : "SID_5E850B8_18484BD0C9077",
+            sessionId : 'sessionId',
+            
           }}
           )
           .then(res => {
@@ -72,9 +74,9 @@ const LeaderBoard = () => {
                       </div>
                       <div className='flex justify-between items-center text-xs mt-2'>
                         <div className='flex items-center'>
-                          <img alt='icons' className='w-8 h-8 rounded-full' src={Santa} />
+                        <img className='w-8 h-8 rounded-full' alt='icons' src={require(`../../Assets/Icons/${items.iconCode}.png`)} />
                           <div className=''>
-                            <p className=''>{items.familyName}</p>
+                            <p className=''>{items.nameCode}</p>
                             <div className='h-4 bg-white'>
                             </div>
                           </div>

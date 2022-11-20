@@ -15,14 +15,14 @@ const Detail = () => {
   const [firstLoading, setFirstLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const listInnerRef = useRef();
-  var limit = 10;
+  var limit = 5;
 
   const onScroll = () => {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
       if (scrollTop + clientHeight === scrollHeight) {
         setLoading(true);
-        limit += 10;
+        limit += 5;
         fetchData();
       }
     }
@@ -33,12 +33,12 @@ const Detail = () => {
     fetchData();
     setFirstLoading(false)
   }, [])
-
+  
   const fetchData = () => {
-    axios.get("log", 
+    axios.get("api/log", 
     {headers: {
             token : '61a78fa3180c3ee77c992c95d474351af121bc38',
-            sessionId : "SID_5E850B8_18484BD0C9077",
+            sessionId : "SID_99111096_18493513CF441",
           }},
           {
             params: {
@@ -62,17 +62,19 @@ const Detail = () => {
   }
 
   return (
-    firstLoading ? <>
-         <ProgressBar
-            height="80"
-            width="80"
-            ariaLabel="progress-bar-loading"
-            wrapperStyle={{}}
-            wrapperClass="progress-bar-wrapper"
-            borderColor = '#F4442E'
-            barColor = '#51E5FF'
-      />
-    </>:
+    !log ? 
+    <div className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
+    <div className="flex flex-col items-center justify-center px-5 mx-auto my-8">
+      <div className="max-w-md text-center">
+        <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
+          <span className="sr-only">Error</span>404
+        </h2>
+        <p className="text-2xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
+        <p className="mt-4 mb-8 dark:text-gray-400">But dont worry, you can find plenty of other things on our homepage.</p>
+        <a rel="noopener noreferrer" href="#" className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Back to homepage</a>
+      </div>
+    </div>
+  </div> :
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className=' h-screen flex flex-col justify-between'>
         <div className='flex justify-end px-2'>
             <Link to={"/edit"}><p className='text-white text-4xl mt-2'><FaEdit /></p></Link>
@@ -90,10 +92,12 @@ const Detail = () => {
                       <h1 className='text-3xl'>{items.rank}</h1>
                       <p>Байр</p>
                     </div> */}
+                    
                     <div className='flex flex-col justify-center w-full'>
                       <div className='flex ml-2'>
                         <FaCalendarAlt />
                         <h1 className='text-xs ml-2'>{moment(items.date).format('YYYY/MM/DD, HH:mm:ss')}</h1>
+
                       </div>
                       <div className='flex justify-between items-center text-xs mt-2'>
                         <div className='flex items-center'>
