@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useRef} from 'react'
-import Santa from '../../Assets/santa-claus.png'
 import back from '../../Assets/back.jpg'
 import {FaCalendarAlt, FaPhoneAlt, FaEdit} from 'react-icons/fa'
 import axios from 'axios'
@@ -7,26 +6,32 @@ import Footer from '../Slot/component/Footer'
 import { Link } from 'react-router-dom'
 import moment from 'moment/moment'
 import { ThreeDots } from 'react-loader-spinner'
-// import { ProgressBar } from  'react-loader-spinner'
+import { ProgressBar } from  'react-loader-spinner'
+import footerBg from '../../Assets/footer/footerBg.png'
 
 const Detail = ({sessionId}) => {
-
+  const iconNames = ['SANTA', 'GRINCH', 'SNOWMAN']
+  const iconData = {
+    SNOWMAN: 'snowman',
+    GRINCH: 'grinch',
+    SANTA: 'santa',
+}
   const [log, setLog] = useState([])
   const [firstLoading, setFirstLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const listInnerRef = useRef();
-  var limit = 5;
+  // const listInnerRef = useRef();
+  // var limit = 10 ;
 
-  const onScroll = () => {
-    if (listInnerRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-      if (scrollTop + clientHeight === scrollHeight) {
-        setLoading(true);
-        limit += 5;
-        fetchData();
-      }
-    }
-  };
+  // const onScroll = () => {
+  //   if (listInnerRef.current) {
+  //     const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+  //     if (scrollTop + clientHeight === scrollHeight) {
+  //       setLoading(true);
+  //       limit += 5;
+  //       fetchData();
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     setFirstLoading(true)
@@ -37,30 +42,33 @@ const Detail = ({sessionId}) => {
   const fetchData = () => {
     axios.get("/api/log", 
     {headers: {
-            sessionId : sessionId
+            sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
           }},
-          {
-            params: {
-              isdn: '99111096',
-              fnfId: 3,
-              offset: 0,
-              limit: limit,
-              isAsc: false
-            }
-          },
-          
           )
           .then(res => {
+            console.log('asdfasdfas',res)
             setLog(res.data.result)
           })
           .catch(err => {
             console.log(err)
           }).finally(() => {
-            setLoading(false);
+            // setLoading(false);
           })
   }
 
   return (
+    loading ? 
+    <div className='flex justify-center items-center h-screen'>
+      <ProgressBar
+        height="80"
+        width="80"
+        ariaLabel="progress-bar-loading"
+        wrapperStyle={{}}
+        wrapperClass="progress-bar-wrapper"
+        borderColor = '#F4442E'
+        barColor = '#51E5FF'
+      />
+    </div> :
     !log ? 
     <div className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
     <div className="flex flex-col items-center justify-center px-5 mx-auto my-8">
@@ -75,33 +83,37 @@ const Detail = ({sessionId}) => {
     </div>
   </div> :
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className=' h-screen flex flex-col justify-between'>
-        <div className='flex justify-end px-2'>
-            <Link to={"/edit"}><p className='text-white text-4xl mt-2'><FaEdit /></p></Link>
+        <div className='flex justify-end px-2 pt-2'>
+          <div style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='h-14 w-14 flex justify-center items-center rounded-md'>
+            <Link to={"/edit"}><p className='text-white text-xl mt-2'><FaEdit /></p></Link>
+          </div>
         </div>
         <div className='flex justify-center items-center'>
           <h1 className='text-white text-xl mt-2'>• Дэлгэрэнгүй •</h1>
+          
         </div>
-        <div className=' overflow-y-scroll h-[640px] px-2'  onScroll={() => onScroll()} ref={listInnerRef}>
+        {/* onScroll={() => onScroll()} ref={listInnerRef} */}
+        <div className=' overflow-y-scroll h-[640px] px-2'>
           {
             log.map((items, idx) => {
               return(
                 // ${items.colors}
-                <div key={idx} className='bg-white h-24 w-full flex rounded-xl py-2 px-2 space-x-3 mt-2'>
-                    {/* <div className={`bg-red-500 flex flex-col justify-center items-center w-24 h-full rounded-lg text-white`}>
-                      <h1 className='text-3xl'>{items.rank}</h1>
-                      <p>Байр</p>
-                    </div> */}
-                    
+                <div key={idx} style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='h-24 shadow-xl text-white w-full flex rounded-xl py-2 px-2 space-x-3 mt-2'>
                     <div className='flex flex-col justify-center w-full'>
-                      <div className='flex ml-2'>
-                        <FaCalendarAlt />
-                        <h1 className='text-xs ml-2'>{moment(items.date).format('YYYY/MM/DD, HH:mm:ss')}</h1>
-
+                      <div className='flex justify-between ml-2'>
+                        <div className='flex justify-center items-center'>
+                          <FaCalendarAlt className='text-white' />
+                          <h1 className='text-xs ml-2'>{moment(items.date).format('YYYY/MM/DD, HH:mm:ss')}</h1>
+                        </div>
+                        <div className=''>
+                            <h1 className='text-xs'>Авсан оноо</h1>
+                            <p className='text-base font-bold'>{items.point}</p>
+                          </div>
                       </div>
                       <div className='flex justify-between items-center text-xs mt-2'>
                         <div className='flex items-center'>
                           <div className='flex ml-2 space-x-3 justify-center items-center'>
-                            <FaPhoneAlt />
+                            <FaPhoneAlt className='text-white' />
                             <p>{items.isdn}</p>
                           </div>
                           
@@ -109,10 +121,15 @@ const Detail = ({sessionId}) => {
                             <p>{items.familyName}</p>
                           </div>
                         </div>
-                          <div className=''>
-                            <h1>Нийлбэр оноо</h1>
-                            <p>{items.point}</p>
-                          </div>
+                        <div className=''>
+                          <div className='flex flex-row space-x-2 items-center'>{items.game.map((names, idx) => {
+                            return(
+                              <div className='bg-white rounded-md' key={idx}>
+                                <img className='w-8 h-8 rounded-full' alt='icons' src={require(`../../Assets/Detail/${iconData[names.name] || 'DEFAULT'}.png`)} />
+                              </div>
+                            )
+                          })}</div>
+                        </div>
                       </div>
                     </div>
                 </div>

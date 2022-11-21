@@ -9,6 +9,8 @@ import back from '../../Assets/back.jpg'
 import Footer from "./component/Footer";
 import axios from "axios";
 import Swal from 'sweetalert2'
+import footerBg from '../../Assets/footer/footerBg.png'
+import { ProgressBar } from  'react-loader-spinner'
 import { useSearchParams } from "react-router-dom";
 
 const santaObj = {
@@ -24,12 +26,18 @@ const snowmanObj = {
   image: snowman
 }
 
-const Slots = ({data, fetchData, sessionId, setSessionId}) => {
+const Slots = ({data, fetchData, sessionId, setSessionId, setData}) => {
+
 const [searchParams, setSearchParams] = useSearchParams();
+const [playResult, setPlayResult] = useState()
 
 useEffect(() => {
-  setSessionId(searchParams.get('s'))
-  localStorage.setItem("sessionId", searchParams.get('s'))
+  if(searchParams.get('s') != null) {
+    setSessionId(searchParams.get('s'))
+    localStorage.setItem("sessionId", searchParams.get('s'))
+  } else {
+    return
+  }
 }, [])
 
 useEffect(() => {
@@ -47,30 +55,31 @@ useEffect(() => {
   const slotRef = [useRef(), useRef(), useRef()];
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (() => { 
+  const handleSubmit = (() => {
       setLoading(true);
+      if(data?.family?.availableTicket < 1) {
+        Swal.fire({
+          imageUrl: `${gifts}`,
+          imageHeight: 100,
+          title: (`Таны эрх дууссан байна!`),
+          width: 600,
+          color: '#FFFFFF',
+          showConfirmButton: true,
+          confirmButtonColor: '#ef4444',
+          background: `url(${back})`,
+        })
+        return 0;
+      }
+
       axios.get(
         "/api/play",
         {
           headers: {
-            sessionId: sessionId,
+            sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
           },
         }
       ).then((res) => {
-        if(res?.data?.result?.customer?.ticketBalance < 0) {
-          Swal.fire({
-            imageUrl: `${gifts}`,
-            imageHeight: 100,
-            title: (`Таны эрх дууссан байна!`),
-            width: 600,
-            color: '#FFFFFF',
-            showConfirmButton: true,
-            confirmButtonColor: '#ef4444',
-            background: `url(${back})`,
-          })
-          return 0;
-        }
-
+        setPlayResult(res.result)
         setTimeout(() => {
           slotRef.forEach((slot, i) => {
             const selected = triggerSlotRotation(slot.current, res?.data?.result?.items[i]);
@@ -89,7 +98,8 @@ useEffect(() => {
               padding: '3em',
               background: `url(${back})`,
             })
-            fetchData();
+            fetchData()
+            // setData({...data, point: playResult.total, availableTicket: playResult.customer.ticketBalance})
           }, 3000);
         }, 500);
       }).catch((err) => {
@@ -127,7 +137,7 @@ useEffect(() => {
 
   return (
     // loading ? 
-    // <>
+    // <div className='flex justify-center items-center h-screen'>
     //   <ProgressBar
     //     height="80"
     //     width="80"
@@ -137,8 +147,8 @@ useEffect(() => {
     //     borderColor = '#F4442E'
     //     barColor = '#51E5FF'
     //   />
-    // </> :
-    !fetchData ? <div className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
+    // </div> :
+    !data ? <div className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
     <div className="flex flex-col items-center justify-center px-5 mx-auto my-8">
       <div className="max-w-md text-center">
         <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
@@ -161,7 +171,7 @@ useEffect(() => {
             <div className="flex justify-center items-center w-[60%] tablet:w-[58%] boxer bg-white h-32">
               <div className="slot">
                 <section>
-                  <div className={loading ? "container" : 'container containerStop'} ref={slotRef[0]}>
+                  <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[0]}>
                     {defaultProps.Dummy.map((item, idx) => (
                       <div className="flex justify-center items-center" key={idx}>
                         <div className="flex justify-center items-center">
@@ -175,7 +185,7 @@ useEffect(() => {
               <div className="absolute left-[155px] bottom-16 h-10 border-[0.5px] ml-1 flex justify-center items-center" />
               <div className="slot">
                 <section>
-                  <div className={loading ? "container" : 'container containerStop'} ref={slotRef[1]}>
+                  <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[1]}>
                     {defaultProps.Dummy.map((item, key) => (
                       <div key={key}>
                         <img alt="icons" src={item.image} className="w-[45px] tablet:w-[55px]" />
@@ -187,7 +197,7 @@ useEffect(() => {
               <div className="absolute right-[155px] bottom-16 h-10 border-[0.5px] ml-1 flex justify-center items-center" />
               <div className="slot">
                 <section>
-                  <div className={loading ? "container" : 'container containerStop'} ref={slotRef[2]}>
+                  <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[2]}>
                     {defaultProps.Dummy.map((item, key) => (
                       <div key={key}>
                         <img alt="icons" src={item.image} className="w-[45px] tablet:w-[55px]" />
@@ -210,14 +220,14 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-end mx-4 mt-32">
+      <div className="flex flex-col justify-end mx-4 mt-44">
         <div className="flex justify-between items-center w-full bg-white rounded-md">
           <div className=' bg-white rounded-tl-md flex flex-col justify-between items-center rounded-bl-md w-[70%] p-2'>
               <div className='flex justify-between text-black w-full'>
                   <div className='w-full'>
                       <div className='flex justify-between w-full text-xs'>
                           <div className='flex justify-between space-x-4'>
-                              <p className='w-16 h-8 rounded-md text-white text-xs bg-red-500 flex justify-start pl-1 items-center' >#{fetchData?.family?.rank}</p>
+                              <p style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='w-16 h-8 rounded-md text-white text-xs flex justify-start pl-1 items-center' >#{data?.family?.rank}</p>
                               <div className='text-left '>
                                 <h1>Гишүүд - {data?.famly?.memberCount}</h1>
                                 <p className='text-[10px]'>{data?.family?.nameCode}</p>
@@ -232,17 +242,17 @@ useEffect(() => {
                   
               </div>
           </div>
-          <div className='flex flex-col rounded-md w-[30%] h-14 p-2 bg-mobi-red text-white'>
+          <div style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='flex flex-col rounded-md w-[30%] h-14 p-2 text-white'>
               <h1 className='text-base'>Нийт оноо</h1>
-              <p className="text-right font-semibold text-base">{fetchData?.family?.total}</p>
+              <p className="text-right font-semibold text-base">{data?.family?.total}</p>
           </div>
         </div>
         <div className='w-full h-[13%] tablet:h-[70%] overflow-y-scroll text-white pt-3 px-1'>
           {
-            fetchData.detail?.map((item , key) => {
+            data.detail?.map((item , key) => {
               return(
                   <div key={key} className='flex items-center justify-between border-b py-2 '>
-                    <img className='w-10' alt='icons' src={require(`../../Assets/Icons/${fetchData.family?.iconCode}.png`)} />
+                    <img className='w-10' alt='icons' src={require(`../../Assets/Icons/${data.family?.iconCode}.png`)} />
                     <p className="font-bold text-center">{item.customerInfo?.isdn}</p>
                     <p className="font-bold text-center">{item.customerInfo?.ticketBalance}</p>
                     <p className="font-bold text-center">{item.familyInfo?.pointTotal}</p>

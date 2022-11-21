@@ -14,7 +14,7 @@ const LeaderBoard = ({sessionId}) => {
     setLoading(true);
     axios.get("/api/leaderboard", 
       {headers: {
-        sessionId : sessionId,
+        sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
       }}
       )
       .then(res => {
@@ -31,7 +31,7 @@ const LeaderBoard = ({sessionId}) => {
 
   return (
     loading ? 
-    <>
+    <div className='flex justify-center items-center h-screen'>
       <ProgressBar
         height="80"
         width="80"
@@ -41,7 +41,7 @@ const LeaderBoard = ({sessionId}) => {
         borderColor = '#F4442E'
         barColor = '#51E5FF'
       />
-    </> :
+    </div> :
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className=' h-screen flex flex-col justify-between'>
         <div className='flex justify-center items-center'>
           <h1 className='text-white text-xl mt-2'>• ШИЛДЭГ 50 БАГ •</h1>

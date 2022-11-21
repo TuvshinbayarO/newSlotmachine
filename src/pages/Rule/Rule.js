@@ -1,9 +1,15 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import back from '../../Assets/back.jpg'
 import Santa from '../../Assets/santa-claus.png'
 import Footer from '../Slot/component/Footer'
 
-function Rule() {
+function Rule(sessionId) {
+
+
+  useEffect(() => {
+
+}, [sessionId])
+
   return (
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='mx-auto h-screen flex flex-col justify-between w-full overflow-x-hidden overflow-y-scroll'>
         <div className='flex justify-center items-center pt-3'>

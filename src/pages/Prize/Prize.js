@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import back from '../../Assets/back.jpg'
 import d from '../../Assets/d.jpg'
 import Footer from '../Slot/component/Footer'
 
-const Prize = () => {
+const Prize = (sessionId) => {
+
+  useEffect(() => {
+
+  }, [sessionId])
 
   const Gift = [
     {

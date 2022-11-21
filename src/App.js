@@ -14,17 +14,18 @@ function App() {
   const [data, setData] = useState({})
   // const [familyData, setFamilyData] = useState({})
   const [sessionId, setSessionId] = useState('')
+
   const fetchData = () => {
     if(sessionId) { 
+
       axios.get("/api/family", 
         {
           headers: {
-          sessionId : sessionId
+          sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
         }
       }).then(res => {
         console.log('RES: ', res)
         setData(res.data.result)
-        // fetchFamily(res.data.result);
       }).catch(err => {
         console.log(err)
       })
@@ -52,9 +53,9 @@ function App() {
     <div className="App">
       <Router history={history}>
           <Routes>
-              <Route path='/' element={<Slot data={data} fetchData={fetchData} sessionId={sessionId} setSessionId={setSessionId}/>} />
-              <Route path='/rule' element={<Rule />} />
-              <Route path='/prize' element={<Prize />} />
+              <Route path='/' element={<Slot data={data} fetchData={fetchData} sessionId={sessionId} setData={setData} setSessionId={setSessionId}/>} />
+              <Route path='/rule' element={<Rule sessionId={sessionId} />} />
+              <Route path='/prize' element={<Prize sessionId={sessionId} />} />
               <Route path='/leaderboards' element={<LeaderBoard sessionId={sessionId} />} />
               <Route path='/detail' element={<Detail sessionId={sessionId} />} /> 
               <Route path='/edit' element={<Edit sessionId={sessionId} data={data} fetchData={fetchData}/>} /> 

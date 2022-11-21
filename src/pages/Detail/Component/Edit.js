@@ -4,19 +4,20 @@ import Footer from '../../Slot/component/Footer'
 import Swal from 'sweetalert2'
 import gifts from "../../../Assets/text.png";
 import back from '../../../Assets/back.jpg'
-// import {FaCheckCircle} from 'react-icons/fa'
+import {FaCheckCircle} from 'react-icons/fa'
+import { ProgressBar } from  'react-loader-spinner'
 
 const Edit = ({data, fetchData, sessionId}) => {
-
   const [names, setNames] = useState([])
   const [selectedName, setSelectedName] = useState(data?.family?.nameCodeiconCode || '');
   const [selectedImage, setSelectedImage] = useState(data?.family?.iconCode || '');
   const [active, setActive] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios.get("/api/suggest/names",
           {headers: {
-            sessionId : sessionId
+            sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
           }}
           ).then(res => {
             setNames(res.data.result)
@@ -116,6 +117,18 @@ const Edit = ({data, fetchData, sessionId}) => {
     ]
 
   return (
+    loading ? 
+    <div className='flex justify-center items-center h-screen'>
+      <ProgressBar
+        height="80"
+        width="80"
+        ariaLabel="progress-bar-loading"
+        wrapperStyle={{}}
+        wrapperClass="progress-bar-wrapper"
+        borderColor = '#F4442E'
+        barColor = '#51E5FF'
+      />
+    </div> :
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='h-screen flex flex-col justify-between'>
         <div className='flex justify-center items-center'>
           <h1 className='text-white text-xl mt-2'>• Edit Profile •</h1>
@@ -129,8 +142,11 @@ const Edit = ({data, fetchData, sessionId}) => {
                 {
                     names?.map((item, idx) => {
                         return(
-                            <div key={idx} className={` active:bg-red-500 transition-all duration-200 active:text-white focus:outline-none focus:ring focus:ring-violet-300 mt-3 p-3 rounded-lg bg-white`}>
-                                <p className={''} onChange={handleChange} onClick={() => setSelectedName(item)}>{item}</p>
+                            <div className='relative'>
+                                {selectedName == item.split('.')[0] ? <FaCheckCircle className='absolute -bottom-[-2px] right-1 z-20' /> : <></>}
+                                <div key={idx} className={` active:bg-red-500 transition-all duration-200 active:text-white focus:outline-none focus:ring focus:ring-violet-300 mt-3 p-3 rounded-lg bg-white`}>
+                                    <p className={''} onChange={handleChange} onClick={() => setSelectedName(item)}>{item}</p>
+                                </div>
                             </div>
                         )
                     })
@@ -144,8 +160,11 @@ const Edit = ({data, fetchData, sessionId}) => {
                 {
                     imgData.map((item, idx) => {
                         return(
+                            <div className='relative'>
+                            {selectedImage == item.img.split('.')[0] ? <FaCheckCircle className='absolute -bottom-[-2px] right-1 z-20' /> : <></>}
                             <div key={idx} className='active:bg-red-500 transition-all duration-200 focus:outline-none focus:ring focus:ring-violet-200  bg-white mt-2 ml-2 p-3 rounded-lg'>
                                 <img width={50}  src={require("../../../Assets/Icons/" + item.img)}  onClick={() => setSelectedImage(item.img.split('.')[0])}/>
+                            </div>
                             </div>
                         )
                     })

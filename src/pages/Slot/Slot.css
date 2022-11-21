@@ -28,13 +28,13 @@ section {
   -moz-box-shadow: -2px 2px 29px 14px rgba(0,0,0,0.32) inset;
 }
 
-.container {
+.containers {
   position: absolute;
   left: 10px;
   width: 100%;
   transition: top ease-in-out 3s;
   animation: top 0.9s linear infinite;
-  filter: blur(2px);
+  /* filter: blur(2px); */
 }
 
 .containerStop {
@@ -44,7 +44,7 @@ section {
 
 @keyframes top {
 
-  0% {transform:translateY(0);}
+  0% {transform:translateY(100);}
   
   100% {transform:translateY(-1000px);}
   
