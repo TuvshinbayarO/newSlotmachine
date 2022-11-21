@@ -4,7 +4,7 @@ import Footer from '../../Slot/component/Footer'
 import Swal from 'sweetalert2'
 import gifts from "../../../Assets/text.png";
 import back from '../../../Assets/back.jpg'
-import {FaCheckCircle} from 'react-icons/fa'
+// import {FaCheckCircle} from 'react-icons/fa'
 
 const Edit = ({data, fetchData, sessionId}) => {
 
@@ -14,7 +14,7 @@ const Edit = ({data, fetchData, sessionId}) => {
   const [active, setActive] = useState(false)
 
   useEffect(() => {
-    axios.get("api/suggest/names",
+    axios.get("/api/suggest/names",
           {headers: {
             sessionId : sessionId
           }}

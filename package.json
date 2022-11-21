@@ -16,7 +16,6 @@
     "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
-    "sweetalert": "^2.1.2",
     "sweetalert2": "^11.6.9",
     "web-vitals": "^2.1.4"
   },
@@ -47,5 +46,5 @@
   "devDependencies": {
     "tailwindcss": "^3.2.3"
   },
-  "proxy": "http://10.64.10.242:8085/game/"
+  "proxy": "http://10.64.10.242:8085/game"
 }

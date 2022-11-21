@@ -11,7 +11,7 @@ module.exports = {
       },
       screens : {
         'tablet': '380px',
-        'iPhone-12' : '400px'
+        'iPhone-12' : '405px'
       }
     },
   },

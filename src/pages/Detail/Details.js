@@ -7,7 +7,7 @@ import Footer from '../Slot/component/Footer'
 import { Link } from 'react-router-dom'
 import moment from 'moment/moment'
 import { ThreeDots } from 'react-loader-spinner'
-import { ProgressBar } from  'react-loader-spinner'
+// import { ProgressBar } from  'react-loader-spinner'
 
 const Detail = ({sessionId}) => {
 
@@ -35,7 +35,7 @@ const Detail = ({sessionId}) => {
   }, [sessionId])
   
   const fetchData = () => {
-    axios.get("api/log", 
+    axios.get("/api/log", 
     {headers: {
             sessionId : sessionId
           }},

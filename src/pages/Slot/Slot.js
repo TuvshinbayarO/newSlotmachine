@@ -24,7 +24,7 @@ const snowmanObj = {
   image: snowman
 }
 
-const Slots = ({data, familyData, fetchFamily, fetchData, sessionId, setSessionId}) => {
+const Slots = ({data, fetchData, sessionId, setSessionId}) => {
 const [searchParams, setSearchParams] = useSearchParams();
 
 useEffect(() => {
@@ -34,7 +34,6 @@ useEffect(() => {
 
 useEffect(() => {
   fetchData();
-  fetchFamily();
 },[sessionId])
 
   const [values, setValues] = useReducer((state, newState) => ({...state, ...newState}), {
@@ -51,7 +50,7 @@ useEffect(() => {
   const handleSubmit = (() => { 
       setLoading(true);
       axios.get(
-        "api/play",
+        "/api/play",
         {
           headers: {
             sessionId: sessionId,
@@ -90,7 +89,6 @@ useEffect(() => {
               padding: '3em',
               background: `url(${back})`,
             })
-            fetchFamily();
             fetchData();
           }, 3000);
         }, 500);
@@ -140,7 +138,7 @@ useEffect(() => {
     //     barColor = '#51E5FF'
     //   />
     // </> :
-    !familyData ? <div className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
+    !fetchData ? <div className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
     <div className="flex flex-col items-center justify-center px-5 mx-auto my-8">
       <div className="max-w-md text-center">
         <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
@@ -159,8 +157,8 @@ useEffect(() => {
           <img alt="icons" className="max-w-[250px] tablet:max-w-[260px] iPhone-12:max-w-[290px] absolute top-[105px] z-20" src={gift} />
         </div>
         <div className="relative">
-          <div className="absolute  top-[93px] tablet:top-28 w-full flex justify-center items-center">
-            <div className="flex justify-center ml-4 tablet:ml-0 items-center w-[60%] tablet:w-[50%] bg-white h-32">
+          <div className="absolute  top-[93px] tablet:top-[115px] w-full flex justify-center items-center">
+            <div className="flex justify-center items-center w-[60%] tablet:w-[58%] boxer bg-white h-32">
               <div className="slot">
                 <section>
                   <div className={loading ? "container" : 'container containerStop'} ref={slotRef[0]}>
@@ -174,7 +172,7 @@ useEffect(() => {
                   </div>
                 </section>
               </div>
-              <div className="h-24 border ml-1"></div>
+              <div className="absolute left-[155px] bottom-16 h-10 border-[0.5px] ml-1 flex justify-center items-center" />
               <div className="slot">
                 <section>
                   <div className={loading ? "container" : 'container containerStop'} ref={slotRef[1]}>
@@ -186,7 +184,7 @@ useEffect(() => {
                   </div>
                 </section>
               </div>
-              <div className="h-24 border"></div>
+              <div className="absolute right-[155px] bottom-16 h-10 border-[0.5px] ml-1 flex justify-center items-center" />
               <div className="slot">
                 <section>
                   <div className={loading ? "container" : 'container containerStop'} ref={slotRef[2]}>
@@ -212,14 +210,14 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-end mx-4 mt-64">
+      <div className="flex flex-col justify-end mx-4 mt-32">
         <div className="flex justify-between items-center w-full bg-white rounded-md">
           <div className=' bg-white rounded-tl-md flex flex-col justify-between items-center rounded-bl-md w-[70%] p-2'>
               <div className='flex justify-between text-black w-full'>
                   <div className='w-full'>
                       <div className='flex justify-between w-full text-xs'>
                           <div className='flex justify-between space-x-4'>
-                              <p className='w-16 h-8 rounded-md text-white text-xs bg-red-500 flex justify-start pl-1 items-center' >#{familyData?.family?.rank}</p>
+                              <p className='w-16 h-8 rounded-md text-white text-xs bg-red-500 flex justify-start pl-1 items-center' >#{fetchData?.family?.rank}</p>
                               <div className='text-left '>
                                 <h1>Гишүүд - {data?.famly?.memberCount}</h1>
                                 <p className='text-[10px]'>{data?.family?.nameCode}</p>
@@ -236,15 +234,15 @@ useEffect(() => {
           </div>
           <div className='flex flex-col rounded-md w-[30%] h-14 p-2 bg-mobi-red text-white'>
               <h1 className='text-base'>Нийт оноо</h1>
-              <p className="text-right font-semibold text-base">{familyData?.family?.total}</p>
+              <p className="text-right font-semibold text-base">{fetchData?.family?.total}</p>
           </div>
         </div>
         <div className='w-full h-[13%] tablet:h-[70%] overflow-y-scroll text-white pt-3 px-1'>
           {
-            familyData.detail?.map((item , key) => {
+            fetchData.detail?.map((item , key) => {
               return(
                   <div key={key} className='flex items-center justify-between border-b py-2 '>
-                    <img className='w-10' alt='icons' src={require(`../../Assets/Icons/${familyData.family?.iconCode}.png`)} />
+                    <img className='w-10' alt='icons' src={require(`../../Assets/Icons/${fetchData.family?.iconCode}.png`)} />
                     <p className="font-bold text-center">{item.customerInfo?.isdn}</p>
                     <p className="font-bold text-center">{item.customerInfo?.ticketBalance}</p>
                     <p className="font-bold text-center">{item.familyInfo?.pointTotal}</p>

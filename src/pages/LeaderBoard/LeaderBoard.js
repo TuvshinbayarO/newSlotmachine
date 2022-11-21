@@ -12,7 +12,7 @@ const LeaderBoard = ({sessionId}) => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get("api/leaderboard", 
+    axios.get("/api/leaderboard", 
       {headers: {
         sessionId : sessionId,
       }}

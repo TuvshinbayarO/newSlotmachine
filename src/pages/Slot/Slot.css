@@ -22,13 +22,18 @@ section {
   cursor: default;
 }
 
+.boxer{
+  box-shadow: -2px 2px 29px 14px rgba(0,0,0,0.32) inset;
+  -webkit-box-shadow: -2px 2px 29px 14px rgba(0,0,0,0.32) inset;
+  -moz-box-shadow: -2px 2px 29px 14px rgba(0,0,0,0.32) inset;
+}
+
 .container {
   position: absolute;
-  top: 2px;
+  left: 10px;
   width: 100%;
   transition: top ease-in-out 3s;
   animation: top 0.9s linear infinite;
-  text-align: center;
   filter: blur(2px);
 }
 
