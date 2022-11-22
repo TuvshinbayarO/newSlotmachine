@@ -168,7 +168,7 @@ useEffect(() => {
           <img onClick={handleSubmit} alt="icons" className={`${!loading ? "roll rolling" : "roll"} max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} src={gift} />
         </div>
         <div className="relative">
-          <div className="absolute top-[117px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[115px] w-full flex justify-center items-center">
+          <div className="absolute top-[117px] iPhone-8-plus:top-[145px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[115px] w-full flex justify-center items-center">
             <div className="flex justify-between items-center w-[60%] iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
               <div className="slot iPhone-12-plus:pl-4">
                 <section>
