@@ -161,16 +161,16 @@ useEffect(() => {
     </div>
   </div> :
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className="w-full flex flex-col justify-between h-screen">
-      <div className=" overflow-y-scroll h-screen">
+      <div className="flex flex-col justify-between overflow-y-scroll h-screen">
       <div>
         <div className='flex flex-col relative justify-center items-center pt-5'>
           <img className=' max-w-[160px]' alt="gifts" src={gifts} />
           <img onClick={handleSubmit} alt="icons" className={`${!loading ? "roll rolling" : "roll"} max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} src={gift} />
         </div>
         <div className="relative">
-          <div className="absolute  top-[117px] iPhone-8:top-[95px] tablet:top-[115px] w-full flex justify-center items-center">
+          <div className="absolute top-[117px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[115px] w-full flex justify-center items-center">
             <div className="flex justify-between items-center w-[60%] iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
-              <div className="slot">
+              <div className="slot iPhone-12-plus:pl-4">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[0]}>
                     {defaultProps.Dummy.map((item, idx) => (
@@ -184,7 +184,7 @@ useEffect(() => {
                 </section>
               </div>
               {/* <div className="absolute left-[147px] tablet:left-[155px] bottom-[73px] tablet:bottom-16 h-10 border-[0.5px] ml-1 flex justify-center items-center" /> */}
-              <div className="slot ml-[12px]">
+              <div className="slot ml-[12px] iPhone-12-plus:pl-2">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[1]}>
                     {defaultProps.Dummy.map((item, key) => (
@@ -211,7 +211,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-end mx-4 tablet:mt-32 mt-44 iPhone-8:mt-56">
+      <div className="flex flex-col justify-end mx-4 tablet:mt-32 mt-44 iPhone-8:mt-56 iPhone-12-plus:mb-48">
         <div className="flex justify-between items-center w-full bg-white rounded-md">
           <div className=' bg-white rounded-tl-md flex flex-col justify-between items-center rounded-bl-md w-[70%] p-2'>
               <div className='flex justify-between text-black w-full'>
@@ -238,7 +238,7 @@ useEffect(() => {
               <p className="text-right font-semibold text-base">{data?.family?.total}</p>
           </div>
         </div>
-        <div className='w-full h-[13%] iPhone-8:h-[100%] tablet:h-full overflow-y-scroll text-white pt-3 px-1'>
+        <div className='w-full h-[13%] iPhone-8:h-[100%] iPhone-12-plus:h-[100%] tablet:h-full overflow-y-scroll text-white pt-3 px-1'>
           {
             data.detail?.map((item , key) => {
               return(
