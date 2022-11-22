@@ -11,11 +11,12 @@ function Rule(sessionId) {
 }, [sessionId])
 
   return (
-    <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='mx-auto h-screen flex flex-col justify-between w-full overflow-x-hidden overflow-y-scroll'>
+    <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='mx-auto h-screen flex flex-col justify-between w-full'>
+        <div className='overflow-y-scroll'>
         <div className='flex justify-center items-center pt-3'>
             <h1 className='w-[65%] text-center text-white text-xl'>ХАМГИЙН ГОЁ БЭЛЭГ УРАМШУУЛЛЫН ДҮРЭМ</h1>
         </div>
-        <div className='text-white mt-4 px-8 w-full text-sm pb-3'>
+        <div className='text-white px-8 w-full text-sm pt-5'>
             <ul className='w-full text-left'>
                 <li className='flex items-center justify-between'>
                     <h1 className='flex items-center justify-center'>1. Жаргалтай гэр бүлийн админ болоод гишүүд тоглох боломжтой</h1>
@@ -52,7 +53,7 @@ function Rule(sessionId) {
                 </li>
             </ul>
             <h1 className='mt-5 text-left'>Жишээ нь: 4 гишүүнтэй гэр бүл Санта буух магадлал 34%Олаф буух магадлал 40% Гринч буух магадлал 26%</h1>
-            
+            </div>
         </div>
         <Footer />
     </div>

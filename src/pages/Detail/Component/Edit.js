@@ -152,11 +152,11 @@ const Edit = ({data, fetchData, sessionId}) => {
                     })
                 }
             </div>
-        <div className='flex flex-col px-2 mt-5 justify-start'>
+        <div className='flex flex-col px-2 mt-2 justify-start'>
             <p className='text-left text-white'>Зураг сонгох</p>
             <div className='border-b border-white pb-3 w-[90%]' />
         </div>
-            <div className='flex flex-wrap flex-row justify-center mt-5 items-center px-2 w-full'>
+            <div className='flex flex-wrap flex-row justify-center mt-2 items-center px-2 w-full'>
                 {
                     imgData.map((item, idx) => {
                         return(
@@ -171,7 +171,7 @@ const Edit = ({data, fetchData, sessionId}) => {
                 }
             </div>
         </div>
-        <div className='flex justify-center items-center'>
+        <div className='flex justify-center items-center py-2'>
             <div className='bg-red-500 text-white w-[60%] p-3 rounded-md flex justify-center items-center' onClick={() => handleSubmit()}>
                 Хадгалах
             </div>

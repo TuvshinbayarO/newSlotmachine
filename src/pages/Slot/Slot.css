@@ -30,7 +30,7 @@ section {
 
 .containers {
   position: absolute;
-  left: 10px;
+  /* left: 10px; */
   width: 100%;
   transition: top ease-in-out 3s;
   animation: top 0.9s linear infinite;

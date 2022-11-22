@@ -161,66 +161,57 @@ useEffect(() => {
     </div>
   </div> :
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className="w-full flex flex-col justify-between h-screen">
+      <div className=" overflow-y-scroll h-screen">
       <div>
         <div className='flex flex-col relative justify-center items-center pt-5'>
           <img className=' max-w-[160px]' alt="gifts" src={gifts} />
-          <img alt="icons" className="max-w-[250px] tablet:max-w-[260px] iPhone-12:max-w-[290px] absolute top-[105px] z-20" src={gift} />
+          <img onClick={handleSubmit} alt="icons" className={`${!loading ? "roll rolling" : "roll"} max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} src={gift} />
         </div>
         <div className="relative">
-          <div className="absolute  top-[93px] tablet:top-[115px] w-full flex justify-center items-center">
-            <div className="flex justify-center items-center w-[60%] tablet:w-[58%] boxer bg-white h-32">
+          <div className="absolute  top-[117px] iPhone-8:top-[95px] tablet:top-[115px] w-full flex justify-center items-center">
+            <div className="flex justify-between items-center w-[60%] iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
               <div className="slot">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[0]}>
                     {defaultProps.Dummy.map((item, idx) => (
                       <div className="flex justify-center items-center" key={idx}>
                         <div className="flex justify-center items-center">
-                          <img alt="icons" className="w-[45px] tablet:w-[55px]" src={item.image} />
+                          <img alt="icons" className="w-[45px] tablet:w-[55px] iPhone-8:w-[45px]" src={item.image} />
                         </div>
                       </div>
                     ))}
                   </div>
                 </section>
               </div>
-              <div className="absolute left-[155px] bottom-16 h-10 border-[0.5px] ml-1 flex justify-center items-center" />
-              <div className="slot">
+              {/* <div className="absolute left-[147px] tablet:left-[155px] bottom-[73px] tablet:bottom-16 h-10 border-[0.5px] ml-1 flex justify-center items-center" /> */}
+              <div className="slot ml-[12px]">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[1]}>
                     {defaultProps.Dummy.map((item, key) => (
                       <div key={key}>
-                        <img alt="icons" src={item.image} className="w-[45px] tablet:w-[55px]" />
+                        <img alt="icons" src={item.image} className="w-[45px] tablet:w-[55px] iPhone-8:w-[45px]" />
                       </div>
                     ))}
                   </div>
                 </section>
               </div>
-              <div className="absolute right-[155px] bottom-16 h-10 border-[0.5px] ml-1 flex justify-center items-center" />
+              {/* <div className="absolute right-[155px] tablet:right-[155px] bottom-[73px] tablet:bottom-16 h-10 border-[0.5px] ml-1 flex justify-center items-center" /> */}
               <div className="slot">
-                <section>
+                <section className="">
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[2]}>
                     {defaultProps.Dummy.map((item, key) => (
                       <div key={key}>
-                        <img alt="icons" src={item.image} className="w-[45px] tablet:w-[55px]" />
+                        <img alt="icons" src={item.image} className="w-[45px] tablet:w-[55px] iPhone-8:w-[45px]" />
                       </div>
                     ))}
                   </div>
                 </section>
               </div>
-            </div>
-          </div>
-          <div className="flex justify-center items-center">
-            
-            <div className={`${!loading ? "roll rolling" : "roll"} absolute cursor-pointer text-white top-[175px] tablet:top-[205px] z-30 flex justify-center items-center text-center w-[104px] tablet:w-[119px] h-12 tablet:h-[50px]`}
-              onClick={handleSubmit}
-            >
-              <p className=" font-bold">
-                тоглох
-              </p>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-end mx-4 mt-44">
+      <div className="flex flex-col justify-end mx-4 tablet:mt-32 mt-44 iPhone-8:mt-56">
         <div className="flex justify-between items-center w-full bg-white rounded-md">
           <div className=' bg-white rounded-tl-md flex flex-col justify-between items-center rounded-bl-md w-[70%] p-2'>
               <div className='flex justify-between text-black w-full'>
@@ -247,7 +238,7 @@ useEffect(() => {
               <p className="text-right font-semibold text-base">{data?.family?.total}</p>
           </div>
         </div>
-        <div className='w-full h-[13%] tablet:h-[70%] overflow-y-scroll text-white pt-3 px-1'>
+        <div className='w-full h-[13%] iPhone-8:h-[100%] tablet:h-full overflow-y-scroll text-white pt-3 px-1'>
           {
             data.detail?.map((item , key) => {
               return(
@@ -261,6 +252,7 @@ useEffect(() => {
             })
           }
         </div>  
+      </div>
       </div>
       <Footer />
     </div>
