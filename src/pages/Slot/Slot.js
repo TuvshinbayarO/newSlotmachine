@@ -28,8 +28,6 @@ const snowmanObj = {
 
 const Slots = ({data, fetchData, sessionId, setSessionId, setData}) => {
 
-console.log('first', data)
-
 const [searchParams, setSearchParams] = useSearchParams();
 const [playResult, setPlayResult] = useState()
 const [isDisabled, setDisabled] = useState(false);
@@ -140,18 +138,6 @@ useEffect(() => {
   };
 
   return (
-    // loading ? 
-    // <div className='flex justify-center items-center h-screen'>
-    //   <ProgressBar
-    //     height="80"
-    //     width="80"
-    //     ariaLabel="progress-bar-loading"
-    //     wrapperStyle={{}}
-    //     wrapperClass="progress-bar-wrapper"
-    //     borderColor = '#F4442E'
-    //     barColor = '#51E5FF'
-    //   />
-    // </div> :
     !data ? <div className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
     <div className="flex flex-col items-center justify-center px-5 mx-auto my-8">
       <div className="max-w-md text-center">
@@ -172,9 +158,9 @@ useEffect(() => {
           <img disabled={isDisabled} onClick={handleSubmit} alt="icons" className={`${!loading ? "roll rolling" : "roll"} max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} src={gift} />
         </div>
         <div className="relative">
-          <div className="absolute top-[117px] iPhone-8-plus:top-[145px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[115px] w-full flex justify-center items-center">
+          <div className="absolute top-[117px] iPhone-8-plus:top-[145px] iPhone-12-pro:top-[156px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[125px] w-full flex justify-center items-center">
             <div className="flex justify-between items-center w-[60%] iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
-              <div className="slot iPhone-8-plus:pl-3 iPhone-12-plus:pl-4">
+              <div className="slot iPhone-8-plus:pl-3 iPhone-12-plus:pl-4 tablet:pl-3">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[0]}>
                     {defaultProps.Dummy.map((item, idx) => (

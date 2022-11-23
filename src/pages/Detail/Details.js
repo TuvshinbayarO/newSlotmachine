@@ -46,7 +46,6 @@ const Detail = ({sessionId}) => {
           }},
           )
           .then(res => {
-            console.log('asdfasdfas',res)
             setLog(res.data.result)
           })
           .catch(err => {

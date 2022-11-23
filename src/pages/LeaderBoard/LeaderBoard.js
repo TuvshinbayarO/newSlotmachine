@@ -18,7 +18,6 @@ const LeaderBoard = ({sessionId}) => {
       }}
       )
       .then(res => {
-        console.log('res: ', res)
         setLeaderBoard(res.data.result.rank)
       })
       .catch(err => {

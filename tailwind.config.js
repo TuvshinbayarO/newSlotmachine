@@ -12,6 +12,7 @@ module.exports = {
       screens : {
         'tablet': '380px',
         'iPhone-12' : '405px',
+        // 'iPhone-12-pro' : '385px',
         'iPhone-8' : '350px',
         'iPhone-8-plus': '410px',
         'iPhone-12-plus': '415px',

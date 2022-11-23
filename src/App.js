@@ -13,7 +13,6 @@ import './App.css'
 
 function App() {
   const [data, setData] = useState({})
-  // const [familyData, setFamilyData] = useState({})
   const [sessionId, setSessionId] = useState('')
 
   const fetchData = () => {
@@ -25,7 +24,7 @@ function App() {
           sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
         }
       }).then(res => {
-        console.log('RES: ', res)
+        console.log('first',res)
         setData(res.data.result)
       }).catch(err => {
         console.log(err)
