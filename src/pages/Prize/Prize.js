@@ -83,11 +83,13 @@ const Prize = (sessionId) => {
             {
               Gift.map((item, idx) => {
                 return(
-                  <div key={idx} style={{ backgroundImage: `url(${d})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='px-2 h-80 flex flex-col text-white justify-center items-center mt-2 text-center w-[350px] rounded-xl'>
+                  <div className='py-2'>
+                  <div key={idx} style={{ backgroundImage: `url(${d})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='px-2 h-80 flex flex-col text-white justify-center items-center text-center w-[350px] rounded-xl'>
                     <p>{item.iphone}</p>
                     <p>{item.mac}</p>
                     <p>{item.pod}</p>
                     <p>{item.pad}</p>
+                  </div>
                   </div>
                 )
               })

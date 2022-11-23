@@ -28,8 +28,11 @@ const snowmanObj = {
 
 const Slots = ({data, fetchData, sessionId, setSessionId, setData}) => {
 
+console.log('first', data)
+
 const [searchParams, setSearchParams] = useSearchParams();
 const [playResult, setPlayResult] = useState()
+const [isDisabled, setDisabled] = useState(false);
 
 useEffect(() => {
   if(searchParams.get('s') != null) {
@@ -68,6 +71,7 @@ useEffect(() => {
           confirmButtonColor: '#ef4444',
           background: `url(${back})`,
         })
+        setDisabled(true)
         return 0;
       }
 
@@ -165,12 +169,12 @@ useEffect(() => {
       <div>
         <div className='flex flex-col relative justify-center items-center pt-5'>
           <img className=' max-w-[160px]' alt="gifts" src={gifts} />
-          <img onClick={handleSubmit} alt="icons" className={`${!loading ? "roll rolling" : "roll"} max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} src={gift} />
+          <img disabled={isDisabled} onClick={handleSubmit} alt="icons" className={`${!loading ? "roll rolling" : "roll"} max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} src={gift} />
         </div>
         <div className="relative">
           <div className="absolute top-[117px] iPhone-8-plus:top-[145px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[115px] w-full flex justify-center items-center">
             <div className="flex justify-between items-center w-[60%] iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
-              <div className="slot iPhone-12-plus:pl-4">
+              <div className="slot iPhone-8-plus:pl-3 iPhone-12-plus:pl-4">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[0]}>
                     {defaultProps.Dummy.map((item, idx) => (
@@ -184,7 +188,7 @@ useEffect(() => {
                 </section>
               </div>
               {/* <div className="absolute left-[147px] tablet:left-[155px] bottom-[73px] tablet:bottom-16 h-10 border-[0.5px] ml-1 flex justify-center items-center" /> */}
-              <div className="slot ml-[12px] iPhone-12-plus:pl-2">
+              <div className="slot ml-[12px] iPhone-8-plus:pl-[6px] iPhone-12-plus:pl-2">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[1]}>
                     {defaultProps.Dummy.map((item, key) => (
@@ -211,7 +215,7 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-end mx-4 tablet:mt-32 mt-44 iPhone-8:mt-56 iPhone-12-plus:mb-48">
+      <div className="flex flex-col justify-end mx-4">
         <div className="flex justify-between items-center w-full bg-white rounded-md">
           <div className=' bg-white rounded-tl-md flex flex-col justify-between items-center rounded-bl-md w-[70%] p-2'>
               <div className='flex justify-between text-black w-full'>
@@ -220,7 +224,7 @@ useEffect(() => {
                           <div className='flex justify-between space-x-4'>
                               <p style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='w-16 h-8 rounded-md text-white text-xs flex justify-start pl-1 items-center' >#{data?.family?.rank}</p>
                               <div className='text-left '>
-                                <h1>Гишүүд - {data?.famly?.memberCount}</h1>
+                                <p>Гишүүд - {data?.family?.memberCount}</p>
                                 <p className='text-[10px]'>{data?.family?.nameCode}</p>
                               </div>
                           </div>    

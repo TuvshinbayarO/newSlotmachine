@@ -9,6 +9,7 @@ import Detail from './pages/Detail/Details';
 import Edit from './pages/Detail/Component/Edit';
 import axios from "axios";
 import history from './history'
+import './App.css'
 
 function App() {
   const [data, setData] = useState({})

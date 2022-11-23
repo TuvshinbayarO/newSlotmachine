@@ -93,7 +93,7 @@ const Detail = ({sessionId}) => {
           
         </div>
         {/* onScroll={() => onScroll()} ref={listInnerRef} */}
-        <div className=' overflow-y-scroll h-[640px] px-2'>
+        <div className=' overflow-y-scroll h-[640px] px-2 py-2'>
           {
             log.map((items, idx) => {
               return(
