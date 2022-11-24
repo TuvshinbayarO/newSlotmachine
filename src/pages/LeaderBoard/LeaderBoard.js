@@ -4,11 +4,13 @@ import {FaGift} from 'react-icons/fa'
 import axios from 'axios'
 import Footer from '../Slot/component/Footer'
 import { ProgressBar } from  'react-loader-spinner'
+import { useNavigate } from 'react-router-dom'
 
 const LeaderBoard = ({sessionId}) => {
 
   const [leaderBoard, setLeaderBoard] = useState([])
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -18,6 +20,9 @@ const LeaderBoard = ({sessionId}) => {
       }}
       )
       .then(res => {
+        if(res.data.code === 'SESSION_EXPIRED'){
+          return navigate("https://api.mobicom.mn?code=0");
+        }
         setLeaderBoard(res.data.result.rank)
       })
       .catch(err => {

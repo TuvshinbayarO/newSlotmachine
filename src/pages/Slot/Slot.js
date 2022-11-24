@@ -11,7 +11,7 @@ import axios from "axios";
 import Swal from 'sweetalert2'
 import footerBg from '../../Assets/footer/footerBg.png'
 import { ProgressBar } from  'react-loader-spinner'
-import { useSearchParams } from "react-router-dom";
+import { useNavigate , useSearchParams } from "react-router-dom";
 
 const santaObj = {
   name: 'SANTA',
@@ -31,6 +31,7 @@ const Slots = ({data, fetchData, sessionId, setSessionId, setData}) => {
 const [searchParams, setSearchParams] = useSearchParams();
 const [playResult, setPlayResult] = useState()
 const [isDisabled, setDisabled] = useState(false);
+const navigate = useNavigate();
 
 useEffect(() => {
   if(searchParams.get('s') != null) {
@@ -81,6 +82,9 @@ useEffect(() => {
           },
         }
       ).then((res) => {
+        if(res.data.code === 'SESSION_EXPIRED'){
+          return navigate("https://api.mobicom.mn?code=0");
+        }
         setPlayResult(res.result)
         setTimeout(() => {
           slotRef.forEach((slot, i) => {
@@ -101,6 +105,7 @@ useEffect(() => {
               background: `url(${back})`,
             })
             fetchData()
+
             // setData({...data, point: playResult.total, availableTicket: playResult.customer.ticketBalance})
           }, 3000);
         }, 500);
@@ -142,11 +147,11 @@ useEffect(() => {
     <div className="flex flex-col items-center justify-center px-5 mx-auto my-8">
       <div className="max-w-md text-center">
         <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
-          <span className="sr-only">Error</span>404
+          <span className="sr-only">Уучлаарай таны нэвтрэх хугацаа дууссан байна!</span>404
         </h2>
-        <p className="text-2xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-        <p className="mt-4 mb-8 dark:text-gray-400">But dont worry, you can find plenty of other things on our homepage.</p>
-        <a rel="noopener noreferrer" href="#" className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Back to homepage</a>
+        <p className="text-2xl font-semibold md:text-3xl">Нүүр хуудас руу буцан уу!</p>
+        {/* <p className="mt-4 mb-8 dark:text-gray-400">But dont worry, you can find plenty of other things on our homepage.</p> */}
+        {/* <a rel="noopener noreferrer" href="#" className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Back to homepage</a> */}
       </div>
     </div>
   </div> :
@@ -158,7 +163,7 @@ useEffect(() => {
           <img disabled={isDisabled} onClick={handleSubmit} alt="icons" className={`${!loading ? "roll rolling" : "roll"} max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} src={gift} />
         </div>
         <div className="relative">
-          <div className="absolute top-[117px] iPhone-8-plus:top-[145px] iPhone-12-pro:top-[156px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[125px] w-full flex justify-center items-center">
+          <div className="absolute top-[117px] iPhone-8-plus:top-[145px] iPhone-12-pro:top-[150px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[125px] w-full flex justify-center items-center">
             <div className="flex justify-between items-center w-[60%] iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
               <div className="slot iPhone-8-plus:pl-3 iPhone-12-plus:pl-4 tablet:pl-3">
                 <section>
@@ -233,10 +238,12 @@ useEffect(() => {
             data.detail?.map((item , key) => {
               return(
                   <div key={key} className='flex items-center justify-between border-b py-2 '>
-                    <img className='w-10' alt='icons' src={require(`../../Assets/Icons/${data.family?.iconCode}.png`)} />
-                    <p className="font-bold text-center">{item.customerInfo?.isdn}</p>
-                    <p className="font-bold text-center">{item.customerInfo?.ticketBalance}</p>
-                    <p className="font-bold text-center">{item.familyInfo?.pointTotal}</p>
+                    <div className="bg-red-500 h-10 w-10">
+                      <img className='w-10 bg-blue-500' alt='icons' src={require(`../../Assets/Icons/${data.family?.iconCode}.png`)} />
+                    </div>
+                    <p className="font-bold text-center">{item?.isdn}</p>
+                    <p className="font-bold text-center">{item?.ticketBalance}</p>
+                    <p className="font-bold text-center">{item?.pointTotal}</p>
                 </div>
               )
             })

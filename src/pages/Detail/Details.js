@@ -3,13 +3,14 @@ import back from '../../Assets/back.jpg'
 import {FaCalendarAlt, FaPhoneAlt, FaEdit} from 'react-icons/fa'
 import axios from 'axios'
 import Footer from '../Slot/component/Footer'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import moment from 'moment/moment'
 import { ThreeDots } from 'react-loader-spinner'
 import { ProgressBar } from  'react-loader-spinner'
 import footerBg from '../../Assets/footer/footerBg.png'
 
 const Detail = ({sessionId}) => {
+  const navigate = useNavigate();  
   const iconNames = ['SANTA', 'GRINCH', 'SNOWMAN']
   const iconData = {
     SNOWMAN: 'snowman',
@@ -19,6 +20,7 @@ const Detail = ({sessionId}) => {
   const [log, setLog] = useState([])
   const [firstLoading, setFirstLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+  
   // const listInnerRef = useRef();
   // var limit = 10 ;
 
@@ -46,6 +48,9 @@ const Detail = ({sessionId}) => {
           }},
           )
           .then(res => {
+            if(res.data.code === 'SESSION_EXPIRED'){
+              return navigate("https://api.mobicom.mn?code=0");
+            } 
             setLog(res.data.result)
           })
           .catch(err => {
@@ -73,11 +78,11 @@ const Detail = ({sessionId}) => {
     <div className="flex flex-col items-center justify-center px-5 mx-auto my-8">
       <div className="max-w-md text-center">
         <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
-          <span className="sr-only">Error</span>404
+          <span className="sr-only">Уучлаарай таны нэвтрэх хугацаа дууссан байна!</span>404
         </h2>
-        <p className="text-2xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-        <p className="mt-4 mb-8 dark:text-gray-400">But dont worry, you can find plenty of other things on our homepage.</p>
-        <a rel="noopener noreferrer" href="#" className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Back to homepage</a>
+        <p className="text-2xl font-semibold md:text-3xl">Нүүр хуудас руу буцан уу!</p>
+        {/* <p className="mt-4 mb-8 dark:text-gray-400">But dont worry, you can find plenty of other things on our homepage.</p> */}
+        {/* <a rel="noopener noreferrer" href="#" className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Back to homepage</a> */}
       </div>
     </div>
   </div> :

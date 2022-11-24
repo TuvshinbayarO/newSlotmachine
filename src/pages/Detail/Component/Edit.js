@@ -79,44 +79,45 @@ const Edit = ({data, fetchData, sessionId}) => {
 
     const imgData = [
         {
-            img: "BUNNY.png"
+            img: "angel.png"
         },
         {
-            img: "FAMILY.png"
+            img: "bell.png"
         },
         {
-            img: "FRIENDS.png"
+            img: "cookie.png"
         },
         {
-            img: "GIRLS.png"
+            img: "dear.png"
         },
         {
-            img: "BOYS.png"
+            img: "decorate.png"
         },
         {
-            img: "MobiTest.png"
+            img: "grinch.png"
         },
         {
-            img: "DEFAULT_ICON.png"
+            img: "leaf.png"
         },
         {
-            img: "DEFAULT_ICON.png"
+            img: "present.png"
         },
         {
-            img: "DEFAULT_ICON.png"
+            img: "santa.png"
         },
         {
-            img: "DEFAULT_ICON.png"
+            img: "snow.png"
         },
         {
-            img: "DEFAULT_ICON.png"
+            img: "snowman.png"
         },
         {
-            img: "DEFAULT_ICON.png"
+            img: "star.png"
         },
     ]
 
   return (
+    
     loading ? 
     <div className='flex justify-center items-center h-screen'>
       <ProgressBar

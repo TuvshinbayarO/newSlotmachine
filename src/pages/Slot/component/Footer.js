@@ -1,5 +1,5 @@
 import React from 'react'
-import {FaInfoCircle, FaGamepad, FaClipboardList, FaGift, FaUserAlt} from 'react-icons/fa'
+
 import { Link } from 'react-router-dom'
 import Play from '../../../Assets/footer/play.png'
 import rule from '../../../Assets/footer/rule.png'
