@@ -20,7 +20,7 @@ const LeaderBoard = ({sessionId}) => {
       }}
       )
       .then(res => {
-        if(res.data.code === 'SESSION_EXPIRED'){
+        if(res.data.code === 'SESSION_EXPIRED' && null){
           return navigate("https://api.mobicom.mn?code=0");
         }
         setLeaderBoard(res.data.result.rank)

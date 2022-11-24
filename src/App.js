@@ -24,7 +24,6 @@ function App() {
           sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
         }
       }).then(res => {
-        console.log('first',res)
         setData(res.data.result)
       }).catch(err => {
         console.log(err)

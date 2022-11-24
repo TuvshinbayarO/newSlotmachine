@@ -32,7 +32,7 @@ section {
   position: absolute;
   /* left: 10px; */
   width: 100%;
-  transition: top ease-in-out 3s;
+  transition: top ease-in-out 1s;
   animation: top 0.9s linear infinite;
   /* filter: blur(2px); */
 }

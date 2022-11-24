@@ -48,7 +48,7 @@ const Detail = ({sessionId}) => {
           }},
           )
           .then(res => {
-            if(res.data.code === 'SESSION_EXPIRED'){
+            if(res.data.code === 'SESSION_EXPIRED' && null){
               return navigate("https://api.mobicom.mn?code=0");
             } 
             setLog(res.data.result)

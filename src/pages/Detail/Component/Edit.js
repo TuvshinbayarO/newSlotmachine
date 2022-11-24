@@ -6,6 +6,8 @@ import gifts from "../../../Assets/text.png";
 import back from '../../../Assets/back.jpg'
 import {FaCheckCircle} from 'react-icons/fa'
 import { ProgressBar } from  'react-loader-spinner'
+import { useNavigate } from 'react-router-dom';
+
 
 const Edit = ({data, fetchData, sessionId}) => {
   const [names, setNames] = useState([])
@@ -13,13 +15,19 @@ const Edit = ({data, fetchData, sessionId}) => {
   const [selectedImage, setSelectedImage] = useState(data?.family?.iconCode || '');
   const [active, setActive] = useState(false)
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();  
 
   useEffect(() => {
+    
     axios.get("/api/suggest/names",
           {headers: {
             sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
           }}
           ).then(res => {
+            if(res.data.code === 'SESSION_EXPIRED' && null){
+                return navigate("https://api.mobicom.mn?code=0");
+              } 
+              console.log('secondIconnd: ' ,res)
             setNames(res.data.result)
           }).catch(err => {
             console.log(err)
@@ -43,6 +51,7 @@ const Edit = ({data, fetchData, sessionId}) => {
           sessionId : sessionId
         }}
         ).then(res => {
+            console.log('secondIcon: ' ,res)
             showAlert(res.data.code)
         }).catch(err => {
             console.log(err)
@@ -88,22 +97,16 @@ const Edit = ({data, fetchData, sessionId}) => {
             img: "cookie.png"
         },
         {
-            img: "dear.png"
-        },
-        {
             img: "decorate.png"
         },
         {
-            img: "grinch.png"
+            img: "dear.png"
         },
         {
             img: "leaf.png"
         },
         {
             img: "present.png"
-        },
-        {
-            img: "santa.png"
         },
         {
             img: "snow.png"
@@ -113,6 +116,12 @@ const Edit = ({data, fetchData, sessionId}) => {
         },
         {
             img: "star.png"
+        },
+        {
+            img: "tree.png"
+        },
+        {
+            img: "default_icon.png"
         },
     ]
 
@@ -159,11 +168,11 @@ const Edit = ({data, fetchData, sessionId}) => {
         </div>
             <div className='flex flex-wrap flex-row justify-center mt-2 items-center px-2 w-full'>
                 {
-                    imgData.map((item, idx) => {
+                    imgData.map((item, idxs) => {
                         return(
                             <div className='relative'>
                             {selectedImage == item.img.split('.')[0] ? <FaCheckCircle className='absolute -bottom-[-2px] right-1 z-20' /> : <></>}
-                            <div key={idx} className='active:bg-red-500 transition-all duration-200 focus:outline-none focus:ring focus:ring-violet-200  bg-white mt-2 ml-2 p-3 rounded-lg'>
+                            <div key={idxs} className='active:bg-red-500 transition-all duration-200 focus:outline-none focus:ring focus:ring-violet-200  bg-white mt-2 ml-2 p-3 rounded-lg'>
                                 <img width={50}  src={require("../../../Assets/Icons/" + item.img)}  onClick={() => setSelectedImage(item.img.split('.')[0])}/>
                             </div>
                             </div>
