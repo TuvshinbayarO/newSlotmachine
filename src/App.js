@@ -14,7 +14,8 @@ import './App.css'
 function App() {
   const [data, setData] = useState({})
   const [sessionId, setSessionId] = useState('')
-  
+  const [rank, setRank] = useState({})
+
   const fetchData = () => {
     if(sessionId) { 
 
@@ -29,6 +30,18 @@ function App() {
         console.log(err)
       })
     }
+    axios.get(
+      "api/myrank",
+    {
+      headers: {
+        sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
+      },
+    }  
+    ).then((res) => {
+      setRank(res)
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   // const fetchFamily = () => {
@@ -52,7 +65,7 @@ function App() {
     <div className="App">
       <Router history={history}>
         <Routes>
-            <Route path='/' element={<Slot data={data} fetchData={fetchData} sessionId={sessionId} setData={setData} setSessionId={setSessionId}/>} />
+            <Route path='/' element={<Slot data={data} fetchData={fetchData} rank={rank} setRank={setRank} sessionId={sessionId} setData={setData} setSessionId={setSessionId}/>} />
             <Route path='/rule' element={<Rule sessionId={sessionId} />} />
             <Route path='/prize' element={<Prize sessionId={sessionId} />} />
             <Route path='/leaderboards' element={<LeaderBoard sessionId={sessionId} />} />

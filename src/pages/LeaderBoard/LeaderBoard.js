@@ -61,18 +61,18 @@ const LeaderBoard = ({sessionId}) => {
                       <p>Байр</p>
                     </div>
                     <div className='flex flex-col justify-center w-full'>
-                      <div className='flex ml-2'>
+                      <div className='flex items-center ml-2'>
                         {
                           idx < 10 &&
                           <FaGift className='text-mobi-red' />
                         }
-                        <h1 className='text-xs ml-2'>{items.gift}</h1>
+                        <h1 className='text-base ml-2 font-bold'>{items.gift}</h1>
                       </div>
                       <div className='flex justify-between items-center text-xs mt-2'>
                         <div className='flex items-center'>
                         <img className='w-8 h-8 rounded-full' alt='icons' src={require(`../../Assets/Icons/${items.iconCode}.png`)} />
                           <div className='flex justify-center items-center ml-2'>
-                            <p className=''>{items.nameCode}</p>
+                            <p className='font-bold text-base'>{items.nameCode}</p>
                             <div className='h-4 bg-white'>
                             </div>
                           </div>

@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
 import back from '../../Assets/back.jpg'
+import bd from '../../Assets/goymod.png'
 import Santa from '../../Assets/santa-claus.png'
 import Footer from '../Slot/component/Footer'
 
@@ -12,7 +13,7 @@ function Rule(sessionId) {
 
   return (
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='mx-auto h-screen flex flex-col justify-between w-full'>
-        <div className='overflow-y-scroll'>
+        <div style={{ backgroundImage: `url(${bd})`, backgroundSize: '1500px', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='overflow-y-scroll'>
         <div className='flex justify-center items-center pt-3'>
             <h1 className='w-[65%] text-center text-white text-xl'>ХАМГИЙН ГОЁ БЭЛЭГ УРАМШУУЛЛЫН ДҮРЭМ</h1>
         </div>
