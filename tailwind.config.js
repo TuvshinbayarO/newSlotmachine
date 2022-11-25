@@ -7,7 +7,12 @@ module.exports = {
         'graysss': '#F3F3F3',
         'water-blue': '#CCEFEE',
         'mobi-pinl': '#FFBDBB',
-        'mobi-red': '#ff3e5e'
+        'mobi-red': '#ff3e5e',
+        'rank-yellow-1': '#FFD752',
+        'rank-gray-2' : '#8F9A98',
+        'rank-brown-3' : '#C68474',
+        'rank-green-4' : '#40C5B4',
+        'rank-blue-6' : '#191F65'
       },
       screens : {
         'tablet': '380px',

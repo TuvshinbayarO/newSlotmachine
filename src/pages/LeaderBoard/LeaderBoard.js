@@ -5,12 +5,19 @@ import axios from 'axios'
 import Footer from '../Slot/component/Footer'
 import { ProgressBar } from  'react-loader-spinner'
 import { useNavigate } from 'react-router-dom'
-
 const LeaderBoard = ({sessionId}) => {
 
   const [leaderBoard, setLeaderBoard] = useState([])
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const colors = [
+    'bg-rank-yellow-1',
+    'bg-rank-gray-2',
+    'bg-rank-brown-3',
+    'bg-rank-green-4',
+    'bg-rank-blue-6'
+  ]
 
   useEffect(() => {
     setLoading(true);
@@ -56,7 +63,8 @@ const LeaderBoard = ({sessionId}) => {
               return(
                 // ${items.colors}
                 <div key={idx} className='bg-white h-24 w-full flex rounded-xl py-2 px-2 space-x-3 mt-2'>
-                    <div className={`bg-red-500 flex flex-col justify-center items-center w-24 h-full rounded-lg text-white`}>
+
+                    <div className={`${colors && items.color} flex flex-col justify-center items-center w-24 h-full rounded-lg text-white`}>
                       <h1 className='text-3xl'>{items.rank}</h1>
                       <p>Байр</p>
                     </div>

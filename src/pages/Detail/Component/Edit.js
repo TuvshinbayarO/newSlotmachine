@@ -11,23 +11,24 @@ import { useNavigate } from 'react-router-dom';
 
 const Edit = ({data, fetchData, sessionId}) => {
   const [names, setNames] = useState([])
-  const [selectedName, setSelectedName] = useState(data?.family?.nameCodeiconCode || '');
-  const [selectedImage, setSelectedImage] = useState(data?.family?.iconCode || '');
+  const [selectedName, setSelectedName] = useState('');
+  const [selectedImage, setSelectedImage] = useState('');
   const [active, setActive] = useState(false)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();  
 
+console.log('image: ', selectedImage)
+
   useEffect(() => {
     
-    axios.get("/api/suggest/names",
-          {headers: {
+    axios.get(`/api/suggest/names?iconCode=${selectedImage}`,
+        {headers: {
             sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
-          }}
+          }},
           ).then(res => {
             if(res.data.code === 'SESSION_EXPIRED' && null){
                 return navigate("https://api.mobicom.mn?code=0");
-              } 
-              console.log('secondIconnd: ' ,res)
+            }
             setNames(res.data.result)
           }).catch(err => {
             console.log(err)
@@ -36,22 +37,59 @@ const Edit = ({data, fetchData, sessionId}) => {
           })
   }, [sessionId])
 
+  useEffect(() => {
+    
+    axios.get(`/api/suggest/names?iconCode=${selectedImage}`,
+        {headers: {
+            sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
+          }},
+          ).then(res => {
+            if(res.data.code === 'SESSION_EXPIRED' && null){
+                return navigate("https://api.mobicom.mn?code=0");
+            }
+            setNames(res.data.result)
+          }).catch(err => {
+            console.log(err)
+          }).finally(() => {
+            fetchData();
+          })
+  }, [selectedImage])
+  const checkDefault = (names) => {
+    var res = false;
+    for(const item of names) {
+        if(item.includes('default')){
+            res = true;
+        }
+    }
+    return res;
+  }
   const handleChange = () => { 
     setActive(!active)
   }; 
 
   const handleSubmit = () => {
+    console.log(selectedName)
+    if(selectedName === '' || selectedImage === ''  ){
+        Swal.fire({
+            imageUrl: `${gifts}`,
+            imageHeight: 50,
+            title: (`Нэр эсвэл зургаа сонгоогүй байна.  `),
+            width: 250,
+            color: '#FFFFFF',
+            showConfirmButton: true,
+            confirmButtonColor: '#ef4444',
+            background: `url(${back})`,
+          })
+    } else {
     axios.post("api/family/profile", 
         {
-            "fnfId": 3,
             "nameCode": selectedName,
             "iconCode": selectedImage
         },
         {headers: {
-          sessionId : sessionId
-        }}
+          sessionId : sessionId,
+        }},
         ).then(res => {
-            console.log('secondIcon: ' ,res)
             showAlert(res.data.code)
         }).catch(err => {
             console.log(err)
@@ -64,9 +102,9 @@ const Edit = ({data, fetchData, sessionId}) => {
     if(code !== 'SUCCESS') {
         Swal.fire({
             imageUrl: `${gifts}`,
-            imageHeight: 100,
+            imageHeight: 50,
             title: (`Алдаа гарлаа`),
-            width: 600,
+            width: 250,
             color: '#FFFFFF',
             showConfirmButton: true,
             confirmButtonColor: '#ef4444',
@@ -75,15 +113,16 @@ const Edit = ({data, fetchData, sessionId}) => {
     } else {
         Swal.fire({
             imageUrl: `${gifts}`,
-            imageHeight: 100,
+            imageHeight: 50,
             title: (`Хадгалагдлаа`),
-            width: 600,
+            width: 250,
             color: '#FFFFFF',
             showConfirmButton: true,
             confirmButtonColor: '#ef4444',
             background: `url(${back})`,
           })
     }
+}
   }
 
     const imgData = [
@@ -144,24 +183,6 @@ const Edit = ({data, fetchData, sessionId}) => {
           <h1 className='text-white text-xl mt-2'>• Edit Profile •</h1>
         </div>
         <div className='px-2 w-full flex-col justify-around items-center'>
-            <div className='flex flex-col px-2 justify-start'>
-                <p className='text-left text-white'>Нэр сонгох</p>
-                <div className='border-b border-white pb-3 w-[90%]' />
-            </div>
-            <div className='flex flex-wrap justify-around items-center w-full'>
-                {
-                    names?.map((item, idx) => {
-                        return(
-                            <div className='relative'>
-                                {selectedName == item.split('.')[0] ? <FaCheckCircle className='absolute -bottom-[-2px] right-1 z-20' /> : <></>}
-                                <div key={idx} className={` active:bg-red-500 transition-all duration-200 active:text-white focus:outline-none focus:ring focus:ring-violet-300 mt-3 p-3 rounded-lg bg-white`}>
-                                    <p className={''} onChange={handleChange} onClick={() => setSelectedName(item)}>{item}</p>
-                                </div>
-                            </div>
-                        )
-                    })
-                }
-            </div>
         <div className='flex flex-col px-2 mt-2 justify-start'>
             <p className='text-left text-white'>Зураг сонгох</p>
             <div className='border-b border-white pb-3 w-[90%]' />
@@ -180,11 +201,30 @@ const Edit = ({data, fetchData, sessionId}) => {
                     })
                 }
             </div>
+            <div className='flex flex-col px-2 justify-start'>
+                <p className='text-left text-white'>Нэр сонгох</p>
+                <div className='border-b border-white pb-3 w-[90%]' />
+            </div>
+            <div className='flex flex-wrap justify-around items-center w-full'>
+                {
+                    names?.map((item, idx) => {
+                        return(
+                            <div className='relative'>
+                                {selectedName == item.split('.')[0] ? <FaCheckCircle className='absolute -bottom-[-2px] right-1 z-20' /> : <></>}
+                                <div key={idx} className={` active:bg-red-500 transition-all duration-200 active:text-white focus:outline-none focus:ring focus:ring-violet-300 mt-3 p-3 rounded-lg bg-white`}>
+                                    <p className={''} onChange={handleChange} onClick={() => setSelectedName(item)}>{item}</p>
+                                    {console.log('first', names)}
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
         <div className='flex justify-center items-center py-2'>
-            <div className='bg-red-500 text-white w-[60%] p-3 rounded-md flex justify-center items-center' onClick={() => handleSubmit()}>
+            <button className={`${checkDefault(names) ? 'bg-red-200' : ' bg-red-500'} text-white w-[60%] p-3 rounded-md flex justify-center items-center`} onClick={() => handleSubmit()}>
                 Хадгалах
-            </div>
+            </button>
         </div>
         <Footer />
     </div>

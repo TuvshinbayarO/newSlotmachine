@@ -93,7 +93,7 @@ const Detail = ({sessionId}) => {
           </div>
         </div>
         <div className='flex justify-center items-center'>
-          <h1 className='text-white text-xl mt-2'>• Дэлгэрэнгүй •</h1>
+          <h1 className='text-white text-xl mt-2'>• Тоглоомын түүх •</h1>
           
         </div>
         {/* onScroll={() => onScroll()} ref={listInnerRef} */}
