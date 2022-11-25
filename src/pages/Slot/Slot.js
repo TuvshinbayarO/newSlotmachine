@@ -103,10 +103,10 @@ useEffect(() => {
           })
           fetchData()
           setLoading(false);
-          // setData({...data, point: playResult.total, availableTicket: playResult.customer.ticketBalance})
         }, 1500);
+        // setLoading(false);
       }, 500);
-
+      
     } catch (error) {
       alert(error);
     }
@@ -176,18 +176,18 @@ useEffect(() => {
   </div> :
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className="w-full flex flex-col justify-between h-screen">
       <div className="flex flex-col justify-between overflow-y-scroll h-screen">
-      <div>
+      <div className="">
         <div className='flex flex-col relative justify-center items-center pt-5'>
           <img className=' max-w-[160px]' alt="gifts" src={gifts} />
-          <button disabled={loading} type="button" className={`${loading ? "roll rolling" : "roll"} max-w-[250px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} onClick={() => { handleSubmit(loading) }} ><img alt="icons"  src={gift} /></button>
+          <button disabled={loading} type="button" className={`${loading ? "roll rolling" : "roll"} max-w-[250px] iPhone-5:max-w-[200px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} onClick={() => { handleSubmit(loading) }} ><img alt="icons"  src={gift} /></button>
           {/* disabled={() => setLoading(false)} */}
           {/* className={`${loading ? "roll rolling" : "roll"} max-w-[250px] left-[82px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} */}
           {/* <img onClick={handleSubmit} alt="icons" className={`${loading ? "roll rolling" : "roll"} max-w-[250px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} src={gift} /> */}
         </div>
         <div className="relative">
-          <div className="absolute top-[117px] iPhone-8-plus:top-[115px] iPhone-12-pro:top-[150px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[125px] w-full flex justify-center items-center">
-            <div className="flex justify-between items-center w-[60%] iPhone-8-plus:w-[50%] iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
-              <div className="slot iPhone-8-plus:pl-1 iPhone-12-plus:pl-4 tablet:pl-3">
+          <div className="absolute top-[117px] iPhone-8-plus:top-[115px] iPhone-5:top-[75px] iPhone-12-pro:top-[150px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[125px] w-full flex justify-center items-center">
+            <div className="flex justify-between items-center w-[60%] iPhone-8-plus:w-[50%] iPhone-5:w-[50%] iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
+              <div className="slot iPhone-8-plus:pl-1 iPhone-12-plus:pl-4 iPhone-5:pl-0 tablet:pl-3">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[0]}>
                     {defaultProps.Dummy.map((item, idx) => (
@@ -228,18 +228,18 @@ useEffect(() => {
       </div>
       <div className="flex flex-col justify-end mx-4">
         <div className="flex justify-between items-center w-full bg-white rounded-md">
-          <div className=' bg-white rounded-tl-md flex flex-col justify-between items-center rounded-bl-md w-[70%] p-2'>
+          <div className=' bg-white rounded-tl-md flex flex-col justify-between items-center rounded-bl-md iPhone-5:text-[6px] w-[70%] p-2'>
               <div className='flex justify-between text-black w-full'>
                   <div className='w-full'>
-                      <div className='flex justify-between w-full text-xs'>
+                      <div className='flex justify-between w-full text-xs iPhone-5:text-[6px]'>
                           <div className='flex justify-between space-x-4'>
                               <p style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='w-16 h-8 rounded-md text-white text-xs flex justify-start pl-1 items-center' >#{rank?.data?.result?.rank}</p>
-                              <div className='text-left '>
+                              <div className='text-left iPhone-5:text-[6px]'>
                                 <p>Гишүүд - {data?.family?.memberCount}</p>
-                                <p className='text-[10px]'>{data?.family?.nameCode}</p>
+                                <p className='text-[10px] iPhone-5:text-[6px]'>{data?.family?.nameCode}</p>
                               </div>
                           </div>    
-                          <div className="flex flex-col">
+                          <div className="flex flex-col iPhone-5:text-[6px]">
                             <h1>Таны эрх</h1>
                             <h1>{data?.family?.availableTicket}</h1>
                           </div>
@@ -249,11 +249,11 @@ useEffect(() => {
               </div>
           </div>
           <div style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='flex flex-col rounded-md w-[30%] h-14 p-2 text-white'>
-              <h1 className='text-base'>Нийт оноо</h1>
-              <p className="text-right font-semibold text-base">{data?.family?.total}</p>
+              <h1 className='text-base iPhone-5:text-[6px]'>Нийт оноо</h1>
+              <p className="text-right font-semibold text-base iPhone-5:text-[6px] iPhone-5:text-center">{data?.family?.total}</p>
           </div>
         </div>
-        <div className='w-full h-[13%] iPhone-8-plus:h-[65%] iPhone-8:h-[100%] iPhone-12-plus:h-[100%] tablet:h-full overflow-y-scroll text-white pt-3 px-1'>
+        <div className='w-full h-[13%] iPhone-8-plus:h-[40%] iPhone-8:h-[50%] iPhone-12-plus:h-[50%] iPhone-12:h-[45%] iPhone-5:h-[25%] tablet:h-full overflow-y-scroll text-white pt-3 iPhone-5:pt-0 px-1'>
           {
             data.detail?.map((item , key) => {
               return(
