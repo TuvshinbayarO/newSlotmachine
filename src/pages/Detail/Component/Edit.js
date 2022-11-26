@@ -17,8 +17,6 @@ const Edit = ({data, fetchData, sessionId}) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();  
 
-console.log('image: ', selectedImage)
-
   useEffect(() => {
     
     axios.get(`/api/suggest/names?iconCode=${selectedImage}`,
@@ -68,7 +66,6 @@ console.log('image: ', selectedImage)
   }; 
 
   const handleSubmit = () => {
-    console.log(selectedName)
     if(selectedName === '' || selectedImage === ''  ){
         Swal.fire({
             imageUrl: `${gifts}`,
@@ -185,7 +182,6 @@ console.log('image: ', selectedImage)
         <div className='px-2 w-full flex-col justify-around items-center'>
         <div className='flex flex-col px-2 mt-2 justify-start'>
             <p className='text-left text-white'>Зураг сонгох</p>
-            <div className='border-b border-white pb-3 w-[90%]' />
         </div>
             <div className='flex flex-wrap flex-row justify-center mt-2 items-center px-2 w-full'>
                 {
@@ -201,9 +197,8 @@ console.log('image: ', selectedImage)
                     })
                 }
             </div>
-            <div className='flex flex-col px-2 justify-start'>
+            <div className='flex flex-col px-2 justify-start mt-10'>
                 <p className='text-left text-white'>Нэр сонгох</p>
-                <div className='border-b border-white pb-3 w-[90%]' />
             </div>
             <div className='flex flex-wrap justify-around items-center w-full'>
                 {
@@ -213,7 +208,6 @@ console.log('image: ', selectedImage)
                                 {selectedName == item.split('.')[0] ? <FaCheckCircle className='absolute -bottom-[-2px] right-1 z-20' /> : <></>}
                                 <div key={idx} className={` active:bg-red-500 transition-all duration-200 active:text-white focus:outline-none focus:ring focus:ring-violet-300 mt-3 p-3 rounded-lg bg-white`}>
                                     <p className={''} onChange={handleChange} onClick={() => setSelectedName(item)}>{item}</p>
-                                    {console.log('first', names)}
                                 </div>
                             </div>
                         )

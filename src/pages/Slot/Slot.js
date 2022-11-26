@@ -114,8 +114,6 @@ useEffect(() => {
 
   async function handleSubmit(loadingState) {
     if(loadingState) return;
-    console.log(loadingState)
-
     if(data?.family?.availableTicket < 1) {
       Swal.fire({
         imageUrl: `${gifts}`,
