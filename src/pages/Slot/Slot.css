@@ -5,20 +5,16 @@
 
 .slot {
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
   height: 100px;
   width: 80px;
 }
 
 section {
   position: absolute;
-  width: 70px;
+  width: 75px;
   height: 70px;
   overflow: hidden;
-  font-family: sans-serif;
-  text-align: center;
-  font-size: 25px;
-  line-height: 60px;
   cursor: default;
 }
 
@@ -32,9 +28,9 @@ section {
   position: absolute;
   /* left: 10px; */
   width: 100%;
-  transition: top ease-in-out 1s;
-  animation: top 0.9s linear infinite;
-  /* filter: blur(2px); */
+  transition: top ease-in-out 2s;
+  animation: top 3s linear infinite;
+  filter: blur(2px);
 }
 
 .containerStop {
@@ -46,7 +42,7 @@ section {
 
   0% {transform:translateY(100);}
   
-  100% {transform:translateY(-1000px);}
+  100% {transform:translateY(-4000px);}
   
 }  
   
@@ -79,4 +75,17 @@ section {
   100% {
     color: rgb(255, 0, 0);
   }
+}
+
+.swal2-title {
+  position: relative !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: .8em 1em 0 !important;
+  color: inherit !important;
+  font-size: 0.875em !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  text-transform: none !important;
+  word-wrap: break-word !important;
 }

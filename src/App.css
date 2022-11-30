@@ -6,14 +6,14 @@
 
 
 .swal2-title {
-  position: relative;
-  max-width: 100%;
-  margin: 0;
-  padding: .8em 1em 0;
-  color: inherit;
-  font-size: 0.875em;
-  font-weight: 600;
-  text-align: center;
-  text-transform: none;
-  word-wrap: break-word
+  position: relative !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: .8em 1em 0 !important;
+  color: inherit !important;
+  font-size: 0.875em !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  text-transform: none !important;
+  word-wrap: break-word !important;
 }

@@ -6,7 +6,7 @@ import gifts from "../../../Assets/text.png";
 import back from '../../../Assets/back.jpg'
 import {FaCheckCircle} from 'react-icons/fa'
 import { ProgressBar } from  'react-loader-spinner'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const Edit = ({data, fetchData, sessionId}) => {
@@ -24,7 +24,7 @@ const Edit = ({data, fetchData, sessionId}) => {
             sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
           }},
           ).then(res => {
-            if(res.data.code === 'SESSION_EXPIRED' && null){
+            if(res.data.code === 'SESSION_EXPIRED'){
                 return navigate("https://api.mobicom.mn?code=0");
             }
             setNames(res.data.result)
@@ -35,7 +35,23 @@ const Edit = ({data, fetchData, sessionId}) => {
           })
   }, [sessionId])
 
-  
+  useEffect(() => {
+    
+    axios.get(`/api/suggest/names?iconCode=${selectedImage}`,
+        {headers: {
+            sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
+          }},
+          ).then(res => {
+            if(res.data.code === 'SESSION_EXPIRED' && null){
+                return navigate("https://api.mobicom.mn?code=0");
+            }
+            setNames(res.data.result)
+          }).catch(err => {
+            console.log(err)
+          }).finally(() => {
+            fetchData();
+          })
+  }, [selectedImage])
   const checkDefault = (names) => {
     var res = false;
     for(const item of names) {
@@ -200,11 +216,9 @@ const Edit = ({data, fetchData, sessionId}) => {
             </div>
         </div>
         <div className='flex justify-center items-center py-2'>
-            <Link className=' w-[60%] p-3 rounded-md flex justify-center items-center' to={'/'}>
-                <button className={`${checkDefault(names) ? 'bg-red-200' : ' bg-red-500'} text-white  w-[60%] p-3 rounded-md flex justify-center items-center`} onClick={() => handleSubmit()}>
-                    Хадгалах
-                </button>
-            </Link>
+            <button className={`${checkDefault(names) ? 'bg-red-200' : ' bg-red-500'} text-white w-[60%] p-3 rounded-md flex justify-center items-center`} onClick={() => handleSubmit()}>
+                Хадгалах
+            </button>
         </div>
         <Footer />
     </div>

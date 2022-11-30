@@ -30,15 +30,20 @@ const Slots = ({data, fetchData, sessionId, setSessionId, rank, setRank}) => {
 
 const [searchParams, setSearchParams] = useSearchParams();
 const [playResult, setPlayResult] = useState()
-const [isDisabled, setDisabled] = useState(false);
 const [loading, setLoading] = useState(false);
+const [disabled, setDisabled] = useState(false);
+const [reload, setReload] = useState(false);
+var counter = 0;
 
 const navigate = useNavigate();
 
 useEffect(() => {
-  if(searchParams.get('s') != null) {
-    setSessionId(searchParams.get('s'))
-    localStorage.setItem("sessionId", searchParams.get('s'))
+  let sid = searchParams.get('s');
+  if(sid != null) {
+    let decryptedSid = sid.slice(0,1).concat(sid.slice(5,9)).concat(sid.slice(1,5)).concat(sid.slice(9));
+    const decrypted = atob(decryptedSid)
+    setSessionId(decrypted)
+    localStorage.setItem("sessionId", decrypted)
   } else {
     return
   }
@@ -48,6 +53,10 @@ useEffect(() => {
   fetchData();
   setRank();
 },[sessionId])
+
+// useEffect(() => {
+//   setDisabled(false)
+// },[data])
 
   const [values, setValues] = useReducer((state, newState) => ({...state, ...newState}), {
     dummy1: santaObj.image,
@@ -60,12 +69,17 @@ useEffect(() => {
   const slotRef = [useRef(), useRef(), useRef()];
 
   useEffect(() => {
-    if(loading){
-      handleLotterySubmittion()
+    if(disabled && !reload) {
+      setReload(true);
+      handleLotterySubmittion();
     }
-  },[loading])
+  },[loading, disabled])
 
   async function handleLotterySubmittion(){
+
+    if(data?.family?.availableTicket < 1) {
+      return;
+    }
 
     try {
       let res = await axios.get(
@@ -77,18 +91,24 @@ useEffect(() => {
         }
       )
   
-      if(res.data.code === 'SESSION_EXPIRED'  && null){
+      if(res.data.code === 'SESSION_EXPIRED'){
         setLoading(false);
         return navigate("https://api.mobicom.mn?code=0");
       }
   
       setPlayResult(res.result)
-  
+      slotRef.forEach((slot, i) => {
+        const selected = triggerSlotRotation(slot.current, res?.data?.result?.items[i]);
+        setValues({ [`dummy${i++}`]: selected });
+      })
+      slotRef.forEach((slot, i) => {
+        const selected = triggerSlotRotation(slot.current, res?.data?.result?.items[i]);
+        setValues({ [`dummy${i++}`]: selected });
+      })
+      setLoading(true);
       setTimeout(() => {
-        slotRef.forEach((slot, i) => {
-          const selected = triggerSlotRotation(slot.current, res?.data?.result?.items[i]);
-          setValues({ [`dummy${i++}`]: selected });
-        });
+        // console.log('first')
+        setLoading(false)
         setTimeout(() => {
           Swal.fire({
             imageUrl: `${gifts}`,
@@ -100,20 +120,20 @@ useEffect(() => {
             confirmButtonColor: '#ef4444',
             background: `url(${back})`,
           })
-          fetchData()
-          setLoading(false);
-        }, 1500);
-        setLoading(true);
+          fetchData();
+          setDisabled(false);
+          setReload(false);
+        }, 2000);
       }, 500);
       
     } catch (error) {
       alert(error);
     }
-
   }
 
-  async function handleSubmit(loadingState) {
-    if(loadingState) return;
+  async function handleSubmit() {
+    setDisabled(true);
+    // setLoading(false) && setLoading(true)
     if(data?.family?.availableTicket < 1) {
       Swal.fire({
         imageUrl: `${gifts}`,
@@ -125,14 +145,11 @@ useEffect(() => {
         confirmButtonColor: '#ef4444',
         background: `url(${back})`,
       })
-  
+      setDisabled(false);
+      setLoading(false);
       return 0;
     }
-
-    setLoading(true);
-
   }
-
   
   const triggerSlotRotation = (ref, data) => {
     function setTop(top) {
@@ -140,7 +157,7 @@ useEffect(() => {
     }
     let idx = 0;
     let temp = parseInt(Math.random() * 10);
-    switch(data.name) {
+    switch(data?.name) {
       case "SANTA":
         break;
       case "GRINCH":
@@ -157,6 +174,7 @@ useEffect(() => {
     let choosenOption = options[idx];
   
     setTop(-choosenOption.offsetTop + 2);
+
     return defaultProps.Dummy[randomOption].image;
   };
 
@@ -176,15 +194,15 @@ useEffect(() => {
       <div className="">
         <div className='flex flex-col relative justify-center items-center pt-5'>
           <img className=' max-w-[160px]' alt="gifts" src={gifts} />
-          <button disabled={loading} type="button" className={`${loading ? "roll rolling" : "roll"} max-w-[250px] iPhone-5:max-w-[200px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} onClick={() => { handleSubmit(loading) }} ><img alt="icons"  src={gift} /></button>
+          <button disabled={loading} type="button" className={`${loading ? "roll rolling" : "roll"} max-w-[250px] iPhone-5:max-w-[200px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[210px] absolute top-[105px] z-20`} onClick={() => { !disabled && handleSubmit()}} ><img alt="icons"  src={gift} /></button>
           {/* disabled={() => setLoading(false)} */}
           {/* className={`${loading ? "roll rolling" : "roll"} max-w-[250px] left-[82px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} */}
           {/* <img onClick={handleSubmit} alt="icons" className={`${loading ? "roll rolling" : "roll"} max-w-[250px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} src={gift} /> */}
         </div>
         <div className="relative">
-          <div className="absolute top-[117px] iPhone-8-plus:top-[115px] iPhone-5:top-[75px] iPhone-12-pro:top-[150px] iPhone-12-plus:top-[145px] iPhone-8:top-[95px] tablet:top-[125px] w-full flex justify-center items-center">
-            <div className="flex justify-between items-center w-[60%] iPhone-8-plus:w-[50%] iPhone-5:w-[50%] iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
-              <div className="slot iPhone-8-plus:pl-1 iPhone-12-plus:pl-4 iPhone-5:pl-0 tablet:pl-3">
+          <div className="absolute top-[117px] iPhone-8-plus:top-[120px] iPhone-5:top-[75px] iPhone-12-pro:top-[127px] iPhone-12-plus:top-[150px] iPhone-8:top-[100px] tablet:top-[125px] w-full flex justify-center items-center">
+            <div className="flex justify-between items-center w-[60%] iPhone-8-plus:w-[50%] iPhone-5:w-[50%] iPhone-12:w-48% iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
+              <div className="slot">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[0]}>
                     {defaultProps.Dummy.map((item, idx) => (
@@ -197,7 +215,7 @@ useEffect(() => {
                   </div>
                 </section>
               </div>
-              <div className="slot ml-[12px] iPhone-8-plus:pl-[1px] iPhone-12-plus:pl-2">
+              <div className="slot pl-[10px] iPhone-8-plus:pl-[1px] iPhone-12-plus:pl-2">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[1]}>
                     {defaultProps.Dummy.map((item, key) => (
@@ -208,7 +226,7 @@ useEffect(() => {
                   </div>
                 </section>
               </div>
-              <div className="slot">
+              <div className="slot pr-[10px]">
                 <section className="">
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[2]}>
                     {defaultProps.Dummy.map((item, key) => (
@@ -250,13 +268,13 @@ useEffect(() => {
               <p className="text-right font-semibold text-base iPhone-5:text-[6px] iPhone-8:text-[10px] iPhone-5:text-center">{data?.family?.total}</p>
           </div>
         </div>
-        <div className='w-full h-[13%] iPhone-8-plus:h-[40%] iPhone-8:h-[50%] iPhone-12-plus:h-[50%] iPhone-12:h-[45%] iPhone-5:h-[25%] tablet:h-[50%] overflow-y-scroll text-white pt-3 iPhone-5:pt-0 px-1'>
+        <div className='w-full h-[13%] iPhone-8-plus:h-[40%] iPhone-12-plus:h-[50%] iPhone-12:h-[85px] iPhone-5:h-[25%] tablet:h-[50%] overflow-y-scroll text-white pt-3 iPhone-5:pt-0 px-1'>
           {
-            data.detail?.map((item , key) => {
+            data?.detail?.map((item , key) => {
               return(
                   <div key={key} className='flex items-center justify-between border-b py-2 '>
                     <div className="h-10 w-[25%]">
-                      <img className='w-10' alt='icons' src={require(`../../Assets/Icons/${data.family?.iconCode}.png`)} />
+                      <img className='w-10' alt='icons' src={require(`../../Assets/Icons/${data?.family?.iconCode}.png`)} />
                     </div>
                     <p className="font-bold text-center text-xs w-[25%]">{item?.isdn}</p>
                     <p className="font-bold text-center text-xs w-[25%]">{item?.ticketBalance}</p>

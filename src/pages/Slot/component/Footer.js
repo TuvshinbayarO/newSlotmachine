@@ -29,7 +29,7 @@ const Footer = () => {
         <div className='flex justify-center flex-col items-center space-y-2'><img className='w-8 h-8' src={Prize} /><h1 className='text-white text-xs'>Шагнал</h1></div>
         </Link>
         <Link to={'/detail'} className={styles}>
-        <div className='flex justify-center flex-col items-center space-y-2'><img className='w-8 h-8' src={Profile} /><h1 className='text-white text-xs'>Профиль</h1></div>
+        <div className='flex justify-center flex-col items-center space-y-2'><img className='w-8 h-8' src={Profile} /><h1 className='text-white text-xs'>Профайль</h1></div>
         </Link>
     </div>
 </div>
