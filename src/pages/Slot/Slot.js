@@ -107,6 +107,7 @@ useEffect(() => {
       })
       setLoading(true);
       setTimeout(() => {
+        // console.log('first')
         setLoading(false)
         setTimeout(() => {
           Swal.fire({
