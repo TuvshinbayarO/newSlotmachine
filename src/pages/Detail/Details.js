@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect, useState} from 'react'
 import back from '../../Assets/back.jpg'
 import {FaCalendarAlt, FaPhoneAlt, FaEdit} from 'react-icons/fa'
 import axios from 'axios'
@@ -11,11 +11,11 @@ import footerBg from '../../Assets/footer/footerBg.png'
 
 const Detail = ({sessionId}) => {
   const navigate = useNavigate();  
-  const iconNames = ['SANTA', 'GRINCH', 'SNOWMAN']
+  // const iconNames = ['SANTA', 'GRINCH', 'SNOWMAN']
   const iconData = {
-    SNOWMAN: 'snowman',
-    GRINCH: 'grinch',
-    SANTA: 'santa',
+    REINDEER: 'REINDEER',
+    WOLF: 'WOLF',
+    LAMB: 'LAMB',
 }
   const [log, setLog] = useState([])
   const [firstLoading, setFirstLoading] = useState(false);
@@ -88,9 +88,9 @@ const Detail = ({sessionId}) => {
   </div> :
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className=' h-screen flex flex-col justify-between'>
         <div className='flex justify-end px-2 pt-2'>
-          <div style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='h-14 w-14 flex justify-center items-center rounded-md'>
-            <Link to={"/edit"}><p className='text-white text-xl mt-2'><FaEdit /></p></Link>
-          </div>
+          
+            <Link to={"/edit"}><p className='text-white text-2xl mt-2'><FaEdit /></p></Link>
+          
         </div>
         <div className='flex justify-center items-center'>
           <h1 className='text-white text-xl mt-2'>• Тоглоомын түүх •</h1>
@@ -126,9 +126,9 @@ const Detail = ({sessionId}) => {
                           </div>
                         </div>
                         <div className=''>
-                          <div className='flex flex-row space-x-2 items-center'>{items.game.map((names, idx) => {
+                          <div className='flex flex-row space-x-2 items-center'>{items.game.map((names, idxs) => {
                             return(
-                              <div className='bg-white rounded-md' key={idx}>
+                              <div className='bg-white rounded-md' key={idxs}>
                                 <img className='w-8 h-8 rounded-full' alt='icons' src={require(`../../Assets/Detail/${iconData[names.name] || 'DEFAULT'}.png`)} />
                               </div>
                             )

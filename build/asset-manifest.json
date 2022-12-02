@@ -1,15 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.741807c7.css",
-    "main.js": "/static/js/main.2845c67a.js",
+    "main.css": "/static/css/main.9497c1de.css",
+    "main.js": "/static/js/main.252a212a.js",
     "static/js/787.325a6cf2.chunk.js": "/static/js/787.325a6cf2.chunk.js",
     "static/media/gift.png": "/static/media/gift.bba6b82d3492f1d61f15.png",
-    "static/media/santa.png": "/static/media/santa.6839ad94c9012d3cd1c8.png",
+    "static/media/LAMB.png": "/static/media/LAMB.6839ad94c9012d3cd1c8.png",
+    "static/media/REINDEER.png": "/static/media/REINDEER.285c42501466426025b7.png",
+    "static/media/grinch.png": "/static/media/grinch.82b503503926bfe74388.png",
+    "static/media/DEFAULT.png": "/static/media/DEFAULT.c3c381979a475caf7530.png",
+    "static/media/WOLF.png": "/static/media/WOLF.9b66617b01a8f4dd40ab.png",
     "static/media/snowman.png": "/static/media/snowman.9efd285aac081706dbfa.png",
-    "static/media/grinch.png": "/static/media/grinch.9b66617b01a8f4dd40ab.png",
-    "static/media/d.jpg": "/static/media/d.9aa5c8e6f7e495663b4b.jpg",
     "static/media/santa-claus.png": "/static/media/santa-claus.dd974484f5cc1aa8805b.png",
+    "static/media/1.jpg": "/static/media/1.de15313abab7533474b5.jpg",
+    "static/media/3.jpg": "/static/media/3.58e527d89883934b0567.jpg",
+    "static/media/4.jpg": "/static/media/4.e7a45588178989c1708b.jpg",
     "static/media/text.png": "/static/media/text.3cd3877b29288b6942be.png",
+    "static/media/10.jpg": "/static/media/10.87ef4bc26a25c7c73006.jpg",
+    "static/media/5.jpg": "/static/media/5.79eb803b8bbea0338be8.jpg",
+    "static/media/2.jpg": "/static/media/2.e606f9cc82e32ab69d8e.jpg",
+    "static/media/8.jpg": "/static/media/8.877d97287882d4ce5078.jpg",
+    "static/media/9.jpg": "/static/media/9.43239e1f939cdec62acf.jpg",
+    "static/media/7.jpg": "/static/media/7.e6c366244769fcef4486.jpg",
+    "static/media/6.jpg": "/static/media/6.ed8afa47c56a287b1709.jpg",
     "static/media/back.jpg": "/static/media/back.e109f3bfc5dc6e0cd403.jpg",
     "static/media/snow.png": "/static/media/snow.ef9f5bc94b3d1da5df57.png",
     "static/media/leaf.png": "/static/media/leaf.02030e374eb6c2f2b338.png",
@@ -26,12 +38,12 @@
     "static/media/footerBg.png": "/static/media/footerBg.b457c07c46b76a774a51.png",
     "static/media/profile.png": "/static/media/profile.bc615c9ed477e45188e8.png",
     "index.html": "/index.html",
-    "main.741807c7.css.map": "/static/css/main.741807c7.css.map",
-    "main.2845c67a.js.map": "/static/js/main.2845c67a.js.map",
+    "main.9497c1de.css.map": "/static/css/main.9497c1de.css.map",
+    "main.252a212a.js.map": "/static/js/main.252a212a.js.map",
     "787.325a6cf2.chunk.js.map": "/static/js/787.325a6cf2.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.741807c7.css",
-    "static/js/main.2845c67a.js"
+    "static/css/main.9497c1de.css",
+    "static/js/main.252a212a.js"
   ]
 }

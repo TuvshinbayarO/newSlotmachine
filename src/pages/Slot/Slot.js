@@ -1,8 +1,8 @@
 import React, { useReducer, useRef, useState, useEffect} from "react";
 import "./Slot.css";
-import santa from "../../Assets/santa-claus.png";
-import grinch from "../../Assets/grinch.png";
-import snowman from "../../Assets/snowman.png";
+import LAMB from "../../Assets/santa-claus.png";
+import WOLF from "../../Assets/grinch.png";
+import SNOWMAN from "../../Assets/snowman.png";
 import gift from "../../Assets/gift.png";
 import gifts from "../../Assets/text.png";
 import back from '../../Assets/back.jpg'
@@ -10,30 +10,29 @@ import Footer from "./component/Footer";
 import axios from "axios";
 import Swal from 'sweetalert2'
 import footerBg from '../../Assets/footer/footerBg.png'
-import { ProgressBar } from  'react-loader-spinner'
 import { useNavigate , useSearchParams } from "react-router-dom";
 
 const santaObj = {
-  name: 'SANTA',
-  image: santa
+  name: 'LAMB',
+  image: LAMB
 }
 const grinchObj = {
-  name: 'GRINCH',
-  image: grinch
+  name: 'WOLF',
+  image: WOLF
 }
 const snowmanObj = {
-  name: 'SNOWMAN',
-  image: snowman
+  name: 'REINDEER',
+  image: SNOWMAN
 }
 
-const Slots = ({data, fetchData, sessionId, setSessionId, rank, setRank}) => {
+const Slots = ({data, fetchData, sessionId, setSessionId, rank, setRank, fetchFamily}) => {
 
 const [searchParams, setSearchParams] = useSearchParams();
 const [playResult, setPlayResult] = useState()
 const [loading, setLoading] = useState(false);
 const [disabled, setDisabled] = useState(false);
 const [reload, setReload] = useState(false);
-var counter = 0;
+// var counter = 0;
 
 const navigate = useNavigate();
 
@@ -52,6 +51,7 @@ useEffect(() => {
 useEffect(() => {
   fetchData();
   setRank();
+  fetchFamily();
 },[sessionId])
 
 // useEffect(() => {
@@ -107,7 +107,6 @@ useEffect(() => {
       })
       setLoading(true);
       setTimeout(() => {
-        // console.log('first')
         setLoading(false)
         setTimeout(() => {
           Swal.fire({
@@ -158,12 +157,12 @@ useEffect(() => {
     let idx = 0;
     let temp = parseInt(Math.random() * 10);
     switch(data?.name) {
-      case "SANTA":
+      case "LAMB":
         break;
-      case "GRINCH":
+      case "WOLF":
         idx = 1;
         break;
-      case "SNOWMAN":
+      case "REINDEER":
         idx = 2;
         break;
     }

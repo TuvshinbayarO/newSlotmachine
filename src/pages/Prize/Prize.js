@@ -1,6 +1,15 @@
 import React, {useEffect} from 'react'
 import back from '../../Assets/back.jpg'
-import d from '../../Assets/d.jpg'
+import gift1 from '../../Assets/gifts/1.jpg'
+import gift2 from '../../Assets/gifts/2.jpg'
+import gift3 from '../../Assets/gifts/3.jpg'
+import gift4 from '../../Assets/gifts/4.jpg'
+import gift5 from '../../Assets/gifts/5.jpg'
+import gift6 from '../../Assets/gifts/6.jpg'
+import gift7 from '../../Assets/gifts/7.jpg'
+import gift8 from '../../Assets/gifts/8.jpg'
+import gift9 from '../../Assets/gifts/9.jpg'
+import gift10 from '../../Assets/gifts/10.jpg'
 import Footer from '../Slot/component/Footer'
 
 const Prize = (sessionId) => {
@@ -11,64 +20,34 @@ const Prize = (sessionId) => {
 
   const Gift = [
     {
-      iphone: 'Iphone 14 Pro max',
-      mac: 'Macbook Pro',
-      pad: 'Ipad Pro',
-      pod: 'AirPods Pro'
+      img: gift1
     },
     {
-      iphone: 'Iphone 14 Pro max',
-      mac: 'Macbook Pro',
-      pad: 'Ipad Pro',
-      pod: 'AirPods Pro'
+      img: gift2
     },
     {
-      iphone: 'Iphone 14 Pro max',
-      mac: 'Macbook Pro',
-      pad: 'Ipad Pro',
-      pod: 'AirPods Pro'
+      img: gift3
     },
     {
-      iphone: 'Iphone 14 Pro max',
-      mac: 'Macbook Pro',
-      pad: 'Ipad Pro',
-      pod: 'AirPods Pro'
+      img: gift4
     },
     {
-      iphone: 'Iphone 14 Pro max',
-      mac: 'Macbook Pro',
-      pad: 'Ipad Pro',
-      pod: 'AirPods Pro'
+      img: gift5
     },
     {
-      iphone: 'Iphone 14 Pro max',
-      mac: 'Macbook Pro',
-      pad: 'Ipad Pro',
-      pod: 'AirPods Pro'
+      img: gift6
     },
     {
-      iphone: 'Iphone 14 Pro max',
-      mac: 'Macbook Pro',
-      pad: 'Ipad Pro',
-      pod: 'AirPods Pro'
+      img: gift7
     },
     {
-      iphone: 'Iphone 14 Pro max',
-      mac: 'Macbook Pro',
-      pad: 'Ipad Pro',
-      pod: 'AirPods Pro'
+      img: gift8
     },
     {
-      iphone: 'Iphone 14 Pro max',
-      mac: 'Macbook Pro',
-      pad: 'Ipad Pro',
-      pod: 'AirPods Pro'
+      img: gift9
     },
     {
-      iphone: 'Iphone 14 Pro max',
-      mac: 'Macbook Pro',
-      pad: 'Ipad Pro',
-      pod: 'AirPods Pro'
+      img: gift10
     },
     
   ]
@@ -84,7 +63,7 @@ const Prize = (sessionId) => {
               Gift.map((item, idx) => {
                 return(
                   <div className='py-2'>
-                  <div key={idx} style={{ backgroundImage: `url(${d})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='px-2 h-80 flex flex-col text-white justify-center items-center text-center w-[350px] rounded-xl'>
+                  <div key={idx} style={{ backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='px-2 h-80 flex flex-col text-white justify-center items-center text-center w-[350px] rounded-xl'>
                     <p>{item.iphone}</p>
                     <p>{item.mac}</p>
                     <p>{item.pod}</p>
