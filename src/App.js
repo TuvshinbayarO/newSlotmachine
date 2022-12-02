@@ -53,7 +53,7 @@ function App() {
           sessionId : sessionId
         }
       }).then(res => {
-        setFamilyData(res.data.result)
+        setData(res.data.result)
         
       }).catch(err => {
         console.log(err)
@@ -65,7 +65,7 @@ function App() {
     <div className="App">
       <Router history={history}>
         <Routes>
-            <Route path='/' element={<Slot familyData={familyData} data={data} fetchData={fetchData} fetchFamily={fetchFamily} rank={rank} setRank={setRank} sessionId={sessionId} setData={setData} setSessionId={setSessionId}/>} />
+            <Route path='/' element={<Slot familyData={familyData} data={data} fetchData={fetchData} setFamilyData={setFamilyData} fetchFamily={fetchFamily} rank={rank} setRank={setRank} sessionId={sessionId} setData={setData} setSessionId={setSessionId}/>} />
             <Route path='/rule' element={<Rule sessionId={sessionId} />} />
             <Route path='/prize' element={<Prize sessionId={sessionId} />} />
             <Route path='/leaderboards' element={<LeaderBoard sessionId={sessionId} />} />

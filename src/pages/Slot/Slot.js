@@ -25,7 +25,7 @@ const snowmanObj = {
   image: SNOWMAN
 }
 
-const Slots = ({data, fetchData, sessionId, setSessionId, rank, setRank, fetchFamily}) => {
+const Slots = ({data, fetchData, sessionId, setSessionId, rank, setRank, fetchFamily, setData}) => {
 
 const [searchParams, setSearchParams] = useSearchParams();
 const [playResult, setPlayResult] = useState()
@@ -49,9 +49,10 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-  fetchData();
-  setRank();
+  setData()
   fetchFamily();
+  setRank();
+  // fetchFamily();
 },[sessionId])
 
 // useEffect(() => {
@@ -90,6 +91,20 @@ useEffect(() => {
           },
         }
       )
+      // if(res.data.code === 'INTERNAL_ERROR' || res.data.code === 'ERROR'){
+      //   setLoading(false)
+      //   Swal.fire({
+      //     imageUrl: `${gifts}`,
+      //     imageHeight: 50,
+      //     title: (`Алдаа гарлаа.`),
+      //     width: 250,
+      //     color: '#FFFFFF',
+      //     showConfirmButton: true,
+      //     confirmButtonColor: '#ef4444',
+      //     background: `url(${back})`,
+      //   })
+      //   setLoading(true)
+      // }
   
       if(res.data.code === 'SESSION_EXPIRED'){
         setLoading(false);
@@ -105,6 +120,7 @@ useEffect(() => {
         const selected = triggerSlotRotation(slot.current, res?.data?.result?.items[i]);
         setValues({ [`dummy${i++}`]: selected });
       })
+      console.log('onoo: ', res)
       setLoading(true);
       setTimeout(() => {
         // console.log('first')
@@ -125,7 +141,7 @@ useEffect(() => {
           setReload(false);
         }, 2000);
       }, 500);
-      
+      fetchData()
     } catch (error) {
       alert(error);
     }
@@ -257,6 +273,7 @@ useEffect(() => {
                           <div className="flex flex-col iPhone-5:text-[6px] iPhone-8:text-[10px]">
                             <h1>Таны эрх</h1>
                             <h1>{data?.family?.availableTicket}</h1>
+                            {console.log('first', data)}
                           </div>
                       </div>
                   </div>
