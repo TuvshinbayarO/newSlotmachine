@@ -18,10 +18,10 @@ const Edit = ({data, fetchData, sessionId}) => {
   const navigate = useNavigate();  
 
   useEffect(() => {
-    
     axios.get(`/api/suggest/names?iconCode=${selectedImage}`,
         {headers: {
-            sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
+            sessionId : sessionId,
+            // sessionId : sessionId.length > 0 ? sessionId : localStorage.getItem("sessionId"),
           }},
           ).then(res => {
             if(res.data.code === 'SESSION_EXPIRED' && null){
@@ -31,7 +31,7 @@ const Edit = ({data, fetchData, sessionId}) => {
           }).catch(err => {
             console.log(err)
           }).finally(() => {
-            fetchData();
+            // fetchData();
           })
   }, [sessionId])
 
@@ -120,7 +120,7 @@ const Edit = ({data, fetchData, sessionId}) => {
             img: "decorate.png"
         },
         {
-            img: "dear.png"
+            img: "deer.png"
         },
         {
             img: "leaf.png"

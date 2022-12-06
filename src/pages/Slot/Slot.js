@@ -25,36 +25,61 @@ const snowmanObj = {
   image: SNOWMAN
 }
 
-const Slots = ({data, fetchData, sessionId, setSessionId, rank, setRank, fetchFamily, setData}) => {
+const Slots = ({data, familyData, sessionId, setSessionId, fetchData }) => {
 
 const [searchParams, setSearchParams] = useSearchParams();
-const [playResult, setPlayResult] = useState()
 const [loading, setLoading] = useState(false);
 const [disabled, setDisabled] = useState(false);
 const [reload, setReload] = useState(false);
-// var counter = 0;
+const [total, setTotal] = useState(0);
+const [ticket, setTicket] = useState(0)
+const [rank, setRank] = useState({})
 
 const navigate = useNavigate();
 
 useEffect(() => {
-  let sid = searchParams.get('s');
-  if(sid != null) {
-    let decryptedSid = sid.slice(0,1).concat(sid.slice(5,9)).concat(sid.slice(1,5)).concat(sid.slice(9));
-    const decrypted = atob(decryptedSid)
-    setSessionId(decrypted)
-    localStorage.setItem("sessionId", decrypted)
+  if(localStorage.getItem("sessionId") != null) {
+    setSessionId(localStorage.getItem("sessionId"));
   } else {
-    return
+    if(!sessionId || sessionId === '') {
+      let sid = searchParams.get('s');
+      if(sid != null) {
+        let decryptedSid = sid.slice(0,1).concat(sid.slice(5,9)).concat(sid.slice(1,5)).concat(sid.slice(9));
+        const decrypted = atob(decryptedSid)
+        setSessionId(decrypted)
+        localStorage.setItem("sessionId", decrypted);
+      } else {
+        return
+      }
+    }
   }
 }, [])
 
-useEffect(() => {
-  setData()
-  fetchFamily();
-  setRank();
-  // fetchFamily();
-},[sessionId])
 
+
+useEffect(() => {
+  // if(data?.family !== undefined){
+    setTotal(data?.family?.total);
+    setTicket(data?.family?.availableTicket);
+    fetchRank()
+  // }
+}, [data])
+
+useEffect(() => {
+  fetchData()
+  // fetchRank()
+}, [])
+
+const fetchRank = async () => {
+  if(sessionId) {
+    try {
+      const res = await axios.get("api/myrank", {headers: { sessionId : sessionId }})
+      setRank(res)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+}
 // useEffect(() => {
 //   setDisabled(false)
 // },[data])
@@ -78,7 +103,7 @@ useEffect(() => {
 
   async function handleLotterySubmittion(){
 
-    if(data?.family?.availableTicket < 1) {
+    if(ticket < 1) {
       return;
     }
 
@@ -87,7 +112,8 @@ useEffect(() => {
         "/api/play",
         {
           headers: {
-            sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
+            sessionId : sessionId,
+            // sessionId : sessionId.length > 0 ? sessionId : localStorage.getItem("sessionId"),
           },
         }
       )
@@ -105,13 +131,10 @@ useEffect(() => {
       //   })
       //   setLoading(true)
       // }
-  
-      if(res.data.code === 'SESSION_EXPIRED'){
+      if(res?.data?.code === 'SESSION_EXPIRED'){
         setLoading(false);
         return navigate("https://api.mobicom.mn?code=0");
       }
-  
-      setPlayResult(res.result)
       slotRef.forEach((slot, i) => {
         const selected = triggerSlotRotation(slot.current, res?.data?.result?.items[i]);
         setValues({ [`dummy${i++}`]: selected });
@@ -120,28 +143,46 @@ useEffect(() => {
         const selected = triggerSlotRotation(slot.current, res?.data?.result?.items[i]);
         setValues({ [`dummy${i++}`]: selected });
       })
-      console.log('onoo: ', res)
       setLoading(true);
       setTimeout(() => {
-        // console.log('first')
         setLoading(false)
-        setTimeout(() => {
-          Swal.fire({
-            imageUrl: `${gifts}`,
-            imageHeight: 50,
-            title: (`${res?.data?.result?.point} оноо авлаа.`),
-            width: 250,
-            color: '#FFFFFF',
-            showConfirmButton: true,
-            confirmButtonColor: '#ef4444',
-            background: `url(${back})`,
-          })
-          fetchData();
+        setTimeout(async () => {
+           if(res?.data?.code !== 'SUCCESS' ) {
+            Swal.fire({
+              imageUrl: `${gifts}`,
+              imageHeight: 50,
+              title: (`Дахин оролдоно уу.`),
+              width: 250,
+              color: '#FFFFFF',
+              showConfirmButton: true,
+              confirmButtonColor: '#ef4444',
+              background: `url(${back})`,
+            })
+            } else {
+              Swal.fire({
+                imageUrl: `${gifts}`,
+                imageHeight: 50,
+                title: (`${res?.data?.result?.point} оноо авлаа.`),
+                width: 250,
+                color: '#FFFFFF',
+                showConfirmButton: true,
+                confirmButtonColor: '#ef4444',
+                background: `url(${back})`
+              }).then((result) => {
+                // if (result.isConfirmed) {
+                //   window.location.reload();
+                // }
+              })
+              // await fetchData();
+              setTicket(res.data?.result?.customer?.ticketBalance ?? ticket - 1);
+              setTotal(res?.data?.result?.total);
+              await fetchRank();
+              // caches.keys().then(list => list.map(key => caches.delete(key)))
+          }
           setDisabled(false);
-          setReload(false);
-        }, 2000);
+          setReload(false); 
+        }, 2000)
       }, 500);
-      fetchData()
     } catch (error) {
       alert(error);
     }
@@ -149,8 +190,7 @@ useEffect(() => {
 
   async function handleSubmit() {
     setDisabled(true);
-    // setLoading(false) && setLoading(true)
-    if(data?.family?.availableTicket < 1) {
+    if(ticket < 1) {
       Swal.fire({
         imageUrl: `${gifts}`,
         imageHeight: 50,
@@ -195,30 +235,30 @@ useEffect(() => {
   };
 
   return (
-    !data ? <div className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
-    <div className="flex flex-col items-center justify-center px-5 mx-auto my-8">
-      <div className="max-w-md text-center">
-        <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
-          <span className="sr-only">Уучлаарай таны нэвтрэх хугацаа дууссан байна!</span>404
-        </h2>
-        <p className="text-2xl font-semibold md:text-3xl">Нүүр хуудас руу буцан уу!</p>
-      </div>
-    </div>
-  </div> :
+  //   !data ? <div className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
+  //   <div className="flex flex-col items-center justify-center px-5 mx-auto my-8">
+  //     <div className="max-w-md text-center">
+  //       <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
+  //         <span className="sr-only">Уучлаарай таны нэвтрэх хугацаа дууссан байна!</span>404
+  //       </h2>
+  //       <p className="text-2xl font-semibold md:text-3xl">Нүүр хуудас руу буцан уу!</p>
+  //     </div>
+  //   </div>
+  // </div> :
+  
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className="w-full flex flex-col justify-between h-screen">
       <div className="flex flex-col justify-between overflow-y-scroll h-screen">
       <div className="">
         <div className='flex flex-col relative justify-center items-center pt-5'>
           <img className=' max-w-[160px]' alt="gifts" src={gifts} />
           <button disabled={loading} type="button" className={`${loading ? "roll rolling" : "roll"} max-w-[250px] iPhone-5:max-w-[200px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[210px] absolute top-[105px] z-20`} onClick={() => { !disabled && handleSubmit()}} ><img alt="icons"  src={gift} /></button>
-          {/* disabled={() => setLoading(false)} */}
-          {/* className={`${loading ? "roll rolling" : "roll"} max-w-[250px] left-[82px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} */}
-          {/* <img onClick={handleSubmit} alt="icons" className={`${loading ? "roll rolling" : "roll"} max-w-[250px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[290px] absolute top-[105px] z-20`} src={gift} /> */}
         </div>
         <div className="relative">
-          <div className="absolute top-[117px] iPhone-8-plus:top-[120px] iPhone-5:top-[75px] iPhone-12-pro:top-[127px] iPhone-12-plus:top-[150px] iPhone-8:top-[100px] tablet:top-[125px] w-full flex justify-center items-center">
-            <div className="flex justify-between items-center w-[60%] iPhone-8-plus:w-[50%] iPhone-5:w-[50%] iPhone-12:w-48% iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
-              <div className="slot">
+          <div className="absolute top-[117px] iPhone-8-plus:top-[120px] iPhone-5:top-[75px] iPhone-12-pro:top-[127px] iPhone-12-plus:top-[118px] iPhone-8:top-[100px] tablet:top-[125px] w-full flex justify-center items-center">
+            <div className="w-full flex justify-center items-center">
+            <div className=" w-1/3" />
+            <div className=" w-1/3 flex justify-between items-center iPhone-8-plus:w-[50%] iPhone-5:w-[50%] Fold:w-[27%] iPhone-12:w-48% iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
+              <div className="slot iPhone-5:pl-[0px] iPhone-12:pl-[6px] iPhone-8:pl-[0px] pl-[6px] iPhone-8-plus:pl-[0px] iPhone-12-plus:pl-0">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[0]}>
                     {defaultProps.Dummy.map((item, idx) => (
@@ -231,7 +271,7 @@ useEffect(() => {
                   </div>
                 </section>
               </div>
-              <div className="slot pl-[10px] iPhone-8-plus:pl-[1px] iPhone-12-plus:pl-2">
+              <div className="slot pl-[9px] iPhone-8-plus:pl-[6px] iPhone-12-plus:pl-[6px]">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[1]}>
                     {defaultProps.Dummy.map((item, key) => (
@@ -254,6 +294,8 @@ useEffect(() => {
                 </section>
               </div>
             </div>
+            <div className=" w-1/3" />
+            </div>
           </div>
         </div>
       </div>
@@ -264,16 +306,16 @@ useEffect(() => {
                   <div className='w-full'>
                       <div className='flex justify-between w-full text-xs iPhone-5:text-[6px] iPhone-8:text-[10px]'>
                           <div className='flex justify-between space-x-4'>
-                              <p style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='w-16 h-8 rounded-md text-white text-xs flex justify-start pl-1 items-center' >#{rank?.data?.result?.rank}</p>
+                              <p style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='w-16 h-8 rounded-md text-white text-xs flex justify-start pl-1 items-center' ># {rank?.data?.result?.rank}
+                              </p>
                               <div className='text-left iPhone-5:text-[6px] iPhone-8:text-[10px]'>
-                                <p>Гишүүд - {data?.family?.memberCount}</p>
+                                <p>Гишүүд - {familyData?.family?.memberCount}</p>
                                 <p className='text-[10px] iPhone-5:text-[6px] iPhone-8:text-[10px]'>{data?.family?.nameCode}</p>
                               </div>
                           </div>    
                           <div className="flex flex-col iPhone-5:text-[6px] iPhone-8:text-[10px]">
                             <h1>Таны эрх</h1>
-                            <h1>{data?.family?.availableTicket}</h1>
-                            {console.log('first', data)}
+                            <h1>{ticket || 0}</h1>
                           </div>
                       </div>
                   </div>
@@ -282,16 +324,17 @@ useEffect(() => {
           </div>
           <div style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='flex flex-col rounded-md w-[30%] h-14 p-2 text-white'>
               <h1 className='text-base iPhone-5:text-[6px] iPhone-8:text-[10px]'>Нийт оноо</h1>
-              <p className="text-right font-semibold text-base iPhone-5:text-[6px] iPhone-8:text-[10px] iPhone-5:text-center">{data?.family?.total}</p>
+              <p className="text-right font-semibold text-base iPhone-5:text-[6px] iPhone-8:text-[10px] iPhone-5:text-center">{total}</p>
           </div>
         </div>
-        <div className='w-full h-[13%] iPhone-8-plus:h-[40%] iPhone-12-plus:h-[50%] iPhone-12:h-[85px] iPhone-5:h-[25%] tablet:h-[50%] overflow-y-scroll text-white pt-3 iPhone-5:pt-0 px-1'>
+        <div className='w-full h-[13%] iPhone-8-plus:h-[43%] iPhone-12-plus:h-[53%] iPhone-12:h-[90px] iPhone-5:h-[28%] tablet:h-[53%] overflow-y-scroll text-white pt-3 iPhone-5:pt-0 px-1'>
           {
-            data?.detail?.map((item , key) => {
+            (data && familyData) &&
+            familyData?.detail?.map((item , key) => {
               return(
                   <div key={key} className='flex items-center justify-between border-b py-2 '>
                     <div className="h-10 w-[25%]">
-                      <img className='w-10' alt='icons' src={require(`../../Assets/Icons/${data?.family?.iconCode}.png`)} />
+                      <img className='w-10' alt='icons' src={require(`../../Assets/Icons/${data?.family?.iconCode ?? 'default_icon'}.png`)} />
                     </div>
                     <p className="font-bold text-center text-xs w-[25%]">{item?.isdn}</p>
                     <p className="font-bold text-center text-xs w-[25%]">{item?.ticketBalance}</p>

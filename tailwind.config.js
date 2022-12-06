@@ -22,7 +22,9 @@ module.exports = {
         'iPhone-8-plus': '410px',
         'iPhone-12-plus': '415px',
         'iPad' : '780px',
-        'iPhone-5' : '310px'
+        'iPhone-5' : '310px',
+        'Fold' : '760px'
+        // 'iPhone-14-promax' : '420px'
       }
     },
   },

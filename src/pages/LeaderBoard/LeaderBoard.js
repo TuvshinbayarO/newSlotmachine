@@ -5,10 +5,11 @@ import axios from 'axios'
 import Footer from '../Slot/component/Footer'
 import { ProgressBar } from  'react-loader-spinner'
 import { useNavigate } from 'react-router-dom'
-const LeaderBoard = ({sessionId}) => {
+const LeaderBoard = ({prevSessionId}) => {
 
   const [leaderBoard, setLeaderBoard] = useState([])
   const [loading, setLoading] = useState(false);
+  const sessionId = (prevSessionId)
   const navigate = useNavigate();
 
   const colors = [
@@ -25,14 +26,15 @@ const LeaderBoard = ({sessionId}) => {
   }, [sessionId])
 
   useEffect(() => {
+    if(sessionId){ 
     setLoading(true);
     axios.get("/api/leaderboard", 
       {headers: {
-        sessionId : localStorage.getItem("sessionId").length == 0 ? sessionId : localStorage.getItem("sessionId"),
+        sessionId : sessionId,
       }}
       )
       .then(res => {
-        if(res.data.code === 'SESSION_EXPIRED' && null){
+        if(res.data.code === 'SESSION_EXPIRED'){
           return navigate("https://api.mobicom.mn?code=0");
         }
         setLeaderBoard(res.data.result.rank)
@@ -43,6 +45,7 @@ const LeaderBoard = ({sessionId}) => {
       .finally(() => {
         setLoading(false);
       })
+    }
     }, [sessionId])
 
   return (
