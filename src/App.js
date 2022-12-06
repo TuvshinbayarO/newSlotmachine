@@ -14,7 +14,7 @@ import './App.css'
 function App() {
   const [data, setData] = useState({})
   const [sessionId, setSessionId] = useState('')
-  const [familyData, setFamilyData] = useState({})
+  const [familyData, setFamilyData] = useState([])
 
   localStorage.removeItem('sessionId')
 
@@ -42,7 +42,7 @@ function App() {
           sessionId : sessionId
         }
       }).then(res => {
-        setFamilyData(res.data.result)
+        setFamilyData(res.data.result.detail)
       }).catch(err => {
         console.log(err)
       })
@@ -63,7 +63,9 @@ function App() {
     <div className="App">
       <Router history={history}>
         <Routes>
-            <Route path='/' element={<Slot familyData={familyData} data={data} sessionId={sessionId} setSessionId={setSessionId} fetchData={fetchData}/>} />
+            <Route path='/' element={<Slot familyData={familyData} data={data} sessionId={sessionId} setSessionId={setSessionId} 
+              setFamilyData={setFamilyData}
+              fetchData={fetchData}/>} />
             <Route path='/rule' element={<Rule sessionId={sessionId} />} />
             <Route path='/prize' element={<Prize sessionId={sessionId} />} />
             <Route path='/leaderboards' element={<LeaderBoard prevSessionId={sessionId} />} />

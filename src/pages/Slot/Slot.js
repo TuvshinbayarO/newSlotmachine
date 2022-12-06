@@ -25,7 +25,7 @@ const snowmanObj = {
   image: SNOWMAN
 }
 
-const Slots = ({data, familyData, sessionId, setSessionId, fetchData }) => {
+const Slots = ({data, familyData, sessionId, setSessionId, fetchData, setFamilyData }) => {
 
 const [searchParams, setSearchParams] = useSearchParams();
 const [loading, setLoading] = useState(false);
@@ -177,6 +177,25 @@ const fetchRank = async () => {
               setTicket(res.data?.result?.customer?.ticketBalance ?? ticket - 1);
               setTotal(res?.data?.result?.total);
               await fetchRank();
+              console.log('family data', familyData)
+              console.log('data data', data)
+              if (familyData.length > 0) {
+                const dd = familyData.map(m => {
+                  if (m?.isdn === data?.family?.isdn) {
+                    console.log('=======')
+                    return {isdn: m?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal: res?.data?.result?.total}
+                  } else {
+                    console.log('dddd')
+                    return {...m}
+                  }
+                })
+                console.log('family', dd);
+                setFamilyData(dd)
+              } else {
+                const dd1 = []
+                dd1.push({isdn: data?.family?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal: res?.data?.result?.total})
+                setFamilyData(dd1)
+              }
               // caches.keys().then(list => list.map(key => caches.delete(key)))
           }
           setDisabled(false);
@@ -257,7 +276,8 @@ const fetchRank = async () => {
           <div className="absolute top-[117px] iPhone-8-plus:top-[120px] iPhone-5:top-[75px] iPhone-12-pro:top-[127px] iPhone-12-plus:top-[118px] iPhone-8:top-[100px] tablet:top-[125px] w-full flex justify-center items-center">
             <div className="w-full flex justify-center items-center">
             <div className=" w-1/3" />
-            <div className=" w-1/3 flex justify-between items-center iPhone-8-plus:w-[50%] iPhone-5:w-[50%] Fold:w-[27%] iPhone-12:w-48% iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
+            
+            <div className="flex justify-between items-center iPhone-8-plus:w-[50%] iPhone-5:w-[50%] Fold:w-[27%] iPhone-12:w-48% iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
               <div className="slot iPhone-5:pl-[0px] iPhone-12:pl-[6px] iPhone-8:pl-[0px] pl-[6px] iPhone-8-plus:pl-[0px] iPhone-12-plus:pl-0">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[0]}>
@@ -294,6 +314,7 @@ const fetchRank = async () => {
                 </section>
               </div>
             </div>
+            
             <div className=" w-1/3" />
             </div>
           </div>
@@ -309,7 +330,7 @@ const fetchRank = async () => {
                               <p style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='w-16 h-8 rounded-md text-white text-xs flex justify-start pl-1 items-center' ># {rank?.data?.result?.rank}
                               </p>
                               <div className='text-left iPhone-5:text-[6px] iPhone-8:text-[10px]'>
-                                <p>Гишүүд - {familyData?.family?.memberCount}</p>
+                                <p>Гишүүд - {data?.family?.memberCount}</p>
                                 <p className='text-[10px] iPhone-5:text-[6px] iPhone-8:text-[10px]'>{data?.family?.nameCode}</p>
                               </div>
                           </div>    
@@ -330,7 +351,7 @@ const fetchRank = async () => {
         <div className='w-full h-[13%] iPhone-8-plus:h-[43%] iPhone-12-plus:h-[53%] iPhone-12:h-[90px] iPhone-5:h-[28%] tablet:h-[53%] overflow-y-scroll text-white pt-3 iPhone-5:pt-0 px-1'>
           {
             (data && familyData) &&
-            familyData?.detail?.map((item , key) => {
+            familyData?.map((item , key) => {
               return(
                   <div key={key} className='flex items-center justify-between border-b py-2 '>
                     <div className="h-10 w-[25%]">
