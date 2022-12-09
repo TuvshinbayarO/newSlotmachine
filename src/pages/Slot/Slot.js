@@ -55,19 +55,14 @@ useEffect(() => {
   }
 }, [])
 
-
-
 useEffect(() => {
-  // if(data?.family !== undefined){
     setTotal(data?.family?.total);
     setTicket(data?.family?.availableTicket);
     fetchRank()
-  // }
 }, [data])
 
 useEffect(() => {
   fetchData()
-  // fetchRank()
 }, [])
 
 const fetchRank = async () => {
@@ -80,9 +75,6 @@ const fetchRank = async () => {
     }
   }
 }
-// useEffect(() => {
-//   setDisabled(false)
-// },[data])
 
   const [values, setValues] = useReducer((state, newState) => ({...state, ...newState}), {
     dummy1: santaObj.image,
@@ -113,24 +105,9 @@ const fetchRank = async () => {
         {
           headers: {
             sessionId : sessionId,
-            // sessionId : sessionId.length > 0 ? sessionId : localStorage.getItem("sessionId"),
           },
         }
       )
-      // if(res.data.code === 'INTERNAL_ERROR' || res.data.code === 'ERROR'){
-      //   setLoading(false)
-      //   Swal.fire({
-      //     imageUrl: `${gifts}`,
-      //     imageHeight: 50,
-      //     title: (`Алдаа гарлаа.`),
-      //     width: 250,
-      //     color: '#FFFFFF',
-      //     showConfirmButton: true,
-      //     confirmButtonColor: '#ef4444',
-      //     background: `url(${back})`,
-      //   })
-      //   setLoading(true)
-      // }
       if(res?.data?.code === 'SESSION_EXPIRED'){
         setLoading(false);
         return navigate("https://api.mobicom.mn?code=0");
@@ -168,35 +145,24 @@ const fetchRank = async () => {
                 showConfirmButton: true,
                 confirmButtonColor: '#ef4444',
                 background: `url(${back})`
-              }).then((result) => {
-                // if (result.isConfirmed) {
-                //   window.location.reload();
-                // }
               })
-              // await fetchData();
               setTicket(res.data?.result?.customer?.ticketBalance ?? ticket - 1);
               setTotal(res?.data?.result?.total);
               await fetchRank();
-              console.log('family data', familyData)
-              console.log('data data', data)
               if (familyData.length > 0) {
                 const dd = familyData.map(m => {
                   if (m?.isdn === data?.family?.isdn) {
-                    console.log('=======')
-                    return {isdn: m?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal: res?.data?.result?.total}
+                    return {isdn: m?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal:familyData[0]?.pointTotal + res?.data?.result?.point }
                   } else {
-                    console.log('dddd')
                     return {...m}
                   }
                 })
-                console.log('family', dd);
                 setFamilyData(dd)
               } else {
                 const dd1 = []
-                dd1.push({isdn: data?.family?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal: res?.data?.result?.total})
+                dd1.push({isdn: data?.family?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal: familyData[0]?.pointTotal + res?.data?.result?.point})
                 setFamilyData(dd1)
               }
-              // caches.keys().then(list => list.map(key => caches.delete(key)))
           }
           setDisabled(false);
           setReload(false); 
@@ -254,17 +220,6 @@ const fetchRank = async () => {
   };
 
   return (
-  //   !data ? <div className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
-  //   <div className="flex flex-col items-center justify-center px-5 mx-auto my-8">
-  //     <div className="max-w-md text-center">
-  //       <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
-  //         <span className="sr-only">Уучлаарай таны нэвтрэх хугацаа дууссан байна!</span>404
-  //       </h2>
-  //       <p className="text-2xl font-semibold md:text-3xl">Нүүр хуудас руу буцан уу!</p>
-  //     </div>
-  //   </div>
-  // </div> :
-  
     <div style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className="w-full flex flex-col justify-between h-screen">
       <div className="flex flex-col justify-between overflow-y-scroll h-screen">
       <div className="">
@@ -273,11 +228,11 @@ const fetchRank = async () => {
           <button disabled={loading} type="button" className={`${loading ? "roll rolling" : "roll"} max-w-[250px] iPhone-5:max-w-[200px] iPhone-8-plus:max-w-[250px] tablet:max-w-[260px] iPhone-8:max-w-[210px] iPhone-12:max-w-[210px] absolute top-[105px] z-20`} onClick={() => { !disabled && handleSubmit()}} ><img alt="icons"  src={gift} /></button>
         </div>
         <div className="relative">
-          <div className="absolute top-[117px] iPhone-8-plus:top-[120px] iPhone-5:top-[75px] iPhone-12-pro:top-[127px] iPhone-12-plus:top-[118px] iPhone-8:top-[100px] tablet:top-[125px] w-full flex justify-center items-center">
+          <div className="absolute top-[117px] iPhone-8-plus:top-[115px] iPhone-5:top-[65px] iPhone-12-pro:top-[120px] iPhone-12-plus:top-[118px] iPhone-8:top-[85px] tablet:top-[125px] w-full flex justify-center items-center">
             <div className="w-full flex justify-center items-center">
             <div className=" w-1/3" />
             
-            <div className="flex justify-between items-center iPhone-8-plus:w-[50%] iPhone-5:w-[50%] Fold:w-[27%] iPhone-12:w-48% iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
+            <div className="flex justify-center items-center iPhone-8-plus:w-[50%] iPhone-5:w-[50%] Fold:w-[27%] iPhone-12:w-48% iPhone-8:w-[48%] tablet:w-[58%] boxer bg-white h-32 iPhone-8:h-24">
               <div className="slot iPhone-5:pl-[0px] iPhone-12:pl-[6px] iPhone-8:pl-[0px] pl-[6px] iPhone-8-plus:pl-[0px] iPhone-12-plus:pl-0">
                 <section>
                   <div className={loading ? "containers" : 'containers containerStop'} ref={slotRef[0]}>

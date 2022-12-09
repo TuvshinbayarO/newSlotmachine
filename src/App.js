@@ -53,7 +53,6 @@ function App() {
 
   useEffect(() => {
     if(sessionId && sessionId !== ''){
-      // localStorage.setItem('sessionId', sessionId)
       fetchFamily();
       fetchData();
     }

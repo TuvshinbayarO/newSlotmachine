@@ -83,64 +83,68 @@ const Detail = ({prevSessionId}) => {
           <div className='flex justify-center items-center'>
             <h1 className='text-white text-xl mt-2'>• Тоглоомын түүх •</h1>
           </div>
-            <div className=' overflow-y-scroll h-[640px] px-2 py-2' onScroll={() => onScroll()} ref={listInnerRef}>
-            {
-              log?.map((items, idx) => {
-                return(
-                  // ${items.colors}
-                  <div key={idx} style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='h-24 shadow-xl text-white w-full flex rounded-xl py-2 px-2 space-x-3 mt-2'>
-                      <div className='flex flex-col justify-center w-full'>
-                        <div className='flex justify-between ml-2'>
-                          <div className='flex justify-center items-center'>
-                            <FaCalendarAlt className='text-white' />
-                            <h1 className='text-xs ml-2'>{moment(items.date).format('YYYY/MM/DD, HH:mm:ss')}</h1>
-                          </div>
-                          <div className=''>
-                              <h1 className='text-xs'>Авсан оноо</h1>
-                              <p className='text-base font-bold'>{items.point}</p>
-                            </div>
+          {loading ? 
+          <div className=' overflow-y-scroll h-[640px] px-2 py-2' onScroll={() => onScroll()} ref={listInnerRef}>
+          {
+            log?.map((items, idx) => {
+              return(
+                // ${items.colors}
+                <div key={idx} style={{ backgroundImage: `url(${footerBg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} className='h-24 shadow-xl text-white w-full flex rounded-xl py-2 px-2 space-x-3 mt-2'>
+                    <div className='flex flex-col justify-center w-full'>
+                      <div className='flex justify-between ml-2'>
+                        <div className='flex justify-center items-center'>
+                          <FaCalendarAlt className='text-white' />
+                          <h1 className='text-xs ml-2'>{moment(items?.date).format('YYYY/MM/DD, HH:mm:ss')}</h1>
                         </div>
-                        <div className='flex justify-between items-center text-xs mt-2'>
-                          <div className='flex items-center'>
-                            <div className='flex ml-2 space-x-3 justify-center items-center'>
-                              <FaPhoneAlt className='text-white' />
-                              <p>{items.isdn}</p>
-                            </div>
-                            
-                            <div className=''>
-                              <p>{items.familyName}</p>
-                            </div>
+                        <div className=''>
+                            <h1 className='text-xs'>Авсан оноо</h1>
+                            <p className='text-base font-bold'>{items?.point}</p>
                           </div>
+                      </div>
+                      <div className='flex justify-between items-center text-xs mt-2'>
+                        <div className='flex items-center'>
+                          <div className='flex ml-2 space-x-3 justify-center items-center'>
+                            <FaPhoneAlt className='text-white' />
+                            <p>{items?.isdn}</p>
+                          </div>
+                          
                           <div className=''>
-                            <div className='flex flex-row space-x-2 items-center'>{items?.game?.map((names, idxs) => {
-                              return(
-                                <div className='bg-white rounded-md' key={idxs}>
-                                  <img className='w-8 h-8 rounded-full' alt='icons' src={require(`../../Assets/Detail/${iconData[names.name] || 'DEFAULT'}.png`)} />
-                                </div>
-                              )
-                            })}</div>
+                            <p>{items?.familyName}</p>
                           </div>
+                        </div>
+                        <div className=''>
+                          <div className='flex flex-row space-x-2 items-center'>{items?.game?.map((names, idxs) => {
+                            return(
+                              <div className='bg-white rounded-md' key={idxs}>
+                                <img className='w-8 h-8 rounded-full' alt='icons' src={require(`../../Assets/Detail/${iconData[names?.name] || 'DEFAULT'}.png`)} />
+                              </div>
+                            )
+                          })}</div>
                         </div>
                       </div>
-                  </div>
-                )
-              })
-            }
-            {loading && (
-              <div className='flex justify-center items-center'>
-                <ThreeDots
-                height="80"
-                width="80"
-                ariaLabel="progress-bar-loading"
-                wrapperStyle={{}}
-                wrapperClass="progress-bar-wrapper"
-                borderColor = '#FFFFFF'
-                color="#FFFFFF" 
-                barColor = '#FFFFFF'
-              />
-             </div>
-            )}
-          </div>
+                    </div>
+                </div>
+              )
+            })
+            
+          }
+          {loading && (
+            <div className='flex justify-center items-center'>
+              <ThreeDots
+              height="80"
+              width="80"
+              ariaLabel="progress-bar-loading"
+              wrapperStyle={{}}
+              wrapperClass="progress-bar-wrapper"
+              borderColor = '#FFFFFF'
+              color="#FFFFFF" 
+              barColor = '#FFFFFF'
+            />
+           </div>
+          )}
+        </div>
+        : <div className='h-screen text-center justify-center items-center flex text-white text-2xl'>Хоосон байна!</div>  
+      }
         <Footer />
     </div>
   )

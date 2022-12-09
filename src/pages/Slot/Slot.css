@@ -16,6 +16,10 @@ section {
   height: 70px;
   overflow: hidden;
   cursor: default;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .boxer{
