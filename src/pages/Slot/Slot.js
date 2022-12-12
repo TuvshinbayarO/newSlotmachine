@@ -33,9 +33,11 @@ const [disabled, setDisabled] = useState(false);
 const [reload, setReload] = useState(false);
 const [total, setTotal] = useState(0);
 const [ticket, setTicket] = useState(0)
-const [rank, setRank] = useState({})
+const [rank, setRank] = useState('')
 
 const navigate = useNavigate();
+
+console.log('ranks', rank)
 
 useEffect(() => {
   if(localStorage.getItem("sessionId") != null) {
@@ -152,7 +154,7 @@ const fetchRank = async () => {
               if (familyData.length > 0) {
                 const dd = familyData.map(m => {
                   if (m?.isdn === data?.family?.isdn) {
-                    return {isdn: m?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal:familyData[0]?.pointTotal + res?.data?.result?.point }
+                    return {isdn: m?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal: m?.pointTotal + res?.data?.result?.point }
                   } else {
                     return {...m}
                   }
@@ -160,10 +162,11 @@ const fetchRank = async () => {
                 setFamilyData(dd)
               } else {
                 const dd1 = []
-                dd1.push({isdn: data?.family?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal: familyData[0]?.pointTotal + res?.data?.result?.point})
+                dd1.push({isdn: data?.family?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal: data?.pointTotal + res?.data?.result?.point})
                 setFamilyData(dd1)
               }
           }
+          console.log('REQE', data)
           setDisabled(false);
           setReload(false); 
         }, 2000)

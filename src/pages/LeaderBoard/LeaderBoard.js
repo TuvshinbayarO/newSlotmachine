@@ -67,42 +67,48 @@ const LeaderBoard = ({prevSessionId}) => {
         </div>
         <div className=' overflow-y-scroll h-[640px] px-2'>
         {
-          leaderBoard.map((items, idx) => {
-            return(
-              // ${items.colors}
-              <div key={idx} className='bg-white h-24 w-full flex rounded-xl py-2 px-2 space-x-3 mt-2'>
-
-                  <div className={`${colors && items.color} flex flex-col justify-center items-center w-24 h-full rounded-lg text-white`}>
-                    <h1 className='text-3xl'>{items.rank}</h1>
-                    <p>Байр</p>
-                  </div>
-                  <div className='flex flex-col justify-center w-full'>
-                    <div className='flex items-center ml-2'>
-                      {
-                        idx < 10 &&
-                        <FaGift className='text-mobi-red' />
-                      }
-                      <h1 className='text-base ml-2 font-bold'>{items.gift}</h1>
+          loading ? 
+          <div className=''>
+          {
+            leaderBoard.map((items, idx) => {
+              return(
+                // ${items.colors}
+                <div key={idx} className='bg-white h-24 w-full flex rounded-xl py-2 px-2 space-x-3 mt-2'>
+  
+                    <div className={`${colors && items.color} flex flex-col justify-center items-center w-24 h-full rounded-lg text-white`}>
+                      <h1 className='text-3xl'>{items.rank}</h1>
+                      <p>Байр</p>
                     </div>
-                    <div className='flex justify-between items-center text-xs mt-2'>
-                      <div className='flex items-center'>
-                      <img className='w-8 h-8 rounded-full' alt='icons' src={require(`../../Assets/Icons/${items.iconCode}.png`)} />
-                        <div className='flex justify-center items-center ml-2'>
-                          <p className='font-bold text-base'>{items.nameCode}</p>
-                          <div className='h-4 bg-white'>
+                    <div className='flex flex-col justify-center w-full'>
+                      <div className='flex items-center ml-2'>
+                        {
+                          idx < 10 &&
+                          <FaGift className='text-mobi-red' />
+                        }
+                        <h1 className='text-base ml-2 font-bold'>{items.gift}</h1>
+                      </div>
+                      <div className='flex justify-between items-center text-xs mt-2'>
+                        <div className='flex items-center'>
+                        <img className='w-8 h-8 rounded-full' alt='icons' src={require(`../../Assets/Icons/${items.iconCode}.png`)} />
+                          <div className='flex justify-center items-center ml-2'>
+                            <p className='font-bold text-base'>{items.nameCode}</p>
+                            <div className='h-4 bg-white'>
+                            </div>
                           </div>
                         </div>
+                          <div className=''>
+                            <h1>Нийт оноо</h1>
+                            <p className='text-base font-semibold'>{items.point}</p>
+                          </div>
                       </div>
-                        <div className=''>
-                          <h1>Нийт оноо</h1>
-                          <p className='text-base font-semibold'>{items.point}</p>
-                        </div>
                     </div>
-                  </div>
-              </div>
-            )
-          })
-        }
+                </div>
+              )
+            })
+          }
+          </div>  : <div className='h-screen text-center justify-center items-center flex text-white text-2xl'>Хоосон байна!</div>  
+        } 
+        
       </div>
         <Footer />
     </div>
