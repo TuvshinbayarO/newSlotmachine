@@ -33,11 +33,9 @@ const [disabled, setDisabled] = useState(false);
 const [reload, setReload] = useState(false);
 const [total, setTotal] = useState(0);
 const [ticket, setTicket] = useState(0)
-const [rank, setRank] = useState('')
+const [rank, setRank] = useState({})
 
 const navigate = useNavigate();
-
-console.log('ranks', rank)
 
 useEffect(() => {
   if(localStorage.getItem("sessionId") != null) {
@@ -162,11 +160,10 @@ const fetchRank = async () => {
                 setFamilyData(dd)
               } else {
                 const dd1 = []
-                dd1.push({isdn: data?.family?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal: data?.pointTotal + res?.data?.result?.point})
+                dd1.push({isdn: data?.family?.isdn, ticketBalance: res.data?.result?.customer?.ticketBalance, pointTotal: data?.total + res?.data?.result?.point})
                 setFamilyData(dd1)
               }
           }
-          console.log('REQE', data)
           setDisabled(false);
           setReload(false); 
         }, 2000)
@@ -295,6 +292,7 @@ const fetchRank = async () => {
                           <div className="flex flex-col iPhone-5:text-[6px] iPhone-8:text-[10px]">
                             <h1>Таны эрх</h1>
                             <h1>{ticket || 0}</h1>
+                            {console.log('ticekt: ', ticket)}
                           </div>
                       </div>
                   </div>

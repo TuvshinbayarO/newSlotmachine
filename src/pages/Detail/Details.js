@@ -6,7 +6,6 @@ import Footer from '../Slot/component/Footer'
 import { Link, useNavigate } from 'react-router-dom'
 import moment from 'moment/moment'
 import { ThreeDots } from 'react-loader-spinner'
-import { ProgressBar } from  'react-loader-spinner'
 import footerBg from '../../Assets/footer/footerBg.png'
 
 const LIMIT = 10;
