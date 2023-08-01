@@ -65,6 +65,7 @@ function App() {
             <Route path='/' element={<Slot familyData={familyData} data={data} sessionId={sessionId} setSessionId={setSessionId} 
               setFamilyData={setFamilyData}
               fetchData={fetchData}/>} />
+              {/* adsfasdf */}
             <Route path='/rule' element={<Rule sessionId={sessionId} />} />
             <Route path='/prize' element={<Prize sessionId={sessionId} />} />
             <Route path='/leaderboards' element={<LeaderBoard prevSessionId={sessionId} />} />
