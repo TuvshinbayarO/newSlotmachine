@@ -25,6 +25,8 @@ module.exports = {
         'iPhone-5' : '310px',
         'Fold' : '760px'
         // 'iPhone-14-promax' : '420px'
+        // 'iPhone-14-promax' : '420px'
+        // 'iPhone-14-promax' : '420px'
       }
     },
   },
