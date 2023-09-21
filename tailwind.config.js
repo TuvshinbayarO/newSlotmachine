@@ -27,6 +27,7 @@ module.exports = {
         // 'iPhone-14-promax' : '420px'
         // 'iPhone-14-promax' : '420px'
         // 'iPhone-14-promax' : '420px'
+        // 'iPhone-14-promax' : '420px'
       }
     },
   },
